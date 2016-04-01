@@ -7,17 +7,33 @@
 //
 
 class JSQRichMessage: JSQMessage {
-    var idid: String
-    
+    var id: String?
+    var recipentID: UInt
+    var customParameters: [String: AnyObject]?
+    var dialogID: String?
+
     init(qbChatMessage: QBChatMessage) {
-        idid = qbChatMessage.ID!
+        id = qbChatMessage.ID
+        recipentID = qbChatMessage.recipientID
+        
+//        if let customParams = qbChatMessage.customParameters {
+//            for (K, V) in customParams {
+//                customParameters![K as! T] = V
+//            }
+//        }
+        if let custParams = qbChatMessage.customParameters {
+            customParameters = (custParams as NSDictionary) as? [String: AnyObject]
+        }
+        dialogID = qbChatMessage.dialogID
         
         let isMedia = qbChatMessage.isMediaMessage()
         if !isMedia {
-            super.init(senderId: "", senderDisplayName: "", date: NSDate(), text: "")
+            super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: qbChatMessage.senderNick ?? "testSender", date:qbChatMessage.dateSent, text: qbChatMessage.text)
         } else {
             //don't care about media first
-            super.init(senderId: "", senderDisplayName: "", date: NSDate(), media: nil)
+            let testMediaData = JSQMediaItem()
+            super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: qbChatMessage.senderNick ?? "testSender", date: qbChatMessage.dateSent, media: testMediaData)
+            
         }
         
     }

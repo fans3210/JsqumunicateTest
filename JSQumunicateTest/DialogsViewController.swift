@@ -121,8 +121,8 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
                 if let currentUserLogin = ServicesManager.instance().currentUser().login {
                     let currentUserId = "\(ServicesManager.instance().currentUser().ID)"
                     print("current user login is \(currentUserLogin), id is \(currentUserId)")
-                    jchatVC.senderDisplayName = currentUserId
-                    jchatVC.senderId = currentUserId
+                    jchatVC.senderDisplayName = currentUserId ?? "default user id"
+                    jchatVC.senderId = currentUserId ?? "default user id"
                 }
                 
                 

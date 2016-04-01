@@ -8,8 +8,11 @@
 
 class JChatViewController: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnectionDelegate {
     var dialog: QBChatDialog?
-    var messages: [QBChatMessage] = []
-    
+    var messages = [QBChatMessage]()
+    var jmessages = [JSQRichMessage]()
+    var demoMessages = [JSQMessage]()
+    var outgoingBubbleImage: JSQMessagesBubbleImage!
+    var incomingBubbleImage: JSQMessagesBubbleImage!
     
     /*
      note: typing, use typingindicator
@@ -17,6 +20,11 @@ class JChatViewController: JSQMessagesViewController, QMChatServiceDelegate, QMC
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupBubbles()
+        collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
+        collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
+        collectionView.backgroundColor = UIColor.grayColor()
         
         print("jchatvc viewdidload")
         
@@ -39,19 +47,37 @@ class JChatViewController: JSQMessagesViewController, QMChatServiceDelegate, QMC
                 print("stopped typing")
                 
             }
-
+            
         }
         
-        //MARK: dangerous, just an attempt
-        //attempt failed, might need to write a new viewcontroller(which is subclass of jsqmessageviewcontroller and takes jsqbmessagescollectionview in xib) to inherit from
-        let qbCollectionView = collectionView as! JSQBMessagesCollectionView
-        qbCollectionView.qb_dataSource = self
         
         ServicesManager.instance().chatService.addDelegate(self)
-//        ServicesManager.instance().chatService.chatAttachmentService.delegate = self
+        //        ServicesManager.instance().chatService.chatAttachmentService.delegate = self
         loadMessages()
         
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        demoAddingMessage("fsf", text: "Hi")
+        demoAddingMessage("fsf", text: "Hi sdaf")
+        demoAddingMessage("fsf", text: "Hi asdf")
+        demoAddingMessage("fsf", text: "H asfi")
+        demoAddingMessage("fsf", text: "Hi sa")
+        demoAddingMessage("fsf", text: "Hi asdf")
+        finishReceivingMessage()
+        collectionView.reloadData()
+    }
+    
+    private func setupBubbles() {
+        let bubbleFactory = JSQMessagesBubbleImageFactory()
+        outgoingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.blueColor())
+        incomingBubbleImage = bubbleFactory.incomingMessagesBubbleImageWithColor(UIColor.redColor())
+    }
+    
+
     
     func storedMessages() -> [QBChatMessage]? {
         return ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID(dialog?.ID) as? [QBChatMessage]
@@ -61,32 +87,65 @@ class JChatViewController: JSQMessagesViewController, QMChatServiceDelegate, QMC
         //load messages for dialog id
         ServicesManager.instance().chatService.messagesWithChatDialogID(dialog?.ID) {[unowned self] response, messageObjects in
             
+            if messageObjects.count > 0 {
+                self.messages += messageObjects as! [QBChatMessage]
+                
+                for message in self.messages {
+                    print("qb message text is \(message.text)")
+                    let jsqrich = JSQRichMessage(qbChatMessage: message)
+                    print("jsqrich message is \(jsqrich)")
+                    self.jmessages.append(jsqrich)
+                }
+            }
+           print("self.collectionview, datasource is \(self.collectionView.dataSource), delagete is \(self.collectionView.delegate)")
             
         }
     }
-
+    
+    func demoAddingMessage(senderId: String, text: String) {
+        let message = JSQMessage(senderId: senderId, displayName: "", text: text)
+        demoMessages.append(message)
+    }
+    
 }
 
-//MARK: cv datasource
+////MARK: cv datasource
 extension JChatViewController {
     
-    func collectionView(collectionView: JSQMessagesCollectionView, qb_messageDataForItemAtIndexPath indexPath: NSIndexPath) -> QBChatMessagePresentable {
-        let lastSection = collectionView.numberOfSections() - 1
-        if indexPath.section == lastSection && indexPath.item == collectionView.numberOfItemsInSection(lastSection) - 1 {
-            ServicesManager.instance().chatService?.loadEarlierMessagesWithChatDialogID(dialog?.ID).continueWithBlock{[unowned self] task in
-                if task.result?.count > 0 {
-                    self.messages += task.result as! [QBChatMessage]
-                }
-                return nil
-            }
-        }
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return jmessages.count
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+//        print("in jsqmessagecollectionview datasource")
+//        let qbMessage = messages[indexPath.item]
+//        print("cv delegate qb message text is \(qbMessage.text)")
+//        let jsqrich = JSQRichMessage(qbChatMessage: qbMessage)
+//        print("cv delegate jsqrich message is \(jsqrich)")
+//        return jsqrich
         
-        //get messages, don't care read unread first
-        let qbmessage = messages[indexPath.row]
-        print("get qbmessage \(qbmessage)")
-        let sivmessage = SivMessage(qbmessage: qbmessage)
-            
-        return sivmessage
+        return demoMessages[indexPath.item]
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+        let jsqmessage = jmessages[indexPath.item]
+        if jsqmessage.senderId == senderId {
+            return outgoingBubbleImage
+        }
+        return incomingBubbleImage
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+        return nil
+    }
+    
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
+        cell.backgroundColor = UIColor.orangeColor()
+        cell.textView.textColor = UIColor.purpleColor()
+        return cell
+        
         
     }
+    
 }
