@@ -30,6 +30,7 @@
 		38A83BF81CAD6F430079EB0C /* QBChatMessagePresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BF71CAD6F430079EB0C /* QBChatMessagePresentable.swift */; };
 		38A83BFA1CAD71DE0079EB0C /* JSQMessageViewController+QBDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BF91CAD71DE0079EB0C /* JSQMessageViewController+QBDataSource.swift */; };
 		38A83BFD1CAD821D0079EB0C /* JSQBMessagesCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BFC1CAD821D0079EB0C /* JSQBMessagesCollectionView.swift */; };
+		38A83C0F1CAE29E10079EB0C /* JSQRishMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */; };
 		B3F275C55CA28C84693427F5 /* libPods-JSQumunicateTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 134DE648B7898DD71C1D5267 /* libPods-JSQumunicateTest.a */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		38A83BF71CAD6F430079EB0C /* QBChatMessagePresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBChatMessagePresentable.swift; sourceTree = "<group>"; };
 		38A83BF91CAD71DE0079EB0C /* JSQMessageViewController+QBDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSQMessageViewController+QBDataSource.swift"; sourceTree = "<group>"; };
 		38A83BFC1CAD821D0079EB0C /* JSQBMessagesCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQBMessagesCollectionView.swift; sourceTree = "<group>"; };
+		38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQRishMessage.swift; sourceTree = "<group>"; };
 		EB2DAD6F3D7B7C5B0D0E97DD /* Pods-JSQumunicateTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				38A83BF11CAD2F0C0079EB0C /* SivMessage.swift */,
+				38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */,
 			);
 			name = Modal;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38A83C0F1CAE29E10079EB0C /* JSQRishMessage.swift in Sources */,
 				38A83BF51CAD6E5B0079EB0C /* QBMessagesCollectionViewDataSource.swift in Sources */,
 				38A83BD61CABA4DC0079EB0C /* UIImage+fixOrientation.m in Sources */,
 				38A83BCF1CABA39C0079EB0C /* NotificationService.swift in Sources */,
