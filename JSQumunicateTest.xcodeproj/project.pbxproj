@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16D824F5F4D43196A5287C16 /* libPods-JSQumunicateTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */; };
 		38A83BB81CA92AA20079EB0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BB71CA92AA20079EB0C /* AppDelegate.swift */; };
 		38A83BBF1CA92AA20079EB0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38A83BBE1CA92AA20079EB0C /* Assets.xcassets */; };
 		38A83BC21CA92AA20079EB0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38A83BC01CA92AA20079EB0C /* LaunchScreen.storyboard */; };
@@ -28,12 +29,10 @@
 		38A83BF81CAD6F430079EB0C /* QBChatMessagePresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BF71CAD6F430079EB0C /* QBChatMessagePresentable.swift */; };
 		38A83C0F1CAE29E10079EB0C /* JSQRishMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */; };
 		38A83C111CAE751E0079EB0C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C101CAE751E0079EB0C /* TestVC.swift */; };
-		B3F275C55CA28C84693427F5 /* libPods-JSQumunicateTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 134DE648B7898DD71C1D5267 /* libPods-JSQumunicateTest.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		134DE648B7898DD71C1D5267 /* libPods-JSQumunicateTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JSQumunicateTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		35C1D47F6A95B5B9A6122DE7 /* Pods-JSQumunicateTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.release.xcconfig"; sourceTree = "<group>"; };
+		313C9CD4075A1DCC2CFCB1D9 /* Pods-JSQumunicateTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.release.xcconfig"; sourceTree = "<group>"; };
 		38A83BB41CA92AA20079EB0C /* JSQumunicateTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSQumunicateTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38A83BB71CA92AA20079EB0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		38A83BBE1CA92AA20079EB0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -59,7 +58,8 @@
 		38A83BF71CAD6F430079EB0C /* QBChatMessagePresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBChatMessagePresentable.swift; sourceTree = "<group>"; };
 		38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQRishMessage.swift; sourceTree = "<group>"; };
 		38A83C101CAE751E0079EB0C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
-		EB2DAD6F3D7B7C5B0D0E97DD /* Pods-JSQumunicateTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.debug.xcconfig"; sourceTree = "<group>"; };
+		4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JSQumunicateTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6AE8E657FA28EB0329414ABB /* Pods-JSQumunicateTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3F275C55CA28C84693427F5 /* libPods-JSQumunicateTest.a in Frameworks */,
+				16D824F5F4D43196A5287C16 /* libPods-JSQumunicateTest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,8 +79,8 @@
 			children = (
 				38A83BB61CA92AA20079EB0C /* JSQumunicateTest */,
 				38A83BB51CA92AA20079EB0C /* Products */,
-				452F5CB3F9A2933147BB2D09 /* Pods */,
-				40F13C4C4B7153E848E44DB4 /* Frameworks */,
+				84970C417473EFA76683308B /* Pods */,
+				C3F85E8B1082D28B931AD36B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -179,21 +179,21 @@
 			name = Modal;
 			sourceTree = "<group>";
 		};
-		40F13C4C4B7153E848E44DB4 /* Frameworks */ = {
+		84970C417473EFA76683308B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				134DE648B7898DD71C1D5267 /* libPods-JSQumunicateTest.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		452F5CB3F9A2933147BB2D09 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				EB2DAD6F3D7B7C5B0D0E97DD /* Pods-JSQumunicateTest.debug.xcconfig */,
-				35C1D47F6A95B5B9A6122DE7 /* Pods-JSQumunicateTest.release.xcconfig */,
+				6AE8E657FA28EB0329414ABB /* Pods-JSQumunicateTest.debug.xcconfig */,
+				313C9CD4075A1DCC2CFCB1D9 /* Pods-JSQumunicateTest.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C3F85E8B1082D28B931AD36B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,12 +203,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 38A83BC61CA92AA20079EB0C /* Build configuration list for PBXNativeTarget "JSQumunicateTest" */;
 			buildPhases = (
-				0A8809A5FE730DCF0018E100 /* Check Pods Manifest.lock */,
+				2D79582A266B918CDB1DF1EC /* 📦 Check Pods Manifest.lock */,
 				38A83BB01CA92AA20079EB0C /* Sources */,
 				38A83BB11CA92AA20079EB0C /* Frameworks */,
 				38A83BB21CA92AA20079EB0C /* Resources */,
-				6F653C662434E041146F4CBC /* Embed Pods Frameworks */,
-				5D470CE0E051BF50A2763170 /* Copy Pods Resources */,
+				7397AD7F7275A186589CD8C9 /* 📦 Embed Pods Frameworks */,
+				CBFF4B3DF17A460DBBD7BA24 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -267,14 +267,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0A8809A5FE730DCF0018E100 /* Check Pods Manifest.lock */ = {
+		2D79582A266B918CDB1DF1EC /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -282,34 +282,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		5D470CE0E051BF50A2763170 /* Copy Pods Resources */ = {
+		7397AD7F7275A186589CD8C9 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6F653C662434E041146F4CBC /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBFF4B3DF17A460DBBD7BA24 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -438,7 +438,7 @@
 		};
 		38A83BC71CA92AA20079EB0C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EB2DAD6F3D7B7C5B0D0E97DD /* Pods-JSQumunicateTest.debug.xcconfig */;
+			baseConfigurationReference = 6AE8E657FA28EB0329414ABB /* Pods-JSQumunicateTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -454,7 +454,7 @@
 		};
 		38A83BC81CA92AA20079EB0C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 35C1D47F6A95B5B9A6122DE7 /* Pods-JSQumunicateTest.release.xcconfig */;
+			baseConfigurationReference = 313C9CD4075A1DCC2CFCB1D9 /* Pods-JSQumunicateTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
