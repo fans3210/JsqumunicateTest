@@ -12,7 +12,7 @@ PODS:
     - Bolts (= 1.5.0)
     - QuickBlox (~> 2.6.5)
   - QuickBlox (2.6.6)
-  - SVProgressHUD (2.0)
+  - SVProgressHUD (2.0.2)
   - TWMessageBarManager (1.7.2)
 
 DEPENDENCIES:
@@ -27,7 +27,7 @@ SPEC CHECKSUMS:
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   QMServices: 3e3b9ee254908d4ee313ab7fe8aa634990a58bb3
   QuickBlox: 8a860f96d8d4694f9d35fbeac9bbb5bc09ed71ec
-  SVProgressHUD: e9e7c893686a20da55a28015ed384d9425e15479
+  SVProgressHUD: e4020e23badbd7cc61bc4a80d3c1da57f166a978
   TWMessageBarManager: e7adc066ee425174f5dee79473fce913b1cd1662
 
 PODFILE CHECKSUM: 0635a3c6f28fc36dd048aa9636335dce4e4176c8
