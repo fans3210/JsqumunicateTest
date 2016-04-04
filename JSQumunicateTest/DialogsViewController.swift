@@ -116,13 +116,23 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "SA_STR_SEGUE_GO_TO_CHAT".localized {
             print("would go to chatvc")
-            if let jchatVC = segue.destinationViewController as? JChatViewController, sender = sender as? QBChatDialog {
-                jchatVC.dialog = sender
+//            if let jchatVC = segue.destinationViewController as? JChatViewController, sender = sender as? QBChatDialog {
+//                jchatVC.dialog = sender
+//                if let currentUserLogin = ServicesManager.instance().currentUser().login {
+//                    let currentUserId = "\(ServicesManager.instance().currentUser().ID)"
+//                    print("current user login is \(currentUserLogin), id is \(currentUserId)")
+//                    jchatVC.senderDisplayName = currentUserId ?? "default user id"
+//                    jchatVC.senderId = currentUserId ?? "default user id"
+//                }
+//                
+//                
+//            }
+            if let testVC = segue.destinationViewController as? TestVC, _ = sender as? QBChatDialog {
                 if let currentUserLogin = ServicesManager.instance().currentUser().login {
                     let currentUserId = "\(ServicesManager.instance().currentUser().ID)"
                     print("current user login is \(currentUserLogin), id is \(currentUserId)")
-                    jchatVC.senderDisplayName = currentUserId ?? "default user id"
-                    jchatVC.senderId = currentUserId ?? "default user id"
+                    testVC.senderDisplayName = currentUserId ?? "default user id"
+                    testVC.senderId = currentUserId ?? "default user id"
                 }
                 
                 

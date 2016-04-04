@@ -24,10 +24,9 @@ class JChatViewController: JSQMessagesViewController, QMChatServiceDelegate, QMC
         setupBubbles()
         collectionView.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
         collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
-        collectionView.backgroundColor = UIColor.grayColor()
         
         print("jchatvc viewdidload")
-        
+
         if dialog?.type == .Private {
             //private, add typing detector
             dialog?.onUserIsTyping = { userId in
@@ -59,16 +58,13 @@ class JChatViewController: JSQMessagesViewController, QMChatServiceDelegate, QMC
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        demoAddingMessage("fsf", text: "Hi")
-        demoAddingMessage("fsf", text: "Hi sdaf")
-        demoAddingMessage("fsf", text: "Hi asdf")
-        demoAddingMessage("fsf", text: "H asfi")
-        demoAddingMessage("fsf", text: "Hi sa")
-        demoAddingMessage("fsf", text: "Hi asdf")
+        test_addMessage("foo", text: "123!")
+        // messages sent from local sender
+        test_addMessage(senderId, text: "sdfa!")
+        test_addMessage(senderId, text: "sdfsd!")
+        test_addMessage(senderId, text: "asfaslkdjflasdffasdfas")
+        // animates the receiving of a new message on the view
         finishReceivingMessage()
-        collectionView.reloadData()
     }
     
     private func setupBubbles() {
@@ -102,7 +98,7 @@ class JChatViewController: JSQMessagesViewController, QMChatServiceDelegate, QMC
         }
     }
     
-    func demoAddingMessage(senderId: String, text: String) {
+    func test_addMessage(senderId: String, text: String) {
         let message = JSQMessage(senderId: senderId, displayName: "", text: text)
         demoMessages.append(message)
     }
