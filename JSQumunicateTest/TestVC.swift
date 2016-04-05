@@ -8,7 +8,8 @@
 
 import UIKit
 
-class TestVC: JSQMessagesViewController {
+class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnectionDelegate {
+    var dialog: QBChatDialog?
     var messages = [JSQMessage]()
     var richMessages = [JSQRichMessage]()
     
@@ -35,6 +36,7 @@ class TestVC: JSQMessagesViewController {
         // No avatars
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
         collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
+        ServicesManager.instance().chatService.addDelegate(self)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -46,8 +48,9 @@ class TestVC: JSQMessagesViewController {
 //        addMessage(senderId, text: "asfaslkdjflasdffasdfas")
         // animates the receiving of a new message on the view
         
-        generateRichMessages()
-        finishReceivingMessage()
+//        generateRichMessages()
+//        finishReceivingMessage()
+        loadMessages()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -68,6 +71,19 @@ class TestVC: JSQMessagesViewController {
         addRichMessage(senderId, text: "sdfsadsfasdfd2222f")
         addRichMessage("dsf", text: "sdfsadsfas333dfdf")
         addRichMessage("f", text: "sdfsadsfasd44444fdf")
+    }
+    
+    func loadMessages() {
+        ServicesManager.instance().chatService.messagesWithChatDialogID(dialog?.ID) {[unowned self] response, messageObjects in
+            if messageObjects.count > 0 {
+                let messages = messageObjects as! [QBChatMessage]
+                for message in messages {
+                    let jsqRich = JSQRichMessage(qbChatMessage: message)
+                    self.richMessages.append(jsqRich)
+                }
+                self.finishReceivingMessage()
+            }
+        }
     }
     
     
