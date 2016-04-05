@@ -10,6 +10,8 @@ import UIKit
 
 class TestVC: JSQMessagesViewController {
     var messages = [JSQMessage]()
+    var richMessages = [JSQRichMessage]()
+    
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingBubble: JSQMessagesBubbleImage!
     
@@ -37,12 +39,14 @@ class TestVC: JSQMessagesViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        addMessage("foo", text: "123!")
-        // messages sent from local sender
-        addMessage(senderId, text: "sdfa!")
-        addMessage(senderId, text: "sdfsd!")
-        addMessage(senderId, text: "asfaslkdjflasdffasdfas")
+//        addMessage("foo", text: "123!")
+//        // messages sent from local sender
+//        addMessage(senderId, text: "sdfa!")
+//        addMessage(senderId, text: "sdfsd!")
+//        addMessage(senderId, text: "asfaslkdjflasdffasdfas")
         // animates the receiving of a new message on the view
+        
+        generateRichMessages()
         finishReceivingMessage()
     }
     
@@ -54,10 +58,16 @@ class TestVC: JSQMessagesViewController {
         let message = JSQMessage(senderId: id, displayName: "", text: text)
         messages.append(message)
     }
+    func addRichMessage(senderId: String, text: String) {
+        let richMessage = JSQRichMessage(customParameters: [:], senderId: senderId, senderDisplayName: "sdfdsf", text: text)
+        richMessages.append(richMessage)
+    }
     
-    func addJRichMessage(id: String, text: String) {
-        
-        
+    func generateRichMessages() {
+        addRichMessage(senderId, text: "sdfsdf111")
+        addRichMessage(senderId, text: "sdfsadsfasdfd2222f")
+        addRichMessage("dsf", text: "sdfsadsfas333dfdf")
+        addRichMessage("f", text: "sdfsadsfasd44444fdf")
     }
     
     
@@ -65,19 +75,28 @@ class TestVC: JSQMessagesViewController {
 
 extension TestVC {
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
-        return messages[indexPath.item]
+//        return messages[indexPath.item]
+        return richMessages[indexPath.item]
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return messages.count
+//        return messages.count
+        return richMessages.count
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!,
                                  messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
-        let message = messages[indexPath.item] // 1
-        if message.senderId == senderId { // 2
+//        let message = messages[indexPath.item] // 1
+//        if message.senderId == senderId { // 2
+//            return outgoingBubble
+//        } else { // 3
+//            return incomingBubble
+//        }
+        
+        let richMessage = richMessages[indexPath.item]
+        if richMessage.senderId == senderId {
             return outgoingBubble
-        } else { // 3
+        } else {
             return incomingBubble
         }
     }

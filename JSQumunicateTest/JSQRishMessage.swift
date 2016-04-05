@@ -38,6 +38,12 @@ class JSQRichMessage: JSQMessage {
         
     }
     
+    init(customParameters: [String: AnyObject]?, senderId:String, senderDisplayName: String, text: String) {
+        recipentID = 12345
+        self.customParameters = customParameters
+        super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: NSDate(), text: text)
+    }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
