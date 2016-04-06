@@ -36,6 +36,7 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
         collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
         ServicesManager.instance().chatService.addDelegate(self)
+        ServicesManager.instance().chatService.chatMessagesPerPage = 100
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -95,10 +96,6 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
                     return JSQRichMessage(qbChatMessage: message)
                 })
                 self.richMessages += messages
-//                for message in messages {
-//                    let jsqRich = JSQRichMessage(qbChatMessage: message)
-//                    self.richMessages.append(jsqRich)
-//                }
                 self.finishReceivingMessage()
             }
         }
@@ -106,6 +103,8 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
     
     
 }
+
+//qmviewcontroller has more than 1 sections while jsqvc only have one, jsq use delegate methods to add timestamps
 
 extension TestVC {
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
