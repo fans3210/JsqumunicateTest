@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         QBSettings.setAccountKey(kQBAccountKey)
         
         // Enables Quickblox REST API calls debug console output.
-        QBSettings.setLogLevel(QBLogLevel.Debug)
+        QBSettings.setLogLevel(QBLogLevel.Nothing)
         
         // Enables detailed XMPP logging in console output.
         QBSettings.enableXMPPLogging()

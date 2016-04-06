@@ -12,7 +12,6 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
     var dialog: QBChatDialog?
     var messages = [JSQMessage]()
     var richMessages = [JSQRichMessage]()
-    
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingBubble: JSQMessagesBubbleImage!
     
@@ -50,6 +49,10 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
         
 //        generateRichMessages()
 //        finishReceivingMessage()
+        if let storedMessages = storedMessages() where storedMessages.count > 0 && richMessages.count == 0 {
+            richMessages += storedMessages
+        }
+        
         loadMessages()
     }
     
@@ -73,14 +76,29 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
         addRichMessage("f", text: "sdfsadsfasd44444fdf")
     }
     
+    func storedMessages() -> [JSQRichMessage]? {
+        
+        let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID(dialog?.ID) as? [QBChatMessage])?.map({ qmChatMesssage -> JSQRichMessage in
+            return JSQRichMessage(qbChatMessage: qmChatMesssage)
+        })
+        
+        return messages
+    }
+    
     func loadMessages() {
         ServicesManager.instance().chatService.messagesWithChatDialogID(dialog?.ID) {[unowned self] response, messageObjects in
+            
+            print("response: ")
+            
             if messageObjects.count > 0 {
-                let messages = messageObjects as! [QBChatMessage]
-                for message in messages {
-                    let jsqRich = JSQRichMessage(qbChatMessage: message)
-                    self.richMessages.append(jsqRich)
-                }
+                let messages = (messageObjects as! [QBChatMessage]).map({ message -> JSQRichMessage in
+                    return JSQRichMessage(qbChatMessage: message)
+                })
+                self.richMessages += messages
+//                for message in messages {
+//                    let jsqRich = JSQRichMessage(qbChatMessage: message)
+//                    self.richMessages.append(jsqRich)
+//                }
                 self.finishReceivingMessage()
             }
         }

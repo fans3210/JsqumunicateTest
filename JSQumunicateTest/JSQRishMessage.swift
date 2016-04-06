@@ -11,6 +11,7 @@ class JSQRichMessage: JSQMessage {
     var recipentID: UInt
     var customParameters: [String: AnyObject]?
     var dialogID: String?
+    var qbChatMessage: QBChatMessage?
 
     init(qbChatMessage: QBChatMessage) {
         id = qbChatMessage.ID
@@ -31,10 +32,22 @@ class JSQRichMessage: JSQMessage {
             super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: qbChatMessage.senderNick ?? "testSender", date:qbChatMessage.dateSent, text: qbChatMessage.text)
         } else {
             //don't care about media first
-            let testMediaData = JSQMediaItem()
-            super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: qbChatMessage.senderNick ?? "testSender", date: qbChatMessage.dateSent, media: testMediaData)
+//            let testMediaData = JSQMediaItem()
+            let photoMediaItem = JSQPhotoMediaItem()
+            if let attachmentType = qbChatMessage.attachments?.first?.type {
+                switch attachmentType {
+                case "image":
+                    
+                    photoMediaItem.image = nil
+                default:
+                    break
+                }
+            }
+
+            super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: qbChatMessage.senderNick ?? "testSender", date: qbChatMessage.dateSent, media: photoMediaItem)
             
         }
+        self.qbChatMessage = qbChatMessage// use that for back up, when sending message, just use this variable to let qmchatservice to send
         
     }
     
