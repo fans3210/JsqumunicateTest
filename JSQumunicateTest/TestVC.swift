@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnectionDelegate {
+class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     var dialog: QBChatDialog?
     var messages = [JSQMessage]()
     var richMessages = [JSQRichMessage]()
@@ -37,6 +37,7 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
         collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
         ServicesManager.instance().chatService.addDelegate(self)
         ServicesManager.instance().chatService.chatMessagesPerPage = 100
+        QMChatCache.instance().messagesLimitPerDialog = 100
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -55,6 +56,7 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
         }
         
         loadMessages()
+//        loadEarlierMessages()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -89,7 +91,7 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
     func loadMessages() {
         ServicesManager.instance().chatService.messagesWithChatDialogID(dialog?.ID) {[unowned self] response, messageObjects in
             
-            print("response: ")
+            print("response: \(response), messageObjects count \(messageObjects.count)")
             
             if messageObjects.count > 0 {
                 let messages = (messageObjects as! [QBChatMessage]).map({ message -> JSQRichMessage in
@@ -101,9 +103,47 @@ class TestVC: JSQMessagesViewController, QMChatServiceDelegate, QMChatConnection
         }
     }
     
+    func loadEarlierMessages() {
+        ServicesManager.instance().chatService.loadEarlierMessagesWithChatDialogID(dialog?.ID).continueWithBlock {[unowned self] task -> AnyObject? in
+            if task.result!.count > 0 {
+                let messages = (task.result as! [QBChatMessage]).map({ message -> JSQRichMessage in
+                    return JSQRichMessage(qbChatMessage: message)
+                })
+                self.richMessages += messages
+                self.finishReceivingMessage()
+            }
+            return nil
+        }
+    }
+    
     
 }
 
+
+//MARK: chat service delegate
+extension TestVC: QMChatServiceDelegate {
+    
+    func chatService(chatService: QMChatService!, didLoadMessagesFromCache messages: [QBChatMessage]!, forDialogID dialogID: String!) {
+        if self.dialog?.ID == dialogID {
+            let messages = messages.map({ message -> JSQRichMessage in
+                return JSQRichMessage(qbChatMessage: message)
+            })
+            self.richMessages += messages
+            finishReceivingMessage()
+        }
+    }
+    
+    func chatService(chatService: QMChatService!, didAddMessageToMemoryStorage message: QBChatMessage!, forDialogID dialogID: String!) {
+        if self.dialog?.ID == dialogID {
+            let message = JSQRichMessage(qbChatMessage: message)
+            self.richMessages.append(message)
+            finishReceivingMessage()
+        }
+    }
+}
+
+
+//MARK: collectionview delegates
 //qmviewcontroller has more than 1 sections while jsqvc only have one, jsq use delegate methods to add timestamps
 
 extension TestVC {

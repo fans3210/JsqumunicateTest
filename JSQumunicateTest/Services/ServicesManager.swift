@@ -107,6 +107,7 @@ class ServicesManager: QMServicesManager {
             errorMessage = (response.error?.error?.localizedDescription.stringByReplacingOccurrencesOfString("(", withString: "", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil).stringByReplacingOccurrencesOfString(")", withString: "", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil))!
         }
         
+        
         TWMessageBarManager.sharedInstance().hideAll()
         TWMessageBarManager.sharedInstance().showMessageWithTitle("SA_STR_ERROR".localized, description: errorMessage, type: TWMessageBarMessageType.Error)
         
