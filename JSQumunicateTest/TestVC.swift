@@ -18,6 +18,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     var richMessages = [JSQRichMessage]()
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingBubble: JSQMessagesBubbleImage!
+    var typingTimer: NSTimer?
     
     private func setupBubbles() {
         let factory = JSQMessagesBubbleImageFactory()
@@ -25,6 +26,31 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
             UIColor.purpleColor())
         incomingBubble = factory.incomingMessagesBubbleImageWithColor(
             UIColor.jsq_messageBubbleLightGrayColor())
+    }
+    
+    private func setUserTypingAppearance() {
+        if dialog?.type == .Private {
+            
+            dialog?.onUserIsTyping = {[unowned self] userId in
+                guard ServicesManager.instance().currentUser().ID != userId else {
+                    return
+                }
+                self.showTypingIndicator = true
+                print("showing typing indicator")
+                self.scrollToBottomAnimated(true)
+            }
+            
+            dialog?.onUserStoppedTyping = {[unowned self] userId in
+                guard ServicesManager.instance().currentUser().ID != userId else {
+                    return
+                }
+                self.collectionView.performBatchUpdates({
+                    self.showTypingIndicator = false
+                     print("hiding typiing indicator")
+                    }, completion: nil)
+                
+            }
+        }
     }
     
     
@@ -44,6 +70,14 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         //change the default settings
         ServicesManager.instance().chatService.chatMessagesPerPage = 100
         QMChatCache.instance().messagesLimitPerDialog = 100
+        
+        setUserTypingAppearance()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TestVC.sendStopTyping), name: UIApplicationWillResignActiveNotification, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -61,6 +95,9 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        
+        dialog?.clearTypingStatusBlocks()
     }
     
     
@@ -110,9 +147,13 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         }
     }
     
+
+    
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         print("did press send button")
+        button.enabled = false
+        
         let messageToBeSent = QBChatMessage()
         messageToBeSent.text = text
         let senderId = UInt(senderId)!
@@ -123,10 +164,13 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         
         ServicesManager.instance().chatService.sendMessage(messageToBeSent, toDialogID: dialog?.ID, saveToHistory: true, saveToStorage: true) {[unowned self] error in
             guard error == nil else {
+                
                 return print("sending message error: \(error)")
             }
             print("message sent successfully")
+            self.sendStopTyping()
             self.finishSendingMessage()
+            
         }
     }
     
@@ -134,6 +178,10 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         print("did press accessory button")
     }
 }
+
+
+
+
 
 //MARK: collectionview delegates
 //qmviewcontroller has more than 1 sections while jsqvc only have one, jsq use delegate methods to add timestamps
@@ -175,6 +223,8 @@ extension TestVC {
 }
 
 
+
+
 //MARK: chat service delegate
 extension TestVC: QMChatServiceDelegate {
     
@@ -207,4 +257,75 @@ extension TestVC: QMChatServiceDelegate {
             print("🌰did add message to memory storage, message senderid is\(message.senderId) recipentid is \(message.recipentID)")
         }
     }
+}
+
+
+
+
+
+//MARK: textfield delegates
+extension TestVC {
+    
+//    override func textViewDidBeginEditing(textView: UITextView) {
+//        super.textViewDidBeginEditing(textView)
+//        guard QBChat.instance().isConnected() else {
+//            return
+//        }
+//        
+//        //when text changes, if timer is active, disable it and re-timing
+//        if let typingTimer = self.typingTimer {
+//            typingTimer.invalidate()
+//            self.typingTimer = nil
+//        } else {
+//            sendBeginTyping()
+//        }
+//        typingTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: #selector(TestVC.sendStopTyping), userInfo: nil, repeats: false)
+//    }
+    
+    private func sendBeginTyping() {
+        if let dialog = dialog {
+            dialog.sendUserIsTyping()
+            print("send user is typing")
+        }
+    }
+    
+    func sendStopTyping() { //cannot be private because will be used as timer's selector
+        if let dialog = dialog {
+            
+            if let timer = self.typingTimer {
+                
+                timer.invalidate()
+            }
+            self.typingTimer = nil
+            dialog.sendUserStoppedTyping()
+            print("send user stopped typing")
+        }
+    }
+    
+    override func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        guard QBChat.instance().isConnected() else {
+            return false //prevent typing
+        }
+        
+        //when text changes, if timer is active, disable it and re-timing
+        if let typingTimer = self.typingTimer {
+            typingTimer.invalidate()
+            self.typingTimer = nil
+        } else {
+            sendBeginTyping()
+        }
+        typingTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(TestVC.sendStopTyping), userInfo: nil, repeats: false)
+        return true
+    }
+    
+    override func textViewDidEndEditing(textView: UITextView) {
+        super.textViewDidEndEditing(textView)
+
+        guard QBChat.instance().isConnected() else {
+            return
+        }
+
+        sendStopTyping() //normally is in viewwilldisappear case
+    }
+    
 }

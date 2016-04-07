@@ -37,6 +37,7 @@ class JSQRichMessage: JSQMessage {
         let isMedia = qbChatMessage.isMediaMessage()
         if !isMedia {
             super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: senderDisplayName, date:qbChatMessage.dateSent, text: qbChatMessage.text)
+            print("init normal rich messsage, sender id is \(self.senderId)")
         } else {
             //don't care about media first
 //            let testMediaData = JSQMediaItem()
@@ -49,19 +50,16 @@ class JSQRichMessage: JSQMessage {
                     break
                 }
             }
-
+            
+            
             super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: senderDisplayName, date: qbChatMessage.dateSent, media: photoMediaItem)
+            print("init media message , senderid is \(self.senderId)")
             
         }
         self.qbChatMessage = qbChatMessage// use that for back up, when sending message, just use this variable to let qmchatservice to send
         
     }
     
-//    init(customParameters: [String: AnyObject]?, senderId:String, senderDisplayName: String, text: String) {
-//        recipentID = 12345
-//        self.customParameters = customParameters
-//        super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: NSDate(), text: text)
-//    }
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -71,7 +69,7 @@ class JSQRichMessage: JSQMessage {
 
 }
 
-func ==(lhs: JSQRichMessage, rhs: JSQRichMessage) -> Bool {
-    return (lhs.senderId == rhs.senderId) && (lhs.senderDisplayName == rhs.senderDisplayName)
-}
+//func ==(lhs: JSQRichMessage, rhs: JSQRichMessage) -> Bool {
+//    return (lhs.senderId == rhs.senderId) && (lhs.senderDisplayName == rhs.senderDisplayName)
+//}
 
