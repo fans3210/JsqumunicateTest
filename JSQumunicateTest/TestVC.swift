@@ -31,8 +31,8 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        senderId = "123"
-        senderDisplayName = "fans"
+//        senderId = "123"
+//        senderDisplayName = "fans"
 
         title = "ChatChat"
         setupBubbles()
@@ -93,7 +93,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     //will not use loadearliermessages func, becuase it's just used for pagenation
     //this should be the first time when we got the message from internet
-    func loadMessagesOL() {
+    private func loadMessagesOL() {
         ServicesManager.instance().chatService.messagesWithChatDialogID(dialog?.ID) {[unowned self] response, messageObjects in
             
             print("response: \(response), messageObjects count \(messageObjects.count)")
@@ -113,6 +113,21 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         print("did press send button")
+        let messageToBeSent = QBChatMessage()
+        messageToBeSent.text = text
+        let senderId = UInt(senderId)!
+        messageToBeSent.senderID = senderId
+        messageToBeSent.deliveredIDs = [senderId]
+        messageToBeSent.readIDs = [senderId]
+        messageToBeSent.dateSent = date
+        
+        ServicesManager.instance().chatService.sendMessage(messageToBeSent, toDialogID: dialog?.ID, saveToHistory: true, saveToStorage: true) {[unowned self] error in
+            guard error == nil else {
+                return print("sending message error: \(error)")
+            }
+            print("message sent successfully")
+            self.finishSendingMessage()
+        }
     }
     
     override func didPressAccessoryButton(sender: UIButton!) {
@@ -156,6 +171,7 @@ extension TestVC {
 //        
 //        return cell
 //    }
+    
 }
 
 
@@ -174,11 +190,21 @@ extension TestVC: QMChatServiceDelegate {
     }
     
     func chatService(chatService: QMChatService!, didAddMessageToMemoryStorage message: QBChatMessage!, forDialogID dialogID: String!) {
+        
+        //TODO: this delegate even in quickblox will be called multiple times. Quickblox use a method to replace the existing message to avoid duplication. We should do similar stuff
+        //NOTE2: there is no problem in one to one chatting, prob happens in group chatting, I think it's because of the recipent id. in group chatting senderid = recipent id, in group, recipent id is 0? (guess), so we will add one constraint first, make sure only display message for senderid != recipentid
+        
         if self.dialog?.ID == dialogID {
+            // Insert message received from XMPP or self sent
             let message = JSQRichMessage(qbChatMessage: message)
-            self.richMessages.append(message)
+            
+            //avoid duplication
+
+            if(!self.richMessages.contains(message) && (UInt(message.senderId) != message.recipentID)) {
+                self.richMessages.append(message)
+            }
             finishReceivingMessage()
-            print("🌰did add message to memory storage")
+            print("🌰did add message to memory storage, message senderid is\(message.senderId) recipentid is \(message.recipentID)")
         }
     }
 }

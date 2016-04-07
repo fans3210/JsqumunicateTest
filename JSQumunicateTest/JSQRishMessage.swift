@@ -27,9 +27,16 @@ class JSQRichMessage: JSQMessage {
         }
         dialogID = qbChatMessage.dialogID
         
+        //get sender displayName
+        let currentUserId = "\(ServicesManager.instance().currentUser().ID)"
+//            print("current user login is \(currentUserLogin), id is \(currentUserId)")
+        let senderDisplayName = currentUserId ?? "default user id"
+        
+        
+        //whether is media message
         let isMedia = qbChatMessage.isMediaMessage()
         if !isMedia {
-            super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: qbChatMessage.senderNick ?? "testSender", date:qbChatMessage.dateSent, text: qbChatMessage.text)
+            super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: senderDisplayName, date:qbChatMessage.dateSent, text: qbChatMessage.text)
         } else {
             //don't care about media first
 //            let testMediaData = JSQMediaItem()
@@ -43,21 +50,28 @@ class JSQRichMessage: JSQMessage {
                 }
             }
 
-            super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: qbChatMessage.senderNick ?? "testSender", date: qbChatMessage.dateSent, media: photoMediaItem)
+            super.init(senderId: "\(qbChatMessage.senderID)", senderDisplayName: senderDisplayName, date: qbChatMessage.dateSent, media: photoMediaItem)
             
         }
         self.qbChatMessage = qbChatMessage// use that for back up, when sending message, just use this variable to let qmchatservice to send
         
     }
     
-    init(customParameters: [String: AnyObject]?, senderId:String, senderDisplayName: String, text: String) {
-        recipentID = 12345
-        self.customParameters = customParameters
-        super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: NSDate(), text: text)
-    }
+//    init(customParameters: [String: AnyObject]?, senderId:String, senderDisplayName: String, text: String) {
+//        recipentID = 12345
+//        self.customParameters = customParameters
+//        super.init(senderId: senderId, senderDisplayName: senderDisplayName, date: NSDate(), text: text)
+//    }
     
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+
 }
+
+func ==(lhs: JSQRichMessage, rhs: JSQRichMessage) -> Bool {
+    return (lhs.senderId == rhs.senderId) && (lhs.senderDisplayName == rhs.senderDisplayName)
+}
+
