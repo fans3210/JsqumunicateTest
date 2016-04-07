@@ -8,6 +8,10 @@
 
 import UIKit
 
+//MARK: note: messages can be loaded from cache or memory or via internet
+
+typealias SenderId = String
+
 class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     var dialog: QBChatDialog?
     var messages = [JSQMessage]()
@@ -36,91 +40,133 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
         collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
         ServicesManager.instance().chatService.addDelegate(self)
+        
+        //change the default settings
         ServicesManager.instance().chatService.chatMessagesPerPage = 100
         QMChatCache.instance().messagesLimitPerDialog = 100
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-//        addMessage("foo", text: "123!")
-//        // messages sent from local sender
-//        addMessage(senderId, text: "sdfa!")
-//        addMessage(senderId, text: "sdfsd!")
-//        addMessage(senderId, text: "asfaslkdjflasdffasdfas")
-        // animates the receiving of a new message on the view
-        
-//        generateRichMessages()
-//        finishReceivingMessage()
 
         
-        if let storedMessages = storedMessages() where storedMessages.count > 0 && richMessages.count == 0 {
+        if let storedMessages = storedInMemoryMessages() where storedMessages.count > 0 && richMessages.count == 0 {
             richMessages += storedMessages
             finishReceivingMessage()
-            return 
+            return
         }
         
-        loadMessages()
-//        loadEarlierMessages()
+        loadMessagesOL()
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
     }
     
-    func addMessage(id: String, text: String) {
-        let message = JSQMessage(senderId: id, displayName: "", text: text)
-        messages.append(message)
-    }
-    func addRichMessage(senderId: String, text: String) {
-        let richMessage = JSQRichMessage(customParameters: [:], senderId: senderId, senderDisplayName: "sdfdsf", text: text)
-        richMessages.append(richMessage)
-    }
     
-    func generateRichMessages() {
-        addRichMessage(senderId, text: "sdfsdf111")
-        addRichMessage(senderId, text: "sdfsadsfasdfd2222f")
-        addRichMessage("dsf", text: "sdfsadsfas333dfdf")
-        addRichMessage("f", text: "sdfsadsfasd44444fdf")
-    }
-    
-    func storedMessages() -> [JSQRichMessage]? {
+    func storedInMemoryMessages() -> [JSQRichMessage]? {
         
-        let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID(dialog?.ID) as? [QBChatMessage])?.map({ qmChatMesssage -> JSQRichMessage in
-            return JSQRichMessage(qbChatMessage: qmChatMesssage)
-        })
+        let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID(dialog?.ID) as? [QBChatMessage])?.map {[unowned self] in
+            self.mapQBChatToJSQRich($0)
+        }
         
         return messages
     }
     
-    func loadMessages() {
+    //if jsqmessage is a media message, config the bubble direction becuase it's bubble init is different from normal text message
+    private let mediaMessageBubbleDirectionConfig: (JSQRichMessage, SenderId) -> JSQRichMessage = {richMessage, senderId in
+        
+        if richMessage.isMediaMessage {
+            let photoMediaItem = richMessage.media as! JSQPhotoMediaItem
+            photoMediaItem.appliesMediaViewMaskAsOutgoing = richMessage.senderId == senderId
+        }
+        
+        return richMessage
+    }
+    
+    
+    //this map added media ownership configs
+    private func mapQBChatToJSQRich(qbChatMessage: QBChatMessage) -> JSQRichMessage {
+
+        let richMessage = JSQRichMessage(qbChatMessage: qbChatMessage)
+        
+        if richMessage.isMediaMessage {
+            let photoMediaItem = richMessage.media as! JSQPhotoMediaItem
+            photoMediaItem.appliesMediaViewMaskAsOutgoing = richMessage.senderId == self.senderId
+        }
+        
+        return richMessage
+    
+    }
+    
+
+    
+    
+    //will not use loadearliermessages func, becuase it's just used for pagenation
+    //this should be the first time when we got the message from internet
+    func loadMessagesOL() {
         ServicesManager.instance().chatService.messagesWithChatDialogID(dialog?.ID) {[unowned self] response, messageObjects in
             
             print("response: \(response), messageObjects count \(messageObjects.count)")
             
             if messageObjects.count > 0 {
-                let messages = (messageObjects as! [QBChatMessage]).map({ message -> JSQRichMessage in
-                    return JSQRichMessage(qbChatMessage: message)
-                })
+
+                let messages = (messageObjects as! [QBChatMessage]).map {[unowned self] in
+                    self.mapQBChatToJSQRich($0)
+                }
+                
                 self.richMessages += messages
                 self.finishReceivingMessage()
             }
         }
     }
     
-    func loadEarlierMessages() {
-        ServicesManager.instance().chatService.loadEarlierMessagesWithChatDialogID(dialog?.ID).continueWithBlock {[unowned self] task -> AnyObject? in
-            if task.result!.count > 0 {
-                let messages = (task.result as! [QBChatMessage]).map({ message -> JSQRichMessage in
-                    return JSQRichMessage(qbChatMessage: message)
-                })
-                self.richMessages += messages
-                self.finishReceivingMessage()
-            }
-            return nil
+    
+    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
+        print("did press send button")
+    }
+    
+    override func didPressAccessoryButton(sender: UIButton!) {
+        print("did press accessory button")
+    }
+}
+
+//MARK: collectionview delegates
+//qmviewcontroller has more than 1 sections while jsqvc only have one, jsq use delegate methods to add timestamps
+
+extension TestVC {
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+        
+        return richMessages[indexPath.item]
+    }
+    
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return messages.count
+        return richMessages.count
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!,
+                                 messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+        
+        let richMessage = richMessages[indexPath.item]
+        if richMessage.senderId == senderId {
+            return outgoingBubble
+        } else {
+            return incomingBubble
         }
     }
     
+    override func collectionView(collectionView: JSQMessagesCollectionView!,
+                                 avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+        return nil
+    }
     
+//    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+//        let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
+//
+//        
+//        return cell
+//    }
 }
 
 
@@ -129,9 +175,9 @@ extension TestVC: QMChatServiceDelegate {
     
     func chatService(chatService: QMChatService!, didLoadMessagesFromCache messages: [QBChatMessage]!, forDialogID dialogID: String!) {
         if self.dialog?.ID == dialogID {
-            let messages = messages.map({ message -> JSQRichMessage in
-                return JSQRichMessage(qbChatMessage: message)
-            })
+            let messages = messages.map {[unowned self] in
+                self.mapQBChatToJSQRich($0)
+            }
             self.richMessages += messages
             finishReceivingMessage()
             print("🍏did load messages from cache")
@@ -145,43 +191,5 @@ extension TestVC: QMChatServiceDelegate {
             finishReceivingMessage()
             print("🌰did add message to memory storage")
         }
-    }
-}
-
-
-//MARK: collectionview delegates
-//qmviewcontroller has more than 1 sections while jsqvc only have one, jsq use delegate methods to add timestamps
-
-extension TestVC {
-    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
-//        return messages[indexPath.item]
-        return richMessages[indexPath.item]
-    }
-    
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return messages.count
-        return richMessages.count
-    }
-    
-    override func collectionView(collectionView: JSQMessagesCollectionView!,
-                                 messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
-//        let message = messages[indexPath.item] // 1
-//        if message.senderId == senderId { // 2
-//            return outgoingBubble
-//        } else { // 3
-//            return incomingBubble
-//        }
-        
-        let richMessage = richMessages[indexPath.item]
-        if richMessage.senderId == senderId {
-            return outgoingBubble
-        } else {
-            return incomingBubble
-        }
-    }
-    
-    override func collectionView(collectionView: JSQMessagesCollectionView!,
-                                 avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return nil
     }
 }

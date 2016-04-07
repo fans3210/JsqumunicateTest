@@ -36,8 +36,7 @@ class JSQRichMessage: JSQMessage {
             let photoMediaItem = JSQPhotoMediaItem()
             if let attachmentType = qbChatMessage.attachments?.first?.type {
                 switch attachmentType {
-                case "image":
-                    
+                case "image":   
                     photoMediaItem.image = nil
                 default:
                     break
