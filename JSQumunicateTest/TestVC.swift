@@ -47,6 +47,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
                 self.collectionView.performBatchUpdates({
                     self.showTypingIndicator = false
                      print("hiding typiing indicator")
+//                    self.collectionView.reloadSections(NSIndexSet(index: 0))
                     }, completion: nil)
                 
             }
@@ -151,7 +152,9 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
+        
         print("did press send button")
+        self.sendStopTyping()
         button.enabled = false
         
         let messageToBeSent = QBChatMessage()
@@ -168,7 +171,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
                 return print("sending message error: \(error)")
             }
             print("message sent successfully")
-            self.sendStopTyping()
+            
             self.finishSendingMessage()
             
         }
