@@ -64,7 +64,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     }
     
     
-    func storedInMemoryMessages() -> [JSQRichMessage]? {
+    private func storedInMemoryMessages() -> [JSQRichMessage]? {
         
         let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID(dialog?.ID) as? [QBChatMessage])?.map {[unowned self] in
             self.mapQBChatToJSQRich($0)
@@ -74,17 +74,6 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     }
     
     //if jsqmessage is a media message, config the bubble direction becuase it's bubble init is different from normal text message
-    private let mediaMessageBubbleDirectionConfig: (JSQRichMessage, SenderId) -> JSQRichMessage = {richMessage, senderId in
-        
-        if richMessage.isMediaMessage {
-            let photoMediaItem = richMessage.media as! JSQPhotoMediaItem
-            photoMediaItem.appliesMediaViewMaskAsOutgoing = richMessage.senderId == senderId
-        }
-        
-        return richMessage
-    }
-    
-    
     //this map added media ownership configs
     private func mapQBChatToJSQRich(qbChatMessage: QBChatMessage) -> JSQRichMessage {
 
