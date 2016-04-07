@@ -51,8 +51,12 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         
 //        generateRichMessages()
 //        finishReceivingMessage()
+
+        
         if let storedMessages = storedMessages() where storedMessages.count > 0 && richMessages.count == 0 {
             richMessages += storedMessages
+            finishReceivingMessage()
+            return 
         }
         
         loadMessages()
@@ -130,6 +134,7 @@ extension TestVC: QMChatServiceDelegate {
             })
             self.richMessages += messages
             finishReceivingMessage()
+            print("🍏did load messages from cache")
         }
     }
     
@@ -138,6 +143,7 @@ extension TestVC: QMChatServiceDelegate {
             let message = JSQRichMessage(qbChatMessage: message)
             self.richMessages.append(message)
             finishReceivingMessage()
+            print("🌰did add message to memory storage")
         }
     }
 }
