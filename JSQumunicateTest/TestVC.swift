@@ -84,6 +84,9 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
+        if let dialog = dialog {
+            ServicesManager.instance().currentDialogID = dialog.ID! //this is used in service manager's handlenewmessage funcs, it will stop the twmessagebarcontroller being displayed in this page when new message comes from the user is just the one u r talking to
+        }
         
         if let storedMessages = storedInMemoryMessages() where storedMessages.count > 0 && richMessages.count == 0 {
             richMessages += storedMessages
@@ -98,6 +101,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         super.viewDidDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self)
         
+        ServicesManager.instance().currentDialogID = ""
         dialog?.clearTypingStatusBlocks()
     }
     

@@ -26,7 +26,6 @@
 		38A83BEC1CABAB760079EB0C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 38A83BEB1CABAB760079EB0C /* Localizable.strings */; };
 		38A83BEE1CABAF560079EB0C /* DialogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BED1CABAF560079EB0C /* DialogsViewController.swift */; };
 		38A83BF01CABCAB70079EB0C /* JChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BEF1CABCAB70079EB0C /* JChatViewController.swift */; };
-		38A83BF81CAD6F430079EB0C /* QBChatMessagePresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BF71CAD6F430079EB0C /* QBChatMessagePresentable.swift */; };
 		38A83C0F1CAE29E10079EB0C /* JSQRishMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */; };
 		38A83C111CAE751E0079EB0C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C101CAE751E0079EB0C /* TestVC.swift */; };
 /* End PBXBuildFile section */
@@ -55,7 +54,6 @@
 		38A83BEB1CABAB760079EB0C /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		38A83BED1CABAF560079EB0C /* DialogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogsViewController.swift; sourceTree = "<group>"; };
 		38A83BEF1CABCAB70079EB0C /* JChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JChatViewController.swift; sourceTree = "<group>"; };
-		38A83BF71CAD6F430079EB0C /* QBChatMessagePresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QBChatMessagePresentable.swift; sourceTree = "<group>"; };
 		38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQRishMessage.swift; sourceTree = "<group>"; };
 		38A83C101CAE751E0079EB0C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JSQumunicateTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -166,7 +164,6 @@
 		38A83BF61CAD6F280079EB0C /* Presents */ = {
 			isa = PBXGroup;
 			children = (
-				38A83BF71CAD6F430079EB0C /* QBChatMessagePresentable.swift */,
 			);
 			name = Presents;
 			sourceTree = "<group>";
@@ -334,7 +331,6 @@
 				38A83BD01CABA39C0079EB0C /* ServicesManager.swift in Sources */,
 				38A83BD51CABA4DC0079EB0C /* String+Localized.swift in Sources */,
 				38A83BDC1CABA7670079EB0C /* LoginTableViewController.swift in Sources */,
-				38A83BF81CAD6F430079EB0C /* QBChatMessagePresentable.swift in Sources */,
 				38A83BE71CABA80E0079EB0C /* AlertViewWithTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

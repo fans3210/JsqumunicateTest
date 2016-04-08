@@ -44,6 +44,8 @@ class ServicesManager: QMServicesManager {
     
     func handleNewMessage(message: QBChatMessage, dialogID: String) {
         
+        print("handle new message called")
+        
         if self.currentDialogID == dialogID {
             return
         }
@@ -69,8 +71,7 @@ class ServicesManager: QMServicesManager {
         }
         
         TWMessageBarManager.sharedInstance().hideAll()
-//        TWMessageBarManager.sharedInstance().showMessageWithTitle(dialogName, description: message.encodedText, type: TWMessageBarMessageType.Info)
-        TWMessageBarManager.sharedInstance().showMessageWithTitle(dialogName, description: message.text, type: TWMessageBarMessageType.Info)
+        TWMessageBarManager.sharedInstance().showMessageWithTitle(dialogName, description: message.text, type: .Info)
 
     }
     
