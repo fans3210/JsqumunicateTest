@@ -90,6 +90,9 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         
         if let storedMessages = storedInMemoryMessages() where storedMessages.count > 0 && richMessages.count == 0 {
             richMessages += storedMessages
+            for message in richMessages {
+                print("\(message.text) 🌑load from memory storage")
+            }
             finishReceivingMessage()
             return
         }
@@ -147,6 +150,10 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
                 }
                 
                 self.richMessages += messages
+                
+                for message in self.richMessages {
+                    print("\(message.text) 👨‍👩‍👧‍👦load from Network")
+                }
                 self.finishReceivingMessage()
             }
         }
@@ -242,7 +249,12 @@ extension TestVC: QMChatServiceDelegate {
             }
             self.richMessages += messages
             finishReceivingMessage()
-            print("🍏did load messages from cache")
+            
+            for message in richMessages {
+               print("\(message.text) 🍏load from cache")
+            }
+            
+            
         }
     }
     
