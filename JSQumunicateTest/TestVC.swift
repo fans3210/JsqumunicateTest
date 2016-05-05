@@ -29,8 +29,11 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     }
     
     private func setUserTypingAppearance() {
-        if dialog?.type == .Private {
-            
+        //remove this restriction for now. just for testing a group chat with 2 people
+        //because group chatting can be monitored in dashboard
+        //a group chatting with 2 people, occupants number is 3 since admin is included
+        if dialog?.type == .Private  || dialog?.occupantIDs?.count == 3 {
+        
             dialog?.onUserIsTyping = {[unowned self] userId in
                 guard ServicesManager.instance().currentUser()!.ID != userId else {
                     return
@@ -111,7 +114,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     private func storedInMemoryMessages() -> [JSQRichMessage]? {
         
-        let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID((dialog?.ID)!) as? [QBChatMessage])?.map {[unowned self] in
+        let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID((dialog?.ID)!)).map {[unowned self] in
             self.mapQBChatToJSQRich($0)
         }
         
@@ -242,7 +245,7 @@ extension TestVC {
 //MARK: chat service delegate
 extension TestVC: QMChatServiceDelegate {
     
-    func chatService(chatService: QMChatService!, didLoadMessagesFromCache messages: [QBChatMessage]!, forDialogID dialogID: String!) {
+    func chatService(chatService: QMChatService, didLoadMessagesFromCache messages: [QBChatMessage], forDialogID dialogID: String) {
         if self.dialog?.ID == dialogID {
             let messages = messages.map {[unowned self] in
                 self.mapQBChatToJSQRich($0)
@@ -258,7 +261,7 @@ extension TestVC: QMChatServiceDelegate {
         }
     }
     
-    func chatService(chatService: QMChatService!, didAddMessageToMemoryStorage message: QBChatMessage!, forDialogID dialogID: String!) {
+    func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
         
         //TODO: this delegate even in quickblox will be called multiple times. Quickblox use a method to replace the existing message to avoid duplication. We should do similar stuff
         //NOTE2: there is no problem in one to one chatting, prob happens in group chatting, I think it's because of the recipent id. in group chatting senderid = recipent id, in group, recipent id is 0? (guess), so we will add one constraint first, make sure only display message for senderid != recipentid
@@ -267,11 +270,11 @@ extension TestVC: QMChatServiceDelegate {
             // Insert message received from XMPP or self sent
             let message = JSQRichMessage(qbChatMessage: message)
             
-            //avoid duplication
+//            avoid duplication
 
-            if(!self.richMessages.contains(message) && (UInt(message.senderId) != message.recipentID)) {
+//            if(!self.richMessages.contains(message) && (UInt(message.senderId) != message.recipentID)) {
                 self.richMessages.append(message)
-            }
+//            }
             finishReceivingMessage()
             print("🌰did add message to memory storage, message senderid is\(message.senderId) recipentid is \(message.recipentID)")
         }

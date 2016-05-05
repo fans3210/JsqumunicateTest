@@ -19,7 +19,7 @@ class Constants {
     class var QB_USERS_ENVIROMENT: String {
         
 //#if DEBUG
-        return "dev"
+        return "SvDev"
 //#elseif QA
 //        return "qbqa"
 //#else

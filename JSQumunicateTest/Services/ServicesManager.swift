@@ -116,9 +116,9 @@ class ServicesManager: QMServicesManager {
     
     func downloadLatestUsers(success:(([QBUUser]!) -> Void)?, error:((NSError!) -> Void)?) {
 
-        let enviroment = Constants.QB_USERS_ENVIROMENT
+//        let enviroment = Constants.QB_USERS_ENVIROMENT
         
-        self.usersService.searchUsersWithTags([enviroment]).continueWithBlock {
+        self.usersService.searchUsersWithTags(["SvDev"]).continueWithBlock {
             [weak self] (task : BFTask!) -> AnyObject! in
             if (task.error != nil) {
                 error?(task.error)
@@ -133,8 +133,8 @@ class ServicesManager: QMServicesManager {
     
     func color(forUser user:QBUUser) -> UIColor {
         
-        let users = self.usersService.usersMemoryStorage.unsortedUsers() as? [QBUUser]
-        let userIndex = (users!).indexOf(self.usersService.usersMemoryStorage.userWithID(user.ID)!)
+        let users = self.usersService.usersMemoryStorage.unsortedUsers()
+        let userIndex = (users).indexOf(self.usersService.usersMemoryStorage.userWithID(user.ID)!)
         
         if userIndex < self.colors.count {
             return self.colors[userIndex!]
@@ -145,26 +145,26 @@ class ServicesManager: QMServicesManager {
     
     func filteredUsersByCurrentEnvironment() -> [QBUUser] {
         
-        let currentEnvironment = Constants.QB_USERS_ENVIROMENT
-        var containsString: String
+//        let currentEnvironment = Constants.QB_USERS_ENVIROMENT
+//        var containsString: String
+//        
+//        if (currentEnvironment == "qbqa") {
+//            containsString = "qa"
+//        } else {
+//            containsString = currentEnvironment
+//        }
         
-        if (currentEnvironment == "qbqa") {
-            containsString = "qa"
-        } else {
-            containsString = currentEnvironment
-        }
-        
-        let unsortedUsers = self.usersService.usersMemoryStorage.unsortedUsers() as! [QBUUser]
+        let unsortedUsers = self.usersService.usersMemoryStorage.unsortedUsers() 
 
-        let filteredUsers = unsortedUsers[0..<kUsersLimit].filter { (user: QBUUser) -> Bool in
-            return user.login?.lowercaseString.rangeOfString(containsString) != nil
-        }
+//        let filteredUsers = unsortedUsers[0..<unsortedUsers.count].filter { (user: QBUUser) -> Bool in
+//            return user.login?.lowercaseString.rangeOfString(containsString) != nil
+//        }
+//        
+//        let sortedUsers = filteredUsers.sort({ (user1, user2) -> Bool in
+//            return (user1.login! as NSString).compare(user2.login!, options:NSStringCompareOptions.NumericSearch) == NSComparisonResult.OrderedAscending
+//        })
         
-        let sortedUsers = filteredUsers.sort({ (user1, user2) -> Bool in
-            return (user1.login! as NSString).compare(user2.login!, options:NSStringCompareOptions.NumericSearch) == NSComparisonResult.OrderedAscending
-        })
-        
-        return sortedUsers
+        return unsortedUsers
     }
     
     // MARK: QMChatServiceDelegate

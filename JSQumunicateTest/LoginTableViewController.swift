@@ -48,7 +48,7 @@ class LoginTableViewController: UITableViewController, NotificationServiceDelega
         }
         
         if (ServicesManager.instance().currentUser() != nil) {
-            ServicesManager.instance().currentUser()!.password = kTestUsersDefaultPassword
+            ServicesManager.instance().currentUser()!.password = "12345678"
             SVProgressHUD.showWithStatus("SA_STR_LOGGING_IN_AS".localized + ServicesManager.instance().currentUser()!.login!)
             // Logging to Quickblox REST API and chat.
             ServicesManager.instance().logInWithUser(ServicesManager.instance().currentUser()!, completion:{
@@ -165,7 +165,7 @@ extension LoginTableViewController {
         let user = self.users![indexPath.row]
         
         cell.setColorMarkerText(String(indexPath.row + 1), color: ServicesManager.instance().color(forUser: user))
-        cell.userDescription = "SA_STR_LOGIN_AS".localized + " " + user.fullName!
+        cell.userDescription = user.login
         cell.tag = indexPath.row
         
         return cell
@@ -177,7 +177,7 @@ extension LoginTableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated:true)
         
         let user = self.users![indexPath.row]
-        user.password = kTestUsersDefaultPassword
+        user.password = "12345678"
         
         self.logInChatWithUser(user)
     }

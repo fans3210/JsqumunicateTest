@@ -8,10 +8,10 @@
 
 import UIKit
 
-let kQBApplicationID:UInt = 28784
-let kQBAuthKey = "QJtmmW2Z7tb-mJF"
-let kQBAuthSecret = "xuwgyRWcUhcwjCM"
-let kQBAccountKey = "7yvNe17TnjNUqDoPwfqp"
+let kQBApplicationID:UInt = 38736
+let kQBAuthKey = "ApHFwfKqODE7PRU"
+let kQBAuthSecret = "XwWfcuLm68PyC9X"
+let kQBAccountKey = "9j18zPi5YsKUugPkmFm4"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
