@@ -1,0 +1,3 @@
+[submodule "Vendor/QMServices"]
+	path = Vendor/QMServices
+	url = https://github.com/QuickBlox/q-municate-services-ios.git

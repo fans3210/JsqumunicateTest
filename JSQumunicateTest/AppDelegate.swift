@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Enables detailed XMPP logging in console output.
         QBSettings.enableXMPPLogging()
-        QBSettings.setChatDNSLookupCacheEnabled(true);
+//        QBSettings.setChatDNSLookupCacheEnabled(true);
         
         
         

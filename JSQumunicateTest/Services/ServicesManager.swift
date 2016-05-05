@@ -50,22 +50,22 @@ class ServicesManager: QMServicesManager {
             return
         }
         
-        if message.senderID == self.currentUser().ID {
+        if message.senderID == self.currentUser()!.ID {
             return
         }
         
         let dialog = self.chatService.dialogsMemoryStorage.chatDialogWithID(dialogID)
         var dialogName = "SA_STR_NEW_MESSAGE".localized
         
-        if dialog.type != QBChatDialogType.Private {
+        if dialog!.type != QBChatDialogType.Private {
             
-            if dialog.name != nil {
-                dialogName = dialog.name!
+            if dialog!.name != nil {
+                dialogName = dialog!.name!
             }
     
         } else {
             
-            if let user = ServicesManager.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog.recipientID)) {
+            if let user = ServicesManager.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog!.recipientID)) {
                 dialogName = user.login!
             }
         }

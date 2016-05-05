@@ -32,7 +32,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         if dialog?.type == .Private {
             
             dialog?.onUserIsTyping = {[unowned self] userId in
-                guard ServicesManager.instance().currentUser().ID != userId else {
+                guard ServicesManager.instance().currentUser()!.ID != userId else {
                     return
                 }
                 self.showTypingIndicator = true
@@ -41,7 +41,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
             }
             
             dialog?.onUserStoppedTyping = {[unowned self] userId in
-                guard ServicesManager.instance().currentUser().ID != userId else {
+                guard ServicesManager.instance().currentUser()!.ID != userId else {
                     return
                 }
                 self.collectionView.performBatchUpdates({
@@ -70,7 +70,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         
         //change the default settings
         ServicesManager.instance().chatService.chatMessagesPerPage = 100
-        QMChatCache.instance().messagesLimitPerDialog = 100
+        QMChatCache.instance()!.messagesLimitPerDialog = 100
         
         setUserTypingAppearance()
         
@@ -111,7 +111,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     private func storedInMemoryMessages() -> [JSQRichMessage]? {
         
-        let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID(dialog?.ID) as? [QBChatMessage])?.map {[unowned self] in
+        let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID((dialog?.ID)!) as? [QBChatMessage])?.map {[unowned self] in
             self.mapQBChatToJSQRich($0)
         }
         
@@ -139,13 +139,13 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     //will not use loadearliermessages func, becuase it's just used for pagenation
     //this should be the first time when we got the message from internet
     private func loadMessagesOL() {
-        ServicesManager.instance().chatService.messagesWithChatDialogID(dialog?.ID) {[unowned self] response, messageObjects in
+        ServicesManager.instance().chatService.messagesWithChatDialogID((dialog?.ID)!) {[unowned self] response, messageObjects in
             
-            print("response: \(response), messageObjects count \(messageObjects.count)")
+            print("response: \(response), messageObjects count \(messageObjects!.count)")
             
-            if messageObjects.count > 0 {
+            if messageObjects!.count > 0 {
 
-                let messages = (messageObjects as! [QBChatMessage]).map {[unowned self] in
+                let messages = (messageObjects!).map {[unowned self] in
                     self.mapQBChatToJSQRich($0)
                 }
                 
@@ -176,7 +176,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         messageToBeSent.readIDs = [senderId]
         messageToBeSent.dateSent = date
         
-        ServicesManager.instance().chatService.sendMessage(messageToBeSent, toDialogID: dialog?.ID, saveToHistory: true, saveToStorage: true) {[unowned self] error in
+        ServicesManager.instance().chatService.sendMessage(messageToBeSent, toDialogID: (dialog?.ID)!, saveToHistory: true, saveToStorage: true) {[unowned self] error in
             guard error == nil else {
                 
                 return print("sending message error: \(error)")

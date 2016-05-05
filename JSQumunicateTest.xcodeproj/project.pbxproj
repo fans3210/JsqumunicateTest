@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		16D824F5F4D43196A5287C16 /* libPods-JSQumunicateTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */; };
+		3894E8CC1CDB3A9000486954 /* QMUsersCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */; };
+		3894E8CE1CDB3AA500486954 /* QMContactListCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */; };
+		3894E8D01CDB3ABE00486954 /* QMChatCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CF1CDB3ABE00486954 /* QMChatCacheModel.bundle */; };
+		3894E8D21CDB3B2C00486954 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E8D11CDB3B2C00486954 /* CFNetwork.framework */; };
+		3894E8D41CDB3B3500486954 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E8D31CDB3B3500486954 /* libxml2.tbd */; };
+		3894E8D61CDB3B3E00486954 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E8D51CDB3B3E00486954 /* libresolv.tbd */; };
+		3894E8D81CDB3B4700486954 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E8D71CDB3B4700486954 /* MobileCoreServices.framework */; };
+		3894E8DA1CDB3B4F00486954 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E8D91CDB3B4F00486954 /* SystemConfiguration.framework */; };
+		3894E9031CDB3E6300486954 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E9011CDB3E6300486954 /* Bolts.framework */; };
+		3894E9041CDB3E6300486954 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E9021CDB3E6300486954 /* Quickblox.framework */; };
+		3894E9191CDB43C700486954 /* libQMServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E8C41CDB392B00486954 /* libQMServices.a */; };
 		38A83BB81CA92AA20079EB0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BB71CA92AA20079EB0C /* AppDelegate.swift */; };
 		38A83BBF1CA92AA20079EB0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38A83BBE1CA92AA20079EB0C /* Assets.xcassets */; };
 		38A83BC21CA92AA20079EB0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38A83BC01CA92AA20079EB0C /* LaunchScreen.storyboard */; };
@@ -25,13 +36,40 @@
 		38A83BEA1CABA80E0079EB0C /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BE51CABA80E0079EB0C /* UserTableViewCell.swift */; };
 		38A83BEC1CABAB760079EB0C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 38A83BEB1CABAB760079EB0C /* Localizable.strings */; };
 		38A83BEE1CABAF560079EB0C /* DialogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BED1CABAF560079EB0C /* DialogsViewController.swift */; };
-		38A83BF01CABCAB70079EB0C /* JChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BEF1CABCAB70079EB0C /* JChatViewController.swift */; };
 		38A83C0F1CAE29E10079EB0C /* JSQRishMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */; };
 		38A83C111CAE751E0079EB0C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C101CAE751E0079EB0C /* TestVC.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3894E8C31CDB392B00486954 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3894E8B41CDB392B00486954 /* QMServices.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55A365301A2744D300C792C0;
+			remoteInfo = QMServices;
+		};
+		3894E8C51CDB3A2800486954 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3894E8B41CDB392B00486954 /* QMServices.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 55013A301A1F63910030C134;
+			remoteInfo = QMServices;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		313C9CD4075A1DCC2CFCB1D9 /* Pods-JSQumunicateTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.release.xcconfig"; sourceTree = "<group>"; };
+		3894E8B41CDB392B00486954 /* QMServices.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QMServices.xcodeproj; path = Vendor/QMServices/QMServices.xcodeproj; sourceTree = "<group>"; };
+		3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMUsersCacheModel.bundle; path = Vendor/QMServices/QMUsersCache/QMUsersCacheModel.bundle; sourceTree = "<group>"; };
+		3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMContactListCacheModel.bundle; path = Vendor/QMServices/QMContactListCache/QMContactListCacheModel.bundle; sourceTree = "<group>"; };
+		3894E8CF1CDB3ABE00486954 /* QMChatCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMChatCacheModel.bundle; path = Vendor/QMServices/QMChatCache/QMChatCacheModel.bundle; sourceTree = "<group>"; };
+		3894E8D11CDB3B2C00486954 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		3894E8D31CDB3B3500486954 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		3894E8D51CDB3B3E00486954 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		3894E8D71CDB3B4700486954 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3894E8D91CDB3B4F00486954 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3894E9011CDB3E6300486954 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Vendor/QMServices/Frameworks/Bolts.framework; sourceTree = "<group>"; };
+		3894E9021CDB3E6300486954 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = Vendor/QMServices/Frameworks/Quickblox.framework; sourceTree = "<group>"; };
 		38A83BB41CA92AA20079EB0C /* JSQumunicateTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSQumunicateTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38A83BB71CA92AA20079EB0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		38A83BBE1CA92AA20079EB0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,7 +91,6 @@
 		38A83BE51CABA80E0079EB0C /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		38A83BEB1CABAB760079EB0C /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		38A83BED1CABAF560079EB0C /* DialogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogsViewController.swift; sourceTree = "<group>"; };
-		38A83BEF1CABCAB70079EB0C /* JChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JChatViewController.swift; sourceTree = "<group>"; };
 		38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQRishMessage.swift; sourceTree = "<group>"; };
 		38A83C101CAE751E0079EB0C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JSQumunicateTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +102,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3894E9191CDB43C700486954 /* libQMServices.a in Frameworks */,
+				3894E9031CDB3E6300486954 /* Bolts.framework in Frameworks */,
+				3894E9041CDB3E6300486954 /* Quickblox.framework in Frameworks */,
+				3894E8DA1CDB3B4F00486954 /* SystemConfiguration.framework in Frameworks */,
+				3894E8D81CDB3B4700486954 /* MobileCoreServices.framework in Frameworks */,
+				3894E8D61CDB3B3E00486954 /* libresolv.tbd in Frameworks */,
+				3894E8D41CDB3B3500486954 /* libxml2.tbd in Frameworks */,
+				3894E8D21CDB3B2C00486954 /* CFNetwork.framework in Frameworks */,
 				16D824F5F4D43196A5287C16 /* libPods-JSQumunicateTest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,9 +117,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3894E8B51CDB392B00486954 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3894E8C41CDB392B00486954 /* libQMServices.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		38A83BAB1CA92AA20079EB0C = {
 			isa = PBXGroup;
 			children = (
+				3894E9011CDB3E6300486954 /* Bolts.framework */,
+				3894E9021CDB3E6300486954 /* Quickblox.framework */,
+				3894E8CF1CDB3ABE00486954 /* QMChatCacheModel.bundle */,
+				3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */,
+				3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */,
+				3894E8B41CDB392B00486954 /* QMServices.xcodeproj */,
 				38A83BB61CA92AA20079EB0C /* JSQumunicateTest */,
 				38A83BB51CA92AA20079EB0C /* Products */,
 				84970C417473EFA76683308B /* Pods */,
@@ -136,7 +195,6 @@
 			children = (
 				38A83BDB1CABA7670079EB0C /* LoginTableViewController.swift */,
 				38A83BED1CABAF560079EB0C /* DialogsViewController.swift */,
-				38A83BEF1CABCAB70079EB0C /* JChatViewController.swift */,
 				38A83C101CAE751E0079EB0C /* TestVC.swift */,
 			);
 			name = ViewControllers;
@@ -188,6 +246,11 @@
 		C3F85E8B1082D28B931AD36B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3894E8D91CDB3B4F00486954 /* SystemConfiguration.framework */,
+				3894E8D71CDB3B4700486954 /* MobileCoreServices.framework */,
+				3894E8D51CDB3B3E00486954 /* libresolv.tbd */,
+				3894E8D31CDB3B3500486954 /* libxml2.tbd */,
+				3894E8D11CDB3B2C00486954 /* CFNetwork.framework */,
 				4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */,
 			);
 			name = Frameworks;
@@ -210,6 +273,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3894E8C61CDB3A2800486954 /* PBXTargetDependency */,
 			);
 			name = JSQumunicateTest;
 			productName = JSQumunicateTest;
@@ -242,12 +306,28 @@
 			mainGroup = 38A83BAB1CA92AA20079EB0C;
 			productRefGroup = 38A83BB51CA92AA20079EB0C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3894E8B51CDB392B00486954 /* Products */;
+					ProjectRef = 3894E8B41CDB392B00486954 /* QMServices.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				38A83BB31CA92AA20079EB0C /* JSQumunicateTest */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3894E8C41CDB392B00486954 /* libQMServices.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libQMServices.a;
+			remoteRef = 3894E8C31CDB392B00486954 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		38A83BB21CA92AA20079EB0C /* Resources */ = {
@@ -256,6 +336,9 @@
 			files = (
 				38A83BC21CA92AA20079EB0C /* LaunchScreen.storyboard in Resources */,
 				38A83BEC1CABAB760079EB0C /* Localizable.strings in Resources */,
+				3894E8D01CDB3ABE00486954 /* QMChatCacheModel.bundle in Resources */,
+				3894E8CC1CDB3A9000486954 /* QMUsersCacheModel.bundle in Resources */,
+				3894E8CE1CDB3AA500486954 /* QMContactListCacheModel.bundle in Resources */,
 				38A83BBF1CA92AA20079EB0C /* Assets.xcassets in Resources */,
 				38A83BDA1CABA7280079EB0C /* Main.storyboard in Resources */,
 			);
@@ -322,7 +405,6 @@
 				38A83BE61CABA80E0079EB0C /* AlertView.swift in Sources */,
 				38A83BEE1CABAF560079EB0C /* DialogsViewController.swift in Sources */,
 				38A83BE91CABA80E0079EB0C /* DialogTableViewCell.swift in Sources */,
-				38A83BF01CABCAB70079EB0C /* JChatViewController.swift in Sources */,
 				38A83BEA1CABA80E0079EB0C /* UserTableViewCell.swift in Sources */,
 				38A83BE81CABA80E0079EB0C /* CornerView.swift in Sources */,
 				38A83BB81CA92AA20079EB0C /* AppDelegate.swift in Sources */,
@@ -336,6 +418,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3894E8C61CDB3A2800486954 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = QMServices;
+			targetProxy = 3894E8C51CDB3A2800486954 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		38A83BC01CA92AA20079EB0C /* LaunchScreen.storyboard */ = {
@@ -438,9 +528,42 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Vendor/QMServices/Frameworks";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
+					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
+					"\"${PODS_ROOT}/Headers/Public/SVProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/TWMessageBarManager\"",
+					"$(SRCROOT)/Vendor/QMServices/**",
+				);
 				INFOPLIST_FILE = JSQumunicateTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"JSQMessagesViewController\"",
+					"-l\"JSQSystemSoundPlayer\"",
+					"-l\"SVProgressHUD\"",
+					"-l\"TWMessageBarManager\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"MapKit\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"UIKit\"",
+					"-lstdc++",
+					"-lxml2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = NewtonCircus.JSQumunicateTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "JSQumunicateTest/JSQumunicateTest-Bridging-Header.h";
@@ -454,9 +577,42 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Vendor/QMServices/Frameworks";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
+					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
+					"\"${PODS_ROOT}/Headers/Public/SVProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/TWMessageBarManager\"",
+					"$(SRCROOT)/Vendor/QMServices/**",
+				);
 				INFOPLIST_FILE = JSQumunicateTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"JSQMessagesViewController\"",
+					"-l\"JSQSystemSoundPlayer\"",
+					"-l\"SVProgressHUD\"",
+					"-l\"TWMessageBarManager\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"MapKit\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"UIKit\"",
+					"-lstdc++",
+					"-lxml2",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = NewtonCircus.JSQumunicateTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "JSQumunicateTest/JSQumunicateTest-Bridging-Header.h";

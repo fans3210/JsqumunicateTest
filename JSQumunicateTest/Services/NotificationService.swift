@@ -49,8 +49,8 @@ class NotificationService {
         
         self.delegate = delegate;
         
-        ServicesManager.instance().chatService.fetchDialogWithID(self.pushDialogID, completion: {
-            [weak self] (chatDialog: QBChatDialog!) -> Void in
+        ServicesManager.instance().chatService.fetchDialogWithID(self.pushDialogID!, completion: {
+            [weak self] (chatDialog) -> Void in
             if let strongSelf = self {
                 //
                 if (chatDialog != nil) {
@@ -60,7 +60,7 @@ class NotificationService {
                 else {
                     //
                     strongSelf.delegate?.notificationServiceDidStartLoadingDialogFromServer()
-                    ServicesManager.instance().chatService.loadDialogWithID(strongSelf.pushDialogID, completion: { (loadedDialog: QBChatDialog!) -> Void in
+                    ServicesManager.instance().chatService.loadDialogWithID(strongSelf.pushDialogID!, completion: { (loadedDialog) -> Void in
                         //
                         strongSelf.delegate?.notificationServiceDidFinishLoadingDialogFromServer()
                         if (loadedDialog != nil) {

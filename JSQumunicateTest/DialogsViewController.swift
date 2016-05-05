@@ -128,8 +128,8 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
 //                
 //            }
             if let testVC = segue.destinationViewController as? TestVC, sender = sender as? QBChatDialog {
-                if let currentUserLogin = ServicesManager.instance().currentUser().login {
-                    let currentUserId = "\(ServicesManager.instance().currentUser().ID)"
+                if let currentUserLogin = ServicesManager.instance().currentUser()!.login {
+                    let currentUserId = "\(ServicesManager.instance().currentUser()!.ID)"
                     print("current user login is \(currentUserLogin), id is \(currentUserId)")
                     testVC.senderDisplayName = currentUserId ?? "default user id"
                     testVC.senderId = currentUserId ?? "default user id"
@@ -197,7 +197,7 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
     func getDialogs() {
         
         if (ServicesManager.instance().lastActivityDate != nil) {
-            ServicesManager.instance().chatService.fetchDialogsUpdatedFromDate(ServicesManager.instance().lastActivityDate, andPageLimit: kDialogsPageLimit, iterationBlock: { (response: QBResponse!, dialogObjects: [AnyObject]!, dialogsUsersIDs: Set<NSObject>!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+            ServicesManager.instance().chatService.fetchDialogsUpdatedFromDate(ServicesManager.instance().lastActivityDate!, andPageLimit: kDialogsPageLimit, iterationBlock: { (response, dialogObjects, dialogsUsersIDs, stop) -> Void in
                 //
                 }, completionBlock: { (response: QBResponse!) -> Void in
                     //
@@ -208,7 +208,7 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
         }
         else {
             SVProgressHUD.showWithStatus("SA_STR_LOADING_DIALOGS".localized)
-            ServicesManager.instance().chatService.allDialogsWithPageLimit(kDialogsPageLimit, extendedRequest: nil, iterationBlock: { (response: QBResponse!, dialogObjects: [AnyObject]!, dialogsUsersIDs: Set<NSObject>!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+            ServicesManager.instance().chatService.allDialogsWithPageLimit(kDialogsPageLimit, extendedRequest: nil, iterationBlock: { (response, dialogObjects, dialogsUsersIDs, stop) -> Void in
                 //
                 }, completion: { (response: QBResponse!) -> Void in
                     //
@@ -298,7 +298,7 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
                 let deleteDialogBlock = { (dialog: QBChatDialog!) -> Void in
                     
                     // Deletes dialog from server and cache.
-                    ServicesManager.instance().chatService.deleteDialogWithID(dialog.ID, completion: { (response: QBResponse!) -> Void in
+                    ServicesManager.instance().chatService.deleteDialogWithID(dialog.ID!, completion: { (response: QBResponse!) -> Void in
                         
                         if response.success {
                             
@@ -318,14 +318,14 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
                     
                 } else {
                     
-                    let occupantIDs =  dialog.occupantIDs!.filter( {$0 != ServicesManager.instance().currentUser().ID} )
+                    let occupantIDs =  dialog.occupantIDs!.filter( {$0 != ServicesManager.instance().currentUser()!.ID} )
                     
                     dialog.occupantIDs = occupantIDs
                     
                     // Notifies occupants that user left the dialog.
-                    ServicesManager.instance().chatService.sendMessageAboutUpdateDialog(dialog, withNotificationText: "User \(ServicesManager.instance().currentUser().login!) " + "SA_STR_USER_HAS_LEFT".localized, customParameters: nil, completion: { (error: NSError?) -> Void in
-                        deleteDialogBlock(dialog)
-                    })
+//                    ServicesManager.instance().chatService.sendMessageAboutUpdateDialog(dialog, withNotificationText: "User \(ServicesManager.instance().currentUser().login!) " + "SA_STR_USER_HAS_LEFT".localized, customParameters: nil, completion: { (error: NSError?) -> Void in
+//                        deleteDialogBlock(dialog)
+//                    })
                 }
             })
         }

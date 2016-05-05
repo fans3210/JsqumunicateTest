@@ -28,7 +28,7 @@ class JSQRichMessage: JSQMessage {
         dialogID = qbChatMessage.dialogID
         
         //get sender displayName
-        let currentUserId = "\(ServicesManager.instance().currentUser().ID)"
+        let currentUserId = "\(ServicesManager.instance().currentUser()!.ID)"
 //            print("current user login is \(currentUserLogin), id is \(currentUserId)")
         let senderDisplayName = currentUserId ?? "default user id"
         

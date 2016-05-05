@@ -48,10 +48,10 @@ class LoginTableViewController: UITableViewController, NotificationServiceDelega
         }
         
         if (ServicesManager.instance().currentUser() != nil) {
-            ServicesManager.instance().currentUser().password = kTestUsersDefaultPassword
-            SVProgressHUD.showWithStatus("SA_STR_LOGGING_IN_AS".localized + ServicesManager.instance().currentUser().login!)
+            ServicesManager.instance().currentUser()!.password = kTestUsersDefaultPassword
+            SVProgressHUD.showWithStatus("SA_STR_LOGGING_IN_AS".localized + ServicesManager.instance().currentUser()!.login!)
             // Logging to Quickblox REST API and chat.
-            ServicesManager.instance().logInWithUser(ServicesManager.instance().currentUser(), completion:{
+            ServicesManager.instance().logInWithUser(ServicesManager.instance().currentUser()!, completion:{
                 [weak self] (success:Bool,  errorMessage: String?) -> Void in
                 if let strongSelf = self {
                     if (success) {

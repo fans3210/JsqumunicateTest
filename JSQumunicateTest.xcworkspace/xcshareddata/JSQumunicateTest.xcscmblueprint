@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5EE78FDEB444F9FA156A3404C7B86BBBD7A1FFD6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D160C3FE7B115E6635EB21EBE93000EBA4B81BC8" : 0,
+    "5EE78FDEB444F9FA156A3404C7B86BBBD7A1FFD6" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "DDEF3C02-290C-4B40-885F-D3F68FDC26DB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D160C3FE7B115E6635EB21EBE93000EBA4B81BC8" : "JsqumunicateTest\/Vendor\/QMServices\/",
+    "5EE78FDEB444F9FA156A3404C7B86BBBD7A1FFD6" : "JsqumunicateTest\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "JSQumunicateTest",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "JSQumunicateTest.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fans3210\/JsqumunicateTest.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5EE78FDEB444F9FA156A3404C7B86BBBD7A1FFD6"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/QuickBlox\/q-municate-services-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D160C3FE7B115E6635EB21EBE93000EBA4B81BC8"
+    }
+  ]
+}
