@@ -4,18 +4,21 @@ PODS:
   - JSQSystemSoundPlayer (2.0.1)
   - SVProgressHUD (2.0.3)
   - TWMessageBarManager (1.7.2)
+  - UIView+Shake (1.1.5)
 
 DEPENDENCIES:
   - JSQMessagesViewController
   - SVProgressHUD
   - TWMessageBarManager (~> 1.7.2)
+  - UIView+Shake
 
 SPEC CHECKSUMS:
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   TWMessageBarManager: e7adc066ee425174f5dee79473fce913b1cd1662
+  UIView+Shake: 2d2185006d38ee5daed07f14c0989f703f86682f
 
-PODFILE CHECKSUM: 58c323842da3fac00de561ac3c41c2de0e536c15
+PODFILE CHECKSUM: 6629c6c267d3e06d21d5c7e9284144830acae783
 
 COCOAPODS: 1.0.0.rc.2

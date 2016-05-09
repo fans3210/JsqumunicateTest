@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 //MARK: note: messages can be loaded from cache or memory or via internet
 
 typealias SenderId = String
@@ -19,6 +20,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingBubble: JSQMessagesBubbleImage!
     var typingTimer: NSTimer?
+    
     
     private func setupBubbles() {
         let factory = JSQMessagesBubbleImageFactory()
@@ -58,13 +60,23 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     }
     
     
+    //config other cells beside message cells, like tasks
+    private func configCellsBesideMessageCells() {
+        let jsqTaskCellIncomingNib = UINib(nibName: "JSQTaskCellIncoming", bundle: NSBundle.mainBundle())
+        collectionView.registerNib(jsqTaskCellIncomingNib, forCellWithReuseIdentifier: JSQTaskCellIncoming.cellReuseIdentifier())
+        
+        let jsqTaskCellOutgoingNib = UINib(nibName: "JSQTaskCellOutgoing", bundle: NSBundle.mainBundle())
+        collectionView.registerNib(jsqTaskCellOutgoingNib, forCellWithReuseIdentifier: JSQTaskCellOutgoing.cellReuseIdentifier())
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 //        senderId = "123"
 //        senderDisplayName = "fans"
 
-        title = "ChatChat"
+        title = dialog?.name
         setupBubbles()
         // No avatars
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
@@ -76,7 +88,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         QMChatCache.instance()!.messagesLimitPerDialog = 100
         
         setUserTypingAppearance()
-        
+        configCellsBesideMessageCells()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -100,7 +112,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
             return
         }
         
-        loadMessagesOL()
+        loadMessagesFromCacheAndOL()
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -141,23 +153,36 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     //will not use loadearliermessages func, becuase it's just used for pagenation
     //this should be the first time when we got the message from internet
-    private func loadMessagesOL() {
+    private func loadMessagesFromCacheAndOL() {
+        //this function load messages from both cache and network
         ServicesManager.instance().chatService.messagesWithChatDialogID((dialog?.ID)!) {[unowned self] response, messageObjects in
             
             print("response: \(response), messageObjects count \(messageObjects!.count)")
             
             if messageObjects!.count > 0 {
-
+                
+//                ServicesManager.instance().chatService.readMessages(messageObjects!, forDialogID: (self.dialog?.ID)!, completion: { (error) in
+//                    
+//                })
+                
                 let messages = (messageObjects!).map {[unowned self] in
                     self.mapQBChatToJSQRich($0)
                 }
                 
-                self.richMessages += messages
-                
-                for message in self.richMessages {
-                    print("\(message.text) 👨‍👩‍👧‍👦load from Network")
+                for message in messages {
+                    print("\(message.text) 👨‍👩‍👧‍👦load from Network)")
+                    if !self.richMessages.contains(message) {
+                        self.richMessages.append(message)
+                    }
                 }
+                
+                
                 self.finishReceivingMessage()
+                
+//                for message in self.richMessages {
+//                    print("\(message.text) 👨‍👩‍👧‍👦load from Network")
+//                }
+               
             }
         }
     }
@@ -230,12 +255,46 @@ extension TestVC {
         return nil
     }
     
-//    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-//        let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
-//
-//        
-//        return cell
-//    }
+    private struct Commands {
+        static let commandTask = "\\ttkk"
+    }
+    
+    
+    override func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let richMessage = richMessages[indexPath.item]
+        let isOutgoingMessage = richMessage.senderId == senderId
+        
+        if richMessage.text.containsString(Commands.commandTask) {
+            if !isOutgoingMessage {
+                return CGSizeMake(320, 154)
+            } else {
+                return CGSizeMake(320, 61)
+            }
+        } else {
+            return super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: indexPath)
+        }
+    }
+    
+    
+    
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let richMessage = richMessages[indexPath.item];
+        let isOutgoingMessage = richMessage.senderId == senderId
+        
+        if richMessage.text.containsString(Commands.commandTask) {
+            var cell: UICollectionViewCell
+            if !isOutgoingMessage {
+                cell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellIncoming.cellReuseIdentifier(), forIndexPath: indexPath)
+            } else {
+                cell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellOutgoing.cellReuseIdentifier(), forIndexPath: indexPath)
+            }
+            return cell
+        } else {
+            let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
+            return cell
+        }
+    }
     
 }
 
@@ -279,6 +338,12 @@ extension TestVC: QMChatServiceDelegate {
             print("🌰did add message to memory storage, message senderid is\(message.senderId) recipentid is \(message.recipentID)")
         }
     }
+    
+//    func chatService(chatService: QMChatService, didUpdateMessages messages: [QBChatMessage], forDialogID dialogID: String) {
+//        if self.dialog?.ID == dialogID {
+//            let messages = messages;
+//        }
+//    }
 }
 
 

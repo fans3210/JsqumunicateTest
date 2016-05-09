@@ -6,6 +6,7 @@
 //  Copyright © 2016 YAO DONG LI. All rights reserved.
 //
 
+
 class JSQRichMessage: JSQMessage {
     var id: String?
     var recipentID: UInt

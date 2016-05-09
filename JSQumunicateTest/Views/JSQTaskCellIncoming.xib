@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="pUP-eK-JG6" customClass="JSQTaskCellIncoming" customModule="JSQumunicateTest" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="154"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here is a task for you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8m-ca-cBt">
+                        <rect key="frame" x="80" y="20" width="161" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WbR-DO-nSq">
+                        <rect key="frame" x="160" y="101" width="160" height="53"/>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <state key="normal" title="Refuse"/>
+                        <connections>
+                            <action selector="refusePressed:" destination="pUP-eK-JG6" eventType="touchUpInside" id="RPa-Vm-zCx"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aiW-cU-28N">
+                        <rect key="frame" x="0.0" y="101" width="160" height="53"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <state key="normal" title="Accept"/>
+                        <connections>
+                            <action selector="acceptPressed:" destination="pUP-eK-JG6" eventType="touchUpInside" id="vRG-8w-JdT"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="K8m-ca-cBt" firstAttribute="centerX" secondItem="pUP-eK-JG6" secondAttribute="centerX" id="2wF-lN-vEr"/>
+                <constraint firstItem="WbR-DO-nSq" firstAttribute="top" secondItem="aiW-cU-28N" secondAttribute="top" id="6hl-CD-emn"/>
+                <constraint firstItem="WbR-DO-nSq" firstAttribute="leading" secondItem="aiW-cU-28N" secondAttribute="trailing" id="70m-RQ-QTP"/>
+                <constraint firstItem="WbR-DO-nSq" firstAttribute="height" secondItem="aiW-cU-28N" secondAttribute="height" id="BrT-en-dj2"/>
+                <constraint firstItem="WbR-DO-nSq" firstAttribute="bottom" secondItem="aiW-cU-28N" secondAttribute="bottom" id="EOr-b3-uZ7"/>
+                <constraint firstAttribute="trailing" secondItem="WbR-DO-nSq" secondAttribute="trailing" id="aLW-Xt-K00"/>
+                <constraint firstItem="aiW-cU-28N" firstAttribute="leading" secondItem="pUP-eK-JG6" secondAttribute="leading" id="gjk-Kg-fz2"/>
+                <constraint firstAttribute="bottom" secondItem="aiW-cU-28N" secondAttribute="bottom" id="iXz-Rd-EMm"/>
+                <constraint firstItem="K8m-ca-cBt" firstAttribute="top" secondItem="pUP-eK-JG6" secondAttribute="top" constant="20" id="jBu-Vc-FDe"/>
+                <constraint firstItem="aiW-cU-28N" firstAttribute="top" secondItem="K8m-ca-cBt" secondAttribute="bottom" constant="60" id="jDx-A0-Scj"/>
+                <constraint firstItem="WbR-DO-nSq" firstAttribute="width" secondItem="aiW-cU-28N" secondAttribute="width" id="o0y-Zv-Ac1"/>
+            </constraints>
+            <connections>
+                <outlet property="acceptButton" destination="aiW-cU-28N" id="Dpj-bu-TwS"/>
+                <outlet property="refuseButton" destination="WbR-DO-nSq" id="WCP-LM-ZI5"/>
+            </connections>
+            <point key="canvasLocation" x="185" y="43"/>
+        </collectionViewCell>
+    </objects>
+</document>

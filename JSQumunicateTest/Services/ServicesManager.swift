@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 /**
 *  Implements user's memory/cache storing, error handling, show top bar notifications.
 */

@@ -3,7 +3,8 @@
 //
 
 
-#import <SVProgressHUD.h>
+#import <SVProgressHUD/SVProgressHUD.h>
 #import "QMServices.h"
-#import "TWMessageBarManager.h"
+#import <TWMessageBarManager/TWMessageBarManager.h>
 #import <JSQMessagesViewController/JSQMessages.h>
+#import "UIView+Shake.h"

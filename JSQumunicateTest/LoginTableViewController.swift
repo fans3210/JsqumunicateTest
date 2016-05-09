@@ -164,7 +164,7 @@ extension LoginTableViewController {
         
         let user = self.users![indexPath.row]
         
-        cell.setColorMarkerText(String(indexPath.row + 1), color: ServicesManager.instance().color(forUser: user))
+        cell.setColorMarkerText(String(indexPath.row + 1), color: UIColor.whiteColor())
         cell.userDescription = user.login
         cell.tag = indexPath.row
         

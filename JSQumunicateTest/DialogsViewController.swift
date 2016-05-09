@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class DialogTableViewCellModel: NSObject {
     
     var detailTextLabelText: String = ""
@@ -262,8 +263,9 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
         cell.dialogLastMessage?.text = chatDialog.lastMessageText
         cell.dialogName?.text = cellModel.textLabelText
         cell.dialogTypeImage.image = cellModel.dialogIcon
-        cell.unreadMessageCounterLabel.text = cellModel.unreadMessagesCounterLabelText
-        cell.unreadMessageCounterHolder.hidden = cellModel.unreadMessagesCounterHiden
+//        cell.unreadMessageCounterLabel.text = cellModel.unreadMessagesCounterLabelText
+//        cell.unreadMessageCounterLabel.text = ""
+//        cell.unreadMessageCounterHolder.hidden = cellModel.unreadMessagesCounterHiden
         
         return cell
     }

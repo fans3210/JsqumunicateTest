@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		16D824F5F4D43196A5287C16 /* libPods-JSQumunicateTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */; };
 		3894E8CC1CDB3A9000486954 /* QMUsersCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */; };
 		3894E8CE1CDB3AA500486954 /* QMContactListCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */; };
 		3894E8D01CDB3ABE00486954 /* QMChatCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CF1CDB3ABE00486954 /* QMChatCacheModel.bundle */; };
@@ -19,6 +18,10 @@
 		3894E9031CDB3E6300486954 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E9011CDB3E6300486954 /* Bolts.framework */; };
 		3894E9041CDB3E6300486954 /* Quickblox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E9021CDB3E6300486954 /* Quickblox.framework */; };
 		3894E9191CDB43C700486954 /* libQMServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3894E8C41CDB392B00486954 /* libQMServices.a */; };
+		389F34B71CE046D700068745 /* JSQTaskCellIncoming.xib in Resources */ = {isa = PBXBuildFile; fileRef = 389F34B61CE046D700068745 /* JSQTaskCellIncoming.xib */; };
+		389F34BA1CE0478D00068745 /* JSQTaskCellIncoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F34B91CE0478D00068745 /* JSQTaskCellIncoming.swift */; };
+		389F34BC1CE049E000068745 /* JSQTaskCellOutgoing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389F34BB1CE049E000068745 /* JSQTaskCellOutgoing.swift */; };
+		389F34BE1CE04A6C00068745 /* JSQTaskCellOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 389F34BD1CE04A6C00068745 /* JSQTaskCellOutgoing.xib */; };
 		38A83BB81CA92AA20079EB0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BB71CA92AA20079EB0C /* AppDelegate.swift */; };
 		38A83BBF1CA92AA20079EB0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38A83BBE1CA92AA20079EB0C /* Assets.xcassets */; };
 		38A83BC21CA92AA20079EB0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38A83BC01CA92AA20079EB0C /* LaunchScreen.storyboard */; };
@@ -38,6 +41,7 @@
 		38A83BEE1CABAF560079EB0C /* DialogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BED1CABAF560079EB0C /* DialogsViewController.swift */; };
 		38A83C0F1CAE29E10079EB0C /* JSQRishMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */; };
 		38A83C111CAE751E0079EB0C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C101CAE751E0079EB0C /* TestVC.swift */; };
+		964DBBFDAFFCA907CCEBCFD4 /* libPods-JSQumunicateTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E1C2353A3FE12B90A0467E /* libPods-JSQumunicateTest.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +62,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14E1C2353A3FE12B90A0467E /* libPods-JSQumunicateTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JSQumunicateTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		313C9CD4075A1DCC2CFCB1D9 /* Pods-JSQumunicateTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.release.xcconfig"; sourceTree = "<group>"; };
 		3894E8B41CDB392B00486954 /* QMServices.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QMServices.xcodeproj; path = Vendor/QMServices/QMServices.xcodeproj; sourceTree = "<group>"; };
 		3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMUsersCacheModel.bundle; path = Vendor/QMServices/QMUsersCache/QMUsersCacheModel.bundle; sourceTree = "<group>"; };
@@ -70,6 +75,10 @@
 		3894E8D91CDB3B4F00486954 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3894E9011CDB3E6300486954 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Vendor/QMServices/Frameworks/Bolts.framework; sourceTree = "<group>"; };
 		3894E9021CDB3E6300486954 /* Quickblox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quickblox.framework; path = Vendor/QMServices/Frameworks/Quickblox.framework; sourceTree = "<group>"; };
+		389F34B61CE046D700068745 /* JSQTaskCellIncoming.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQTaskCellIncoming.xib; sourceTree = "<group>"; };
+		389F34B91CE0478D00068745 /* JSQTaskCellIncoming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQTaskCellIncoming.swift; sourceTree = "<group>"; };
+		389F34BB1CE049E000068745 /* JSQTaskCellOutgoing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQTaskCellOutgoing.swift; sourceTree = "<group>"; };
+		389F34BD1CE04A6C00068745 /* JSQTaskCellOutgoing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQTaskCellOutgoing.xib; sourceTree = "<group>"; };
 		38A83BB41CA92AA20079EB0C /* JSQumunicateTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSQumunicateTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38A83BB71CA92AA20079EB0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		38A83BBE1CA92AA20079EB0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,7 +102,6 @@
 		38A83BED1CABAF560079EB0C /* DialogsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogsViewController.swift; sourceTree = "<group>"; };
 		38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQRishMessage.swift; sourceTree = "<group>"; };
 		38A83C101CAE751E0079EB0C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
-		4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JSQumunicateTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AE8E657FA28EB0329414ABB /* Pods-JSQumunicateTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +118,7 @@
 				3894E8D61CDB3B3E00486954 /* libresolv.tbd in Frameworks */,
 				3894E8D41CDB3B3500486954 /* libxml2.tbd in Frameworks */,
 				3894E8D21CDB3B2C00486954 /* CFNetwork.framework in Frameworks */,
-				16D824F5F4D43196A5287C16 /* libPods-JSQumunicateTest.a in Frameworks */,
+				964DBBFDAFFCA907CCEBCFD4 /* libPods-JSQumunicateTest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,6 +216,10 @@
 				38A83BE31CABA80E0079EB0C /* CornerView.swift */,
 				38A83BE41CABA80E0079EB0C /* DialogTableViewCell.swift */,
 				38A83BE51CABA80E0079EB0C /* UserTableViewCell.swift */,
+				389F34B61CE046D700068745 /* JSQTaskCellIncoming.xib */,
+				389F34BD1CE04A6C00068745 /* JSQTaskCellOutgoing.xib */,
+				389F34B91CE0478D00068745 /* JSQTaskCellIncoming.swift */,
+				389F34BB1CE049E000068745 /* JSQTaskCellOutgoing.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -251,7 +263,7 @@
 				3894E8D51CDB3B3E00486954 /* libresolv.tbd */,
 				3894E8D31CDB3B3500486954 /* libxml2.tbd */,
 				3894E8D11CDB3B2C00486954 /* CFNetwork.framework */,
-				4DFD5939296D0C64FCEC4311 /* libPods-JSQumunicateTest.a */,
+				14E1C2353A3FE12B90A0467E /* libPods-JSQumunicateTest.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -339,7 +351,9 @@
 				3894E8D01CDB3ABE00486954 /* QMChatCacheModel.bundle in Resources */,
 				3894E8CC1CDB3A9000486954 /* QMUsersCacheModel.bundle in Resources */,
 				3894E8CE1CDB3AA500486954 /* QMContactListCacheModel.bundle in Resources */,
+				389F34B71CE046D700068745 /* JSQTaskCellIncoming.xib in Resources */,
 				38A83BBF1CA92AA20079EB0C /* Assets.xcassets in Resources */,
+				389F34BE1CE04A6C00068745 /* JSQTaskCellOutgoing.xib in Resources */,
 				38A83BDA1CABA7280079EB0C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,6 +415,7 @@
 			files = (
 				38A83C0F1CAE29E10079EB0C /* JSQRishMessage.swift in Sources */,
 				38A83BD61CABA4DC0079EB0C /* UIImage+fixOrientation.m in Sources */,
+				389F34BC1CE049E000068745 /* JSQTaskCellOutgoing.swift in Sources */,
 				38A83BCF1CABA39C0079EB0C /* NotificationService.swift in Sources */,
 				38A83BE61CABA80E0079EB0C /* AlertView.swift in Sources */,
 				38A83BEE1CABAF560079EB0C /* DialogsViewController.swift in Sources */,
@@ -408,6 +423,7 @@
 				38A83BEA1CABA80E0079EB0C /* UserTableViewCell.swift in Sources */,
 				38A83BE81CABA80E0079EB0C /* CornerView.swift in Sources */,
 				38A83BB81CA92AA20079EB0C /* AppDelegate.swift in Sources */,
+				389F34BA1CE0478D00068745 /* JSQTaskCellIncoming.swift in Sources */,
 				38A83C111CAE751E0079EB0C /* TestVC.swift in Sources */,
 				38A83BD81CABA67F0079EB0C /* Constants.swift in Sources */,
 				38A83BD01CABA39C0079EB0C /* ServicesManager.swift in Sources */,
@@ -528,8 +544,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Vendor/QMServices/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Vendor/QMServices/Frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
 					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
@@ -577,8 +597,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Vendor/QMServices/Frameworks";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Vendor/QMServices/Frameworks",
+				);
 				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
 					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
