@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 /**
  *  Default test users password
  */

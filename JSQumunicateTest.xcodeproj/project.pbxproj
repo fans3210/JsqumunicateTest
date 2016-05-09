@@ -41,7 +41,7 @@
 		38A83BEE1CABAF560079EB0C /* DialogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83BED1CABAF560079EB0C /* DialogsViewController.swift */; };
 		38A83C0F1CAE29E10079EB0C /* JSQRishMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */; };
 		38A83C111CAE751E0079EB0C /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A83C101CAE751E0079EB0C /* TestVC.swift */; };
-		964DBBFDAFFCA907CCEBCFD4 /* libPods-JSQumunicateTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14E1C2353A3FE12B90A0467E /* libPods-JSQumunicateTest.a */; };
+		F62D1B4D063DEC3550404DB4 /* Pods_JSQumunicateTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C2BF8FDC6700BC424FB717D /* Pods_JSQumunicateTest.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +62,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		14E1C2353A3FE12B90A0467E /* libPods-JSQumunicateTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JSQumunicateTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		313C9CD4075A1DCC2CFCB1D9 /* Pods-JSQumunicateTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.release.xcconfig"; sourceTree = "<group>"; };
 		3894E8B41CDB392B00486954 /* QMServices.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QMServices.xcodeproj; path = Vendor/QMServices/QMServices.xcodeproj; sourceTree = "<group>"; };
 		3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMUsersCacheModel.bundle; path = Vendor/QMServices/QMUsersCache/QMUsersCacheModel.bundle; sourceTree = "<group>"; };
@@ -103,6 +102,7 @@
 		38A83C0E1CAE29E10079EB0C /* JSQRishMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSQRishMessage.swift; sourceTree = "<group>"; };
 		38A83C101CAE751E0079EB0C /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		6AE8E657FA28EB0329414ABB /* Pods-JSQumunicateTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.debug.xcconfig"; sourceTree = "<group>"; };
+		9C2BF8FDC6700BC424FB717D /* Pods_JSQumunicateTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSQumunicateTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +118,7 @@
 				3894E8D61CDB3B3E00486954 /* libresolv.tbd in Frameworks */,
 				3894E8D41CDB3B3500486954 /* libxml2.tbd in Frameworks */,
 				3894E8D21CDB3B2C00486954 /* CFNetwork.framework in Frameworks */,
-				964DBBFDAFFCA907CCEBCFD4 /* libPods-JSQumunicateTest.a in Frameworks */,
+				F62D1B4D063DEC3550404DB4 /* Pods_JSQumunicateTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,7 +263,7 @@
 				3894E8D51CDB3B3E00486954 /* libresolv.tbd */,
 				3894E8D31CDB3B3500486954 /* libxml2.tbd */,
 				3894E8D11CDB3B2C00486954 /* CFNetwork.framework */,
-				14E1C2353A3FE12B90A0467E /* libPods-JSQumunicateTest.a */,
+				9C2BF8FDC6700BC424FB717D /* Pods_JSQumunicateTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -550,11 +550,6 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
-					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
-					"\"${PODS_ROOT}/Headers/Public/SVProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/Public/TWMessageBarManager\"",
 					"$(SRCROOT)/Vendor/QMServices/**",
 				);
 				INFOPLIST_FILE = JSQumunicateTest/Info.plist;
@@ -563,24 +558,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"JSQMessagesViewController\"",
-					"-l\"JSQSystemSoundPlayer\"",
-					"-l\"SVProgressHUD\"",
-					"-l\"TWMessageBarManager\"",
-					"-framework",
-					"\"AudioToolbox\"",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreLocation\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"MapKit\"",
-					"-framework",
-					"\"QuartzCore\"",
-					"-framework",
-					"\"UIKit\"",
 					"-lstdc++",
 					"-lxml2",
 				);
@@ -603,11 +580,6 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/JSQMessagesViewController\"",
-					"\"${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer\"",
-					"\"${PODS_ROOT}/Headers/Public/SVProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/Public/TWMessageBarManager\"",
 					"$(SRCROOT)/Vendor/QMServices/**",
 				);
 				INFOPLIST_FILE = JSQumunicateTest/Info.plist;
@@ -616,24 +588,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"JSQMessagesViewController\"",
-					"-l\"JSQSystemSoundPlayer\"",
-					"-l\"SVProgressHUD\"",
-					"-l\"TWMessageBarManager\"",
-					"-framework",
-					"\"AudioToolbox\"",
-					"-framework",
-					"\"CoreGraphics\"",
-					"-framework",
-					"\"CoreLocation\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"MapKit\"",
-					"-framework",
-					"\"QuartzCore\"",
-					"-framework",
-					"\"UIKit\"",
 					"-lstdc++",
 					"-lxml2",
 				);

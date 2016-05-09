@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import JSQMessagesViewController
+import UIView_Shake
 
 class JSQTaskCellOutgoing: JSQMessagesCollectionViewCellOutgoing {
 

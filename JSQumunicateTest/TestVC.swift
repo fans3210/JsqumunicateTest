@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import JSQMessagesViewController
 
 //MARK: note: messages can be loaded from cache or memory or via internet
 
