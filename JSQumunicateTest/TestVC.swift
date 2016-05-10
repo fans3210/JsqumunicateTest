@@ -94,26 +94,11 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TestVC.sendStopTyping), name: UIApplicationWillResignActiveNotification, object: nil)
+        
+        loadMessages()
+
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if let dialog = dialog {
-            ServicesManager.instance().currentDialogID = dialog.ID! //this is used in service manager's handlenewmessage funcs, it will stop the twmessagebarcontroller being displayed in this page when new message comes from the user is just the one u r talking to
-        }
-        
-        if let storedMessages = storedInMemoryMessages() where storedMessages.count > 0 && richMessages.count == 0 {
-            richMessages += storedMessages
-            for message in richMessages {
-                print("\(message.text) 🌑load from memory storage")
-            }
-            finishReceivingMessage()
-            return
-        }
-        
-        loadMessagesFromCacheAndOL()
-    }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
@@ -148,22 +133,38 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     }
     
-
+    
+    private func loadMessages() {
+        //load messages logic
+        if let dialog = dialog {
+            ServicesManager.instance().currentDialogID = dialog.ID! //this is used in service manager's handlenewmessage funcs, it will stop the twmessagebarcontroller being displayed in this page when new message comes from the user is just the one u r talking to
+        }
+        
+        //guard
+        if let messagesInMemory = storedInMemoryMessages() where messagesInMemory.count > 0 && richMessages.count == 0 {
+            richMessages += messagesInMemory
+            for message in richMessages {
+                print("\(message.text) 🌑load from memory storage")
+            }
+            
+            finishReceivingMessage()
+            return
+        }
+        
+        loadMessagesFromCacheAndOL()
+    }
     
     
     //will not use loadearliermessages func, becuase it's just used for pagenation
     //this should be the first time when we got the message from internet
     private func loadMessagesFromCacheAndOL() {
         //this function load messages from both cache and network
+        
         ServicesManager.instance().chatService.messagesWithChatDialogID((dialog?.ID)!) {[unowned self] response, messageObjects in
             
             print("response: \(response), messageObjects count \(messageObjects!.count)")
             
             if messageObjects!.count > 0 {
-                
-//                ServicesManager.instance().chatService.readMessages(messageObjects!, forDialogID: (self.dialog?.ID)!, completion: { (error) in
-//                    
-//                })
                 
                 let messages = (messageObjects!).map {[unowned self] in
                     self.mapQBChatToJSQRich($0)
@@ -175,13 +176,8 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
                         self.richMessages.append(message)
                     }
                 }
-                
-                
+
                 self.finishReceivingMessage()
-                
-//                for message in self.richMessages {
-//                    print("\(message.text) 👨‍👩‍👧‍👦load from Network")
-//                }
                
             }
         }
@@ -283,14 +279,19 @@ extension TestVC {
         let isOutgoingMessage = richMessage.senderId == senderId
         
         if richMessage.text.containsString(Commands.commandTask) {
-            var cell: UICollectionViewCell
+            //special type of cell
             if !isOutgoingMessage {
-                cell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellIncoming.cellReuseIdentifier(), forIndexPath: indexPath)
+                //is icoming
+                let taskIncomingcell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellIncoming.cellReuseIdentifier(), forIndexPath: indexPath) as! JSQTaskCellIncoming
+                taskIncomingcell.taskCellDelegate = self
+                return taskIncomingcell
             } else {
-                cell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellOutgoing.cellReuseIdentifier(), forIndexPath: indexPath)
+                //ougoing task cell
+                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellOutgoing.cellReuseIdentifier(), forIndexPath: indexPath) as! JSQTaskCellOutgoing
+                return cell
             }
-            return cell
         } else {
+            //normal cell
             let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
             return cell
         }
@@ -346,28 +347,23 @@ extension TestVC: QMChatServiceDelegate {
 //    }
 }
 
-
+//MARK: special type of cell delegates
+extension TestVC: JSQTaskCellDelegate {
+    func acceptButtonDidPressedForCell(cell: JSQTaskCellIncoming) {
+        if let indexPath = collectionView.indexPathForCell(cell) {
+            print("accept, index is \(indexPath.item)")
+        }
+    }
+    
+    func refuseButtonDidPressedForCell(cell: JSQTaskCellIncoming) {
+        print("refuse")
+    }
+}
 
 
 
 //MARK: textfield delegates
 extension TestVC {
-    
-//    override func textViewDidBeginEditing(textView: UITextView) {
-//        super.textViewDidBeginEditing(textView)
-//        guard QBChat.instance().isConnected() else {
-//            return
-//        }
-//        
-//        //when text changes, if timer is active, disable it and re-timing
-//        if let typingTimer = self.typingTimer {
-//            typingTimer.invalidate()
-//            self.typingTimer = nil
-//        } else {
-//            sendBeginTyping()
-//        }
-//        typingTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: #selector(TestVC.sendStopTyping), userInfo: nil, repeats: false)
-//    }
     
     private func sendBeginTyping() {
         if let dialog = dialog {
