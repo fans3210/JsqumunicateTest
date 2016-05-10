@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3828E8A01CE19B850025BE34 /* TaskDetailsPopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828E89F1CE19B850025BE34 /* TaskDetailsPopViewController.swift */; };
 		3894E8CC1CDB3A9000486954 /* QMUsersCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */; };
 		3894E8CE1CDB3AA500486954 /* QMContactListCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */; };
 		3894E8D01CDB3ABE00486954 /* QMChatCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CF1CDB3ABE00486954 /* QMChatCacheModel.bundle */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		313C9CD4075A1DCC2CFCB1D9 /* Pods-JSQumunicateTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.release.xcconfig"; sourceTree = "<group>"; };
+		3828E89F1CE19B850025BE34 /* TaskDetailsPopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailsPopViewController.swift; sourceTree = "<group>"; };
 		3894E8B41CDB392B00486954 /* QMServices.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QMServices.xcodeproj; path = Vendor/QMServices/QMServices.xcodeproj; sourceTree = "<group>"; };
 		3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMUsersCacheModel.bundle; path = Vendor/QMServices/QMUsersCache/QMUsersCacheModel.bundle; sourceTree = "<group>"; };
 		3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMContactListCacheModel.bundle; path = Vendor/QMServices/QMContactListCache/QMContactListCacheModel.bundle; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				38A83BDB1CABA7670079EB0C /* LoginTableViewController.swift */,
 				38A83BED1CABAF560079EB0C /* DialogsViewController.swift */,
 				38A83C101CAE751E0079EB0C /* TestVC.swift */,
+				3828E89F1CE19B850025BE34 /* TaskDetailsPopViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				38A83BEA1CABA80E0079EB0C /* UserTableViewCell.swift in Sources */,
 				38A83BE81CABA80E0079EB0C /* CornerView.swift in Sources */,
 				38A83BB81CA92AA20079EB0C /* AppDelegate.swift in Sources */,
+				3828E8A01CE19B850025BE34 /* TaskDetailsPopViewController.swift in Sources */,
 				389F34BA1CE0478D00068745 /* JSQTaskCellIncoming.swift in Sources */,
 				38A83C111CAE751E0079EB0C /* TestVC.swift in Sources */,
 				38A83BD81CABA67F0079EB0C /* Constants.swift in Sources */,

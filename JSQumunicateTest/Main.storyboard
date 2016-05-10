@@ -416,23 +416,44 @@
             </objects>
             <point key="canvasLocation" x="2237" y="198"/>
         </scene>
-        <!--TestVC-->
-        <scene sceneID="MCn-x8-8x1">
+        <!--Task Details Pop View Controller-->
+        <scene sceneID="axC-or-CKo">
             <objects>
-                <viewController id="kf8-tE-nnc" customClass="TestVC" customModule="JSQumunicateTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="taskDetailsPop" id="LsD-Tf-GlE" customClass="TaskDetailsPopViewController" customModule="JSQumunicateTest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="EEW-Qz-uH2"/>
-                        <viewControllerLayoutGuide type="bottom" id="Uiz-mr-b9c"/>
+                        <viewControllerLayoutGuide type="top" id="lud-S9-l8S"/>
+                        <viewControllerLayoutGuide type="bottom" id="cS6-l5-pi2"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Dg2-7C-cea">
+                    <view key="view" contentMode="scaleToFill" id="uLu-Pu-HGJ">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="details of the task" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EVb-AR-cjj">
+                                <rect key="frame" x="20" y="40" width="136" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zsy-lD-nQh">
+                                <rect key="frame" x="24" y="69" width="52" height="30"/>
+                                <state key="normal" title="dismiss"/>
+                                <connections>
+                                    <action selector="dismiss:" destination="LsD-Tf-GlE" eventType="touchUpInside" id="qqM-uB-JLC"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Zsy-lD-nQh" firstAttribute="leading" secondItem="uLu-Pu-HGJ" secondAttribute="leadingMargin" constant="4" id="WDS-mC-efP"/>
+                            <constraint firstItem="EVb-AR-cjj" firstAttribute="top" secondItem="lud-S9-l8S" secondAttribute="bottom" constant="20" id="fX0-FP-cNk"/>
+                            <constraint firstItem="EVb-AR-cjj" firstAttribute="leading" secondItem="uLu-Pu-HGJ" secondAttribute="leading" constant="20" id="nYQ-93-oBg"/>
+                            <constraint firstItem="Zsy-lD-nQh" firstAttribute="top" secondItem="EVb-AR-cjj" secondAttribute="bottom" constant="8" id="rFD-HI-PIn"/>
+                        </constraints>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xyY-Hq-ru5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eOY-Cf-x0r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-851" y="-491"/>
+            <point key="canvasLocation" x="2954" y="198"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qZH-Iu-xjY">

@@ -41,7 +41,6 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
                     return
                 }
                 self.showTypingIndicator = true
-                print("showing typing indicator")
                 self.scrollToBottomAnimated(true)
             }
             
@@ -51,8 +50,6 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
                 }
                 self.collectionView.performBatchUpdates({
                     self.showTypingIndicator = false
-                     print("hiding typiing indicator")
-//                    self.collectionView.reloadSections(NSIndexSet(index: 0))
                     }, completion: nil)
                 
             }
@@ -60,7 +57,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     }
     
     
-    //config other cells beside message cells, like tasks
+    //config other cells beside message cells, like tasks etc
     private func configCellsBesideMessageCells() {
         let jsqTaskCellIncomingNib = UINib(nibName: "JSQTaskCellIncoming", bundle: NSBundle.mainBundle())
         collectionView.registerNib(jsqTaskCellIncomingNib, forCellWithReuseIdentifier: JSQTaskCellIncoming.cellReuseIdentifier())
@@ -140,24 +137,25 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
             ServicesManager.instance().currentDialogID = dialog.ID! //this is used in service manager's handlenewmessage funcs, it will stop the twmessagebarcontroller being displayed in this page when new message comes from the user is just the one u r talking to
         }
         
-        //guard
-        if let messagesInMemory = storedInMemoryMessages() where messagesInMemory.count > 0 && richMessages.count == 0 {
-            richMessages += messagesInMemory
-            for message in richMessages {
-                print("\(message.text) 🌑load from memory storage")
-            }
-            
-            finishReceivingMessage()
+        
+        guard let messagesInMemory = storedInMemoryMessages() where messagesInMemory.count > 0 && richMessages.count == 0 else {
+            retrieveMessagesFromCacheAndOL()
             return
         }
+        //get from memory
+        richMessages += messagesInMemory
+        for message in richMessages {
+            print("\(message.text) 🌑load from memory storage")
+        }
+        finishReceivingMessage()
         
-        loadMessagesFromCacheAndOL()
+        
     }
     
     
     //will not use loadearliermessages func, becuase it's just used for pagenation
     //this should be the first time when we got the message from internet
-    private func loadMessagesFromCacheAndOL() {
+    private func retrieveMessagesFromCacheAndOL() {
         //this function load messages from both cache and network
         
         ServicesManager.instance().chatService.messagesWithChatDialogID((dialog?.ID)!) {[unowned self] response, messageObjects in
@@ -253,6 +251,7 @@ extension TestVC {
     
     private struct Commands {
         static let commandTask = "\\ttkk"
+        static let commandTaskAccepted = "\\ttkka"
     }
     
     
@@ -283,6 +282,7 @@ extension TestVC {
             if !isOutgoingMessage {
                 //is icoming
                 let taskIncomingcell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellIncoming.cellReuseIdentifier(), forIndexPath: indexPath) as! JSQTaskCellIncoming
+                taskIncomingcell.delegate = self
                 taskIncomingcell.taskCellDelegate = self
                 return taskIncomingcell
             } else {
@@ -296,6 +296,38 @@ extension TestVC {
             return cell
         }
     }
+    
+//    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        print("select cell")
+//    }
+    
+    
+}
+
+
+extension TestVC: JSQMessagesCollectionViewCellDelegate {
+    func messagesCollectionViewCellDidTapAvatar(cell: JSQMessagesCollectionViewCell) {
+        
+    }
+    
+    func messagesCollectionViewCellDidTapMessageBubble(cell: JSQMessagesCollectionViewCell) {
+        
+    }
+    
+    func messagesCollectionViewCellDidTapCell(cell: JSQMessagesCollectionViewCell, atPosition position: CGPoint) {
+        
+        if cell is JSQTaskCellIncoming {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let taskDetailsPopVC = storyboard.instantiateViewControllerWithIdentifier("taskDetailsPop")
+            taskDetailsPopVC.modalPresentationStyle = .Custom
+            self.navigationController?.presentViewController(taskDetailsPopVC, animated: true, completion: nil)
+        }
+    }
+    
+    func messagesCollectionViewCell(cell: JSQMessagesCollectionViewCell, didPerformAction action: Selector, withSender sender: AnyObject) {
+        
+    }
+    
     
 }
 
@@ -340,11 +372,7 @@ extension TestVC: QMChatServiceDelegate {
         }
     }
     
-//    func chatService(chatService: QMChatService, didUpdateMessages messages: [QBChatMessage], forDialogID dialogID: String) {
-//        if self.dialog?.ID == dialogID {
-//            let messages = messages;
-//        }
-//    }
+
 }
 
 //MARK: special type of cell delegates
@@ -352,6 +380,9 @@ extension TestVC: JSQTaskCellDelegate {
     func acceptButtonDidPressedForCell(cell: JSQTaskCellIncoming) {
         if let indexPath = collectionView.indexPathForCell(cell) {
             print("accept, index is \(indexPath.item)")
+//            let message = richMessages[indexPath.row]
+//            message.qbChatMessage?.text = "sdf"
+//            ServicesManager.instance().chatService.update
         }
     }
     
