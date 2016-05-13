@@ -43,6 +43,8 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
                 self.showTypingIndicator = true
                 self.scrollToBottomAnimated(true)
             }
+
+            
             
             dialog?.onUserStoppedTyping = {[unowned self] userId in
                 guard ServicesManager.instance().currentUser()!.ID != userId else {
@@ -83,6 +85,10 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         //change the default settings
         ServicesManager.instance().chatService.chatMessagesPerPage = 100
         QMChatCache.instance()!.messagesLimitPerDialog = 100
+        
+        //toolbars
+        
+        
         
         setUserTypingAppearance()
         configCellsBesideMessageCells()

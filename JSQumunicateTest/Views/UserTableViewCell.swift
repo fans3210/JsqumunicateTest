@@ -22,25 +22,25 @@ class UserTableViewCell: UITableViewCell {
     }
     
     func setColorMarkerText(text: String, color: UIColor){
-        self.colorMarker.backgroundColor = color
-        self.colorMarker.title = text
+//        self.colorMarker.backgroundColor = color
+//        self.colorMarker.title = text
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
         
-        let markerColor = self.colorMarker.backgroundColor
-        
-        super.setSelected(selected, animated: animated)
-        
-        self.colorMarker.backgroundColor = markerColor
+//        let markerColor = self.colorMarker.backgroundColor
+//        
+//        super.setSelected(selected, animated: animated)
+//        
+//        self.colorMarker.backgroundColor = markerColor
     }
     
     override func setHighlighted(highlighted: Bool, animated: Bool) {
         
-        let markerColor = self.colorMarker.backgroundColor
-        
-        super.setHighlighted(highlighted, animated: animated)
-        
-        self.colorMarker.backgroundColor = markerColor
+//        let markerColor = self.colorMarker.backgroundColor
+//        
+//        super.setHighlighted(highlighted, animated: animated)
+//        
+//        self.colorMarker.backgroundColor = markerColor
     }
 }

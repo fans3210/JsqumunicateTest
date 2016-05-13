@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 let kQBApplicationID:UInt = 38736
 let kQBAuthKey = "ApHFwfKqODE7PRU"
 let kQBAuthSecret = "XwWfcuLm68PyC9X"
@@ -32,6 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Enables detailed XMPP logging in console output.
         QBSettings.enableXMPPLogging()
 //        QBSettings.setChatDNSLookupCacheEnabled(true);
+        
+        
+        //webrtc settings
+        QBRTCClient.initializeRTC()
+        
         
         
         
