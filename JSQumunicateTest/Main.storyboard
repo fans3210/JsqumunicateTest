@@ -73,8 +73,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Login as User 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3F-oh-jvS">
-                                            <rect key="frame" x="51" y="12" width="541" height="21"/>
+                                        <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login as User 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V3F-oh-jvS">
+                                            <rect key="frame" x="10" y="12" width="582" height="21"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="hnM-aH-P4c"/>
@@ -84,6 +84,7 @@
                                         </label>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="V3F-oh-jvS" firstAttribute="leading" secondItem="H5W-gB-D6d" secondAttribute="leading" constant="10" id="A3P-cQ-BCI"/>
                                         <constraint firstItem="V3F-oh-jvS" firstAttribute="top" secondItem="H5W-gB-D6d" secondAttribute="topMargin" constant="4" id="d68-HJ-tTP"/>
                                         <constraint firstItem="V3F-oh-jvS" firstAttribute="trailing" secondItem="H5W-gB-D6d" secondAttribute="trailingMargin" constant="33" id="jlO-56-BqP"/>
                                     </constraints>
@@ -364,10 +365,10 @@
             </objects>
             <point key="canvasLocation" x="1490" y="198"/>
         </scene>
-        <!--TestVC-->
+        <!--ChatVC-->
         <scene sceneID="vtW-k8-clC">
             <objects>
-                <viewController id="ugV-TT-Z4g" customClass="TestVC" customModule="JSQumunicateTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ugV-TT-Z4g" customClass="ChatVC" customModule="JSQumunicateTest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jKu-sQ-hjw"/>
                         <viewControllerLayoutGuide type="bottom" id="sYR-Yw-T38"/>
@@ -474,7 +475,65 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mv8-dh-SGE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3148" y="991"/>
+            <point key="canvasLocation" x="2536" y="1051"/>
+        </scene>
+        <!--Incoming CallVC-->
+        <scene sceneID="Rvd-Kx-NYz">
+            <objects>
+                <viewController storyboardIdentifier="IncomingCall" id="ixM-7Q-iZ7" customClass="IncomingCallVC" customModule="JSQumunicateTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lk3-fa-LIK"/>
+                        <viewControllerLayoutGuide type="bottom" id="Pzo-Ge-WVb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Lu6-bq-R1v">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eAa-VZ-qlY">
+                                <rect key="frame" x="20" y="480" width="560" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="yU6-Ng-9MP"/>
+                                </constraints>
+                                <state key="normal" title="Accept"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tnx-Ab-v7J">
+                                <rect key="frame" x="20" y="550" width="560" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="454" id="FEo-XB-jeC"/>
+                                    <constraint firstAttribute="height" constant="30" id="ww4-5H-rMX"/>
+                                </constraints>
+                                <state key="normal" title="Reject"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="FEo-XB-jeC"/>
+                                    </mask>
+                                </variation>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incoming Call" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5e3-Tz-X68">
+                                <rect key="frame" x="248" y="50" width="104" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eAa-VZ-qlY" firstAttribute="leading" secondItem="Lu6-bq-R1v" secondAttribute="leading" constant="20" id="4e1-IA-G7W"/>
+                            <constraint firstItem="5e3-Tz-X68" firstAttribute="top" secondItem="lk3-fa-LIK" secondAttribute="bottom" constant="30" id="7Lb-Ll-vOO"/>
+                            <constraint firstItem="tnx-Ab-v7J" firstAttribute="leading" secondItem="Lu6-bq-R1v" secondAttribute="leading" constant="20" id="Iwx-bb-8ID"/>
+                            <constraint firstItem="5e3-Tz-X68" firstAttribute="centerX" secondItem="Lu6-bq-R1v" secondAttribute="centerX" id="UyW-FX-7ut"/>
+                            <constraint firstAttribute="trailing" secondItem="tnx-Ab-v7J" secondAttribute="trailing" constant="20" id="bqK-lS-OA4"/>
+                            <constraint firstItem="Pzo-Ge-WVb" firstAttribute="top" secondItem="tnx-Ab-v7J" secondAttribute="bottom" constant="20" id="dwb-3W-Rz0"/>
+                            <constraint firstItem="tnx-Ab-v7J" firstAttribute="top" secondItem="eAa-VZ-qlY" secondAttribute="bottom" constant="40" id="qX0-vs-ZHB"/>
+                            <constraint firstAttribute="trailing" secondItem="eAa-VZ-qlY" secondAttribute="trailing" constant="20" id="yE4-Jh-CM8"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hTp-bw-V9o" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3280" y="1059"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qZH-Iu-xjY">

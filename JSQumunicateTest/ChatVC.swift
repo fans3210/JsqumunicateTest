@@ -1,5 +1,5 @@
 //
-//  TestVC.swift
+//  ChatVC.swift
 //  JSQumunicateTest
 //
 //  Created by YAO DONG LI on 4/1/16.
@@ -13,16 +13,49 @@ import JSQMessagesViewController
 
 typealias SenderId = String
 
-class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
+class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     var dialog: QBChatDialog?
     var messages = [JSQMessage]()
     var richMessages = [JSQRichMessage]()
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingBubble: JSQMessagesBubbleImage!
     var typingTimer: NSTimer?
+    var currentSession: QBRTCSession?
+    
+    lazy var toolbarAlertVC: UIAlertController = {
+        let alertVC = UIAlertController(title: "Action", message: "Select One", preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        
+        let videoCallAction = UIAlertAction(title: "Video Call", style: .Default) {[unowned self] _ in
+            
+            guard let dialog = self.dialog else {
+                return
+            }
+            let oppoentIds = dialog.occupantIDs?.filter {
+                $0 != dialog.userID && $0 != ServicesManager.instance().currentUser()!.ID //temporarily solution
+            }
+
+            let newSession = QBRTCClient.instance().createNewSessionWithOpponents(oppoentIds, withConferenceType: .Video)
+            self.currentSession = newSession
+
+        }
+        
+        let audioCallAction = UIAlertAction(title: "Audio Call", style: .Default, handler: { _ in
+            
+        })
+        
+        alertVC.addAction(videoCallAction)
+        alertVC.addAction(audioCallAction)
+        alertVC.addAction(cancelAction)
+        
+        return alertVC
+    }()
     
     
     private func setupBubbles() {
+        //video call handler
+
         let factory = JSQMessagesBubbleImageFactory()
         outgoingBubble = factory.outgoingMessagesBubbleImageWithColor(
             UIColor.purpleColor())
@@ -68,6 +101,10 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         collectionView.registerNib(jsqTaskCellOutgoingNib, forCellWithReuseIdentifier: JSQTaskCellOutgoing.cellReuseIdentifier())
     }
     
+    private func configVideoCall() {
+        QBRTCClient.instance().addDelegate(self)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,17 +123,17 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
         ServicesManager.instance().chatService.chatMessagesPerPage = 100
         QMChatCache.instance()!.messagesLimitPerDialog = 100
         
-        //toolbars
-        
-        
         
         setUserTypingAppearance()
         configCellsBesideMessageCells()
+        
+        //config Videocall
+        configVideoCall()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(TestVC.sendStopTyping), name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatVC.sendStopTyping), name: UIApplicationWillResignActiveNotification, object: nil)
         
         loadMessages()
 
@@ -218,9 +255,29 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     override func didPressAccessoryButton(sender: UIButton!) {
         print("did press accessory button")
+        self.presentViewController(toolbarAlertVC, animated: true, completion: nil)
     }
+
 }
 
+
+//MARK: video call delegates
+extension ChatVC: QBRTCClientDelegate {
+    func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
+        guard let currentSession = currentSession else {
+            let userInfo = ["reject" : "busy"]
+            session.rejectCall(userInfo)
+            return
+        }
+        self.currentSession = currentSession
+        QBRTCSoundRouter.instance().initialize()
+        
+        if let incomingCallVC = storyboard?.instantiateViewControllerWithIdentifier("IncomingCall") as? IncomingCallVC {
+            incomingCallVC.session = currentSession
+            self.presentViewController(incomingCallVC, animated: true, completion: nil)
+        }
+    }
+}
 
 
 
@@ -228,7 +285,7 @@ class TestVC: JSQMessagesViewController, QMChatConnectionDelegate {
 //MARK: collectionview delegates
 //qmviewcontroller has more than 1 sections while jsqvc only have one, jsq use delegate methods to add timestamps
 
-extension TestVC {
+extension ChatVC {
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
         
         return richMessages[indexPath.item]
@@ -311,7 +368,7 @@ extension TestVC {
 }
 
 
-extension TestVC: JSQMessagesCollectionViewCellDelegate {
+extension ChatVC: JSQMessagesCollectionViewCellDelegate {
     func messagesCollectionViewCellDidTapAvatar(cell: JSQMessagesCollectionViewCell) {
         
     }
@@ -341,7 +398,7 @@ extension TestVC: JSQMessagesCollectionViewCellDelegate {
 
 
 //MARK: chat service delegate
-extension TestVC: QMChatServiceDelegate {
+extension ChatVC: QMChatServiceDelegate {
     
     func chatService(chatService: QMChatService, didLoadMessagesFromCache messages: [QBChatMessage], forDialogID dialogID: String) {
         if self.dialog?.ID == dialogID {
@@ -382,7 +439,7 @@ extension TestVC: QMChatServiceDelegate {
 }
 
 //MARK: special type of cell delegates
-extension TestVC: JSQTaskCellDelegate {
+extension ChatVC: JSQTaskCellDelegate {
     func acceptButtonDidPressedForCell(cell: JSQTaskCellIncoming) {
         if let indexPath = collectionView.indexPathForCell(cell) {
             print("accept, index is \(indexPath.item)")
@@ -400,7 +457,7 @@ extension TestVC: JSQTaskCellDelegate {
 
 
 //MARK: textfield delegates
-extension TestVC {
+extension ChatVC {
     
     private func sendBeginTyping() {
         if let dialog = dialog {
@@ -434,7 +491,7 @@ extension TestVC {
         } else {
             sendBeginTyping()
         }
-        typingTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(TestVC.sendStopTyping), userInfo: nil, repeats: false)
+        typingTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(ChatVC.sendStopTyping), userInfo: nil, repeats: false)
         return true
     }
     

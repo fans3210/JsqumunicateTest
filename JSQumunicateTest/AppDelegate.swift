@@ -9,23 +9,30 @@
 import UIKit
 
 
-let kQBApplicationID:UInt = 38736
-let kQBAuthKey = "ApHFwfKqODE7PRU"
-let kQBAuthSecret = "XwWfcuLm68PyC9X"
-let kQBAccountKey = "9j18zPi5YsKUugPkmFm4"
+//let kQBApplicationID:UInt = 38736
+//let kQBAuthKey = "ApHFwfKqODE7PRU"
+//let kQBAuthSecret = "XwWfcuLm68PyC9X"
+//let kQBAccountKey = "9j18zPi5YsKUugPkmFm4"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    private struct QBAppConfigs {
+        static let kQBQpplicationId: UInt = 38736
+        static let kQBAuthKey = "ApHFwfKqODE7PRU"
+        static let kQBAuthSecret = "XwWfcuLm68PyC9X"
+        static let kQBAccountKey = "9j18zPi5YsKUugPkmFm4"
+    }
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Set QuickBlox credentials (You must create application in admin.quickblox.com).
-        QBSettings.setApplicationID(kQBApplicationID)
-        QBSettings.setAuthKey(kQBAuthKey)
-        QBSettings.setAuthSecret(kQBAuthSecret)
-        QBSettings.setAccountKey(kQBAccountKey)
+        QBSettings.setApplicationID(QBAppConfigs.kQBQpplicationId)
+        QBSettings.setAuthKey(QBAppConfigs.kQBAuthKey)
+        QBSettings.setAuthSecret(QBAppConfigs.kQBAuthSecret)
+        QBSettings.setAccountKey(QBAppConfigs.kQBAccountKey)
         
         // Enables Quickblox REST API calls debug console output.
         QBSettings.setLogLevel(QBLogLevel.Nothing)

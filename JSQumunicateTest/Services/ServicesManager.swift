@@ -92,7 +92,7 @@ class ServicesManager: QMServicesManager {
 
     // MARK: QMServiceManagerProtocol
     
-    override func handleErrorResponse(response: QBResponse!) {
+    override func handleErrorResponse(response: QBResponse) {
         super.handleErrorResponse(response)
         
         if !self.isAuthorized() {
@@ -170,7 +170,7 @@ class ServicesManager: QMServicesManager {
     
     // MARK: QMChatServiceDelegate
     
-    override func chatService(chatService: QMChatService!, didAddMessageToMemoryStorage message: QBChatMessage!, forDialogID dialogID: String!) {
+    override func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
         super.chatService(chatService, didAddMessageToMemoryStorage: message, forDialogID: dialogID)
         self.handleNewMessage(message, dialogID: dialogID)
     }

@@ -129,13 +129,13 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
 //                
 //                
 //            }
-            if let testVC = segue.destinationViewController as? TestVC, sender = sender as? QBChatDialog {
+            if let ChatVC = segue.destinationViewController as? ChatVC, sender = sender as? QBChatDialog {
                 if let currentUserLogin = ServicesManager.instance().currentUser()!.login {
                     let currentUserId = "\(ServicesManager.instance().currentUser()!.ID)"
                     print("current user login is \(currentUserLogin), id is \(currentUserId)")
-                    testVC.senderDisplayName = currentUserId ?? "default user id"
-                    testVC.senderId = currentUserId ?? "default user id"
-                    testVC.dialog = sender
+                    ChatVC.senderDisplayName = currentUserId ?? "default user id"
+                    ChatVC.senderId = currentUserId ?? "default user id"
+                    ChatVC.dialog = sender
                 }
                 
                 
@@ -340,57 +340,57 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
     
     // MARK: - QMChatServiceDelegate
     
-    func chatService(chatService: QMChatService!, didUpdateChatDialogInMemoryStorage chatDialog: QBChatDialog!) {
+    func chatService(chatService: QMChatService, didUpdateChatDialogInMemoryStorage chatDialog: QBChatDialog) {
         
         self.tableView.reloadData()
     }
     
-    func chatService(chatService: QMChatService!, didUpdateChatDialogsInMemoryStorage dialogs: [QBChatDialog]!) {
+    func chatService(chatService: QMChatService, didUpdateChatDialogsInMemoryStorage dialogs: [QBChatDialog]) {
         
         self.tableView.reloadData()
     }
     
-    func chatService(chatService: QMChatService!, didAddChatDialogsToMemoryStorage chatDialogs: [QBChatDialog]!) {
+    func chatService(chatService: QMChatService, didAddChatDialogsToMemoryStorage chatDialogs: [QBChatDialog]) {
         
         self.tableView.reloadData()
     }
     
-    func chatService(chatService: QMChatService!, didAddChatDialogToMemoryStorage chatDialog: QBChatDialog!) {
+    func chatService(chatService: QMChatService, didAddChatDialogToMemoryStorage chatDialog: QBChatDialog) {
         
         self.tableView.reloadData()
     }
     
-    func chatService(chatService: QMChatService!, didDeleteChatDialogWithIDFromMemoryStorage chatDialogID: String!) {
+    func chatService(chatService: QMChatService, didDeleteChatDialogWithIDFromMemoryStorage chatDialogID: String) {
         
         self.tableView.reloadData()
     }
     
-    func chatService(chatService: QMChatService!, didAddMessagesToMemoryStorage messages: [QBChatMessage]!, forDialogID dialogID: String!) {
+    func chatService(chatService: QMChatService, didAddMessagesToMemoryStorage messages: [QBChatMessage], forDialogID dialogID: String) {
         
         self.tableView.reloadData()
     }
     
-    func chatService(chatService: QMChatService!, didAddMessageToMemoryStorage message: QBChatMessage!, forDialogID dialogID: String!) {
+    func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
         
         self.tableView.reloadData()
     }
     
     // MARK: QMChatConnectionDelegate
     
-    func chatServiceChatDidAccidentallyDisconnect(chatService: QMChatService!) {
+    func chatServiceChatDidAccidentallyDisconnect(chatService: QMChatService) {
         SVProgressHUD.showErrorWithStatus("SA_STR_DISCONNECTED".localized)
     }
     
-    func chatServiceChatDidConnect(chatService: QMChatService!) {
+    func chatServiceChatDidConnect(chatService: QMChatService) {
         SVProgressHUD.showSuccessWithStatus("SA_STR_CONNECTED".localized)
         self.getDialogs()
     }
     
-    func chatService(chatService: QMChatService!, chatDidNotConnectWithError error: NSError!) {
+    func chatService(chatService: QMChatService, chatDidNotConnectWithError error: NSError) {
         SVProgressHUD.showErrorWithStatus(error.localizedDescription)
     }
     
-    func chatServiceChatDidReconnect(chatService: QMChatService!) {
+    func chatServiceChatDidReconnect(chatService: QMChatService) {
         SVProgressHUD.showSuccessWithStatus("SA_STR_RECONNECTED".localized)
         self.getDialogs()
     }
