@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3828E8A01CE19B850025BE34 /* TaskDetailsPopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828E89F1CE19B850025BE34 /* TaskDetailsPopViewController.swift */; };
 		3828E8B01CE9B1FE0025BE34 /* IncomingCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828E8AF1CE9B1FE0025BE34 /* IncomingCallVC.swift */; };
+		3828E8BE1CE9CFBC0025BE34 /* PrivateVideoChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828E8BD1CE9CFBC0025BE34 /* PrivateVideoChatVC.swift */; };
+		3828E8C11CEAD26A0025BE34 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828E8C01CEAD26A0025BE34 /* LocalVideoView.swift */; };
 		3894E8CC1CDB3A9000486954 /* QMUsersCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */; };
 		3894E8CE1CDB3AA500486954 /* QMContactListCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */; };
 		3894E8D01CDB3ABE00486954 /* QMChatCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CF1CDB3ABE00486954 /* QMChatCacheModel.bundle */; };
@@ -67,6 +69,8 @@
 		313C9CD4075A1DCC2CFCB1D9 /* Pods-JSQumunicateTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSQumunicateTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-JSQumunicateTest/Pods-JSQumunicateTest.release.xcconfig"; sourceTree = "<group>"; };
 		3828E89F1CE19B850025BE34 /* TaskDetailsPopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDetailsPopViewController.swift; sourceTree = "<group>"; };
 		3828E8AF1CE9B1FE0025BE34 /* IncomingCallVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCallVC.swift; sourceTree = "<group>"; };
+		3828E8BD1CE9CFBC0025BE34 /* PrivateVideoChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateVideoChatVC.swift; sourceTree = "<group>"; };
+		3828E8C01CEAD26A0025BE34 /* LocalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoView.swift; sourceTree = "<group>"; };
 		3894E8B41CDB392B00486954 /* QMServices.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QMServices.xcodeproj; path = Vendor/QMServices/QMServices.xcodeproj; sourceTree = "<group>"; };
 		3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMUsersCacheModel.bundle; path = Vendor/QMServices/QMUsersCache/QMUsersCacheModel.bundle; sourceTree = "<group>"; };
 		3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMContactListCacheModel.bundle; path = Vendor/QMServices/QMContactListCache/QMContactListCacheModel.bundle; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 				38A83C101CAE751E0079EB0C /* ChatVC.swift */,
 				3828E89F1CE19B850025BE34 /* TaskDetailsPopViewController.swift */,
 				3828E8AF1CE9B1FE0025BE34 /* IncomingCallVC.swift */,
+				3828E8BD1CE9CFBC0025BE34 /* PrivateVideoChatVC.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -226,6 +231,7 @@
 				389F34BD1CE04A6C00068745 /* JSQTaskCellOutgoing.xib */,
 				389F34B91CE0478D00068745 /* JSQTaskCellIncoming.swift */,
 				389F34BB1CE049E000068745 /* JSQTaskCellOutgoing.swift */,
+				3828E8C01CEAD26A0025BE34 /* LocalVideoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -428,10 +434,12 @@
 				38A83BD61CABA4DC0079EB0C /* UIImage+fixOrientation.m in Sources */,
 				389F34BC1CE049E000068745 /* JSQTaskCellOutgoing.swift in Sources */,
 				38A83BCF1CABA39C0079EB0C /* NotificationService.swift in Sources */,
+				3828E8BE1CE9CFBC0025BE34 /* PrivateVideoChatVC.swift in Sources */,
 				38A83BE61CABA80E0079EB0C /* AlertView.swift in Sources */,
 				38A83BEE1CABAF560079EB0C /* DialogsViewController.swift in Sources */,
 				38A83BE91CABA80E0079EB0C /* DialogTableViewCell.swift in Sources */,
 				38A83BEA1CABA80E0079EB0C /* UserTableViewCell.swift in Sources */,
+				3828E8C11CEAD26A0025BE34 /* LocalVideoView.swift in Sources */,
 				38A83BE81CABA80E0079EB0C /* CornerView.swift in Sources */,
 				38A83BB81CA92AA20079EB0C /* AppDelegate.swift in Sources */,
 				3828E8A01CE19B850025BE34 /* TaskDetailsPopViewController.swift in Sources */,

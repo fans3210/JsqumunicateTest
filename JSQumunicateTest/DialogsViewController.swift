@@ -286,7 +286,7 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+        if (editingStyle == .Delete) {
             
             let dialog = DialogsViewController.dialogs()[indexPath.row]
             

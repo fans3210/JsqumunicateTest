@@ -20,7 +20,7 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingBubble: JSQMessagesBubbleImage!
     var typingTimer: NSTimer?
-    var currentSession: QBRTCSession?
+    private var currentSession: QBRTCSession?
     
     lazy var toolbarAlertVC: UIAlertController = {
         let alertVC = UIAlertController(title: "Action", message: "Select One", preferredStyle: .ActionSheet)
@@ -37,8 +37,16 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
             }
 
             let newSession = QBRTCClient.instance().createNewSessionWithOpponents(oppoentIds, withConferenceType: .Video)
+            print("create session with oppoentIds \(oppoentIds)")
+            
             self.currentSession = newSession
-
+            
+            //go to private videochat vc
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let privateVideoChatVC = self.storyboard?.instantiateViewControllerWithIdentifier("privateVideoChat") as? PrivateVideoChatVC {
+                privateVideoChatVC.session = self.currentSession
+                self.presentViewController(privateVideoChatVC, animated: true, completion: nil)
+            }
         }
         
         let audioCallAction = UIAlertAction(title: "Audio Call", style: .Default, handler: { _ in
@@ -263,21 +271,51 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
 
 //MARK: video call delegates
 extension ChatVC: QBRTCClientDelegate {
+    
     func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
-        guard let currentSession = currentSession else {
-            let userInfo = ["reject" : "busy"]
-            session.rejectCall(userInfo)
+        print("🐲🐲did receive new session")
+        guard let _ = currentSession else {
+            QBRTCSoundRouter.instance().initialize()
+            currentSession = session
+            if let incomingCallVC = storyboard?.instantiateViewControllerWithIdentifier("IncomingCall") as? IncomingCallVC {
+                incomingCallVC.session = currentSession
+                incomingCallVC.delegate = self
+                self.presentViewController(incomingCallVC, animated: true, completion: nil)
+            }
             return
         }
-        self.currentSession = currentSession
-        QBRTCSoundRouter.instance().initialize()
         
-        if let incomingCallVC = storyboard?.instantiateViewControllerWithIdentifier("IncomingCall") as? IncomingCallVC {
-            incomingCallVC.session = currentSession
-            self.presentViewController(incomingCallVC, animated: true, completion: nil)
+        let userInfo = ["reject" : "busy"]
+        session.rejectCall(userInfo)
+
+    }
+    
+    
+    func sessionDidClose(session: QBRTCSession!) {
+        print("🌰🌰🌰session did close")
+    }
+    
+}
+
+
+
+
+
+//MARK: incomingCallVC delegate
+extension ChatVC: IncomingCallVCDelegate {
+    func incomingCallVC(vc: IncomingCallVC, didAcceptSession session: QBRTCSession) {
+        if let privateVideoChatVC = self.storyboard?.instantiateViewControllerWithIdentifier("privateVideoChat") as? PrivateVideoChatVC {
+            currentSession = session
+            privateVideoChatVC.session = self.currentSession
+            self.presentViewController(privateVideoChatVC, animated: true, completion: nil)
         }
     }
+    
+    func incomingCallVC(vc: IncomingCallVC, didRejectSession session: QBRTCSession) {
+        currentSession = nil
+    }
 }
+
 
 
 
@@ -380,10 +418,11 @@ extension ChatVC: JSQMessagesCollectionViewCellDelegate {
     func messagesCollectionViewCellDidTapCell(cell: JSQMessagesCollectionViewCell, atPosition position: CGPoint) {
         
         if cell is JSQTaskCellIncoming {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let taskDetailsPopVC = storyboard.instantiateViewControllerWithIdentifier("taskDetailsPop")
-            taskDetailsPopVC.modalPresentationStyle = .Custom
-            self.navigationController?.presentViewController(taskDetailsPopVC, animated: true, completion: nil)
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let taskDetailsPopVC = storyboard?.instantiateViewControllerWithIdentifier("taskDetailsPop") {
+                taskDetailsPopVC.modalPresentationStyle = .Custom
+                	self.navigationController?.presentViewController(taskDetailsPopVC, animated: true, completion: nil)
+            }
         }
     }
     
