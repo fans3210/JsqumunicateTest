@@ -11,6 +11,7 @@
 		3828E8B01CE9B1FE0025BE34 /* IncomingCallVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828E8AF1CE9B1FE0025BE34 /* IncomingCallVC.swift */; };
 		3828E8BE1CE9CFBC0025BE34 /* PrivateVideoChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828E8BD1CE9CFBC0025BE34 /* PrivateVideoChatVC.swift */; };
 		3828E8C11CEAD26A0025BE34 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3828E8C01CEAD26A0025BE34 /* LocalVideoView.swift */; };
+		3879BAAE1CF55E4000BD5808 /* NoAutoLayoutStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3879BAAD1CF55E4000BD5808 /* NoAutoLayoutStoryboard.storyboard */; };
 		3894E8CC1CDB3A9000486954 /* QMUsersCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */; };
 		3894E8CE1CDB3AA500486954 /* QMContactListCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */; };
 		3894E8D01CDB3ABE00486954 /* QMChatCacheModel.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3894E8CF1CDB3ABE00486954 /* QMChatCacheModel.bundle */; };
@@ -71,6 +72,7 @@
 		3828E8AF1CE9B1FE0025BE34 /* IncomingCallVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IncomingCallVC.swift; sourceTree = "<group>"; };
 		3828E8BD1CE9CFBC0025BE34 /* PrivateVideoChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateVideoChatVC.swift; sourceTree = "<group>"; };
 		3828E8C01CEAD26A0025BE34 /* LocalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoView.swift; sourceTree = "<group>"; };
+		3879BAAD1CF55E4000BD5808 /* NoAutoLayoutStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NoAutoLayoutStoryboard.storyboard; sourceTree = "<group>"; };
 		3894E8B41CDB392B00486954 /* QMServices.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QMServices.xcodeproj; path = Vendor/QMServices/QMServices.xcodeproj; sourceTree = "<group>"; };
 		3894E8CB1CDB3A9000486954 /* QMUsersCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMUsersCacheModel.bundle; path = Vendor/QMServices/QMUsersCache/QMUsersCacheModel.bundle; sourceTree = "<group>"; };
 		3894E8CD1CDB3AA500486954 /* QMContactListCacheModel.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = QMContactListCacheModel.bundle; path = Vendor/QMServices/QMContactListCache/QMContactListCacheModel.bundle; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				38A83BCC1CABA39C0079EB0C /* Services */,
 				38A83BB71CA92AA20079EB0C /* AppDelegate.swift */,
 				38A83BD91CABA7280079EB0C /* Main.storyboard */,
+				3879BAAD1CF55E4000BD5808 /* NoAutoLayoutStoryboard.storyboard */,
 				38A83BBE1CA92AA20079EB0C /* Assets.xcassets */,
 				38A83BC01CA92AA20079EB0C /* LaunchScreen.storyboard */,
 				38A83BC31CA92AA20079EB0C /* Info.plist */,
@@ -364,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				38A83BC21CA92AA20079EB0C /* LaunchScreen.storyboard in Resources */,
+				3879BAAE1CF55E4000BD5808 /* NoAutoLayoutStoryboard.storyboard in Resources */,
 				38A83BEC1CABAB760079EB0C /* Localizable.strings in Resources */,
 				3894E8D01CDB3ABE00486954 /* QMChatCacheModel.bundle in Resources */,
 				3894E8CC1CDB3A9000486954 /* QMUsersCacheModel.bundle in Resources */,

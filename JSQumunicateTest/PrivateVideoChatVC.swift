@@ -63,6 +63,7 @@ class PrivateVideoChatVC: UIViewController {
         if session?.conferenceType == .Video {
             //config local video view
             let localVideoView = LocalVideoView(previewLayer: cameraCapture.previewLayer, frame: localVideoViewContainer.frame)
+            localVideoView.contentMode = .ScaleAspectFit
             self.localVideoView = localVideoView
             localVideoViewContainer.addSubview(self.localVideoView)
         }
@@ -72,7 +73,7 @@ class PrivateVideoChatVC: UIViewController {
     private func configRemoteVideoView(userId: NSNumber) {
         if session?.conferenceType == .Video {
             
-            let remoteVideoView = QBRTCRemoteVideoView(frame: CGRectMake(100, 300, localVideoViewContainer.frame.size.width+30, localVideoViewContainer.frame.size.height+30))
+            let remoteVideoView = QBRTCRemoteVideoView(frame: remoteVideoViewContainer.frame)
             remoteVideoViewContainer.backgroundColor = UIColor.blueColor()
             remoteVideoView.backgroundColor = UIColor.orangeColor()
             remoteVideoView.contentMode = .ScaleAspectFit

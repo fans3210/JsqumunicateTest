@@ -14,6 +14,8 @@ import JSQMessagesViewController
 typealias SenderId = String
 
 class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
+    
+    
     var dialog: QBChatDialog?
     var messages = [JSQMessage]()
     var richMessages = [JSQRichMessage]()
@@ -59,6 +61,7 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         
         return alertVC
     }()
+    
     
     
     private func setupBubbles() {
@@ -137,12 +140,28 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         
         //config Videocall
         configVideoCall()
+
+////        //setup overlay, difficult, maybe just use a transparent small overlay in center and hide the collectionview first
+//        collectionView.hidden = true
+//        
+//        let overLay = UIView(frame: CGRectMake(collectionView.frame.origin.x + 10, collectionView.frame.origin.y + 20, collectionView.frame.size.width, collectionView.frame.size.height))
+//        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+//        overLay.addSubview(indicator)
+//        indicator.startAnimating()
+//        indicator.center = collectionView.center
+//        overLay.backgroundColor = UIColor.greenColor()
+//        
+//        let v = overLay
+//        collectionView.superview!.addSubview(v)
+        
+        
+        collectionView.backgroundColor = UIColor.blackColor()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatVC.sendStopTyping), name: UIApplicationWillResignActiveNotification, object: nil)
-        
         loadMessages()
 
     }
@@ -205,7 +224,7 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     
     //will not use loadearliermessages func, becuase it's just used for pagenation
-    //this should be the first time when we got the message from internet
+    //this should be the first time when we got the  message from internet
     private func retrieveMessagesFromCacheAndOL() {
         //this function load messages from both cache and network
         
@@ -226,7 +245,7 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
                     }
                 }
 
-                self.finishReceivingMessage()
+                self.finishReceivingMessage()//should move this line out of the function, add completion handler
                
             }
         }

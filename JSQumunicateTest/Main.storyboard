@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6S5-ka-IgZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6S5-ka-IgZ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -408,6 +408,13 @@
                                     <action selector="dismiss:" destination="LsD-Tf-GlE" eventType="touchUpInside" id="qqM-uB-JLC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l9e-49-qZB">
+                                <rect key="frame" x="15" y="107" width="298" height="30"/>
+                                <state key="normal" title="go to another storyboard withoutautolayout"/>
+                                <connections>
+                                    <segue destination="fYe-MI-Ccn" kind="show" id="O4c-E4-r0D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -420,7 +427,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eOY-Cf-x0r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2902" y="168"/>
+            <point key="canvasLocation" x="2902" y="185"/>
+        </scene>
+        <!--NoAutoLayoutStoryboard-->
+        <scene sceneID="sWo-Ep-Nqc">
+            <objects>
+                <viewControllerPlaceholder storyboardName="NoAutoLayoutStoryboard" id="fYe-MI-Ccn" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GUp-Ed-1cl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3378" y="58"/>
         </scene>
         <!--PrivateVideoChat-->
         <scene sceneID="W1X-c8-9Ar">
@@ -438,7 +453,7 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3bG-Rs-da4" userLabel="RemoteVideoViewContainer">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="525"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gG-j1-s6c" userLabel="MyVideoContainerView">
@@ -471,8 +486,14 @@
                                     <constraint firstItem="3bG-Rs-da4" firstAttribute="top" secondItem="g1Z-rm-NyG" secondAttribute="top" id="QIe-ee-uWC"/>
                                     <constraint firstAttribute="bottom" secondItem="aVI-4z-0hz" secondAttribute="bottom" constant="21" id="Qfm-go-YgP"/>
                                     <constraint firstItem="6gG-j1-s6c" firstAttribute="top" secondItem="g1Z-rm-NyG" secondAttribute="top" id="c1p-8r-zSg"/>
+                                    <constraint firstAttribute="bottom" secondItem="3bG-Rs-da4" secondAttribute="bottom" id="geF-tQ-3Oq"/>
                                     <constraint firstAttribute="trailing" secondItem="3bG-Rs-da4" secondAttribute="trailing" id="wqg-MT-sPx"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Ot2-Lw-bLC"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
