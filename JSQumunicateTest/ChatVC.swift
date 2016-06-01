@@ -63,6 +63,15 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     }()
     
     
+    private func configToolbar() {
+        let contentView = inputToolbar.contentView
+        contentView.backgroundColor = UIColor.blackColor()
+        contentView.rightBarButtonItemWidth = 10
+//        contentView.rightBarButtonItem = nil
+        
+        
+        
+    }
     
     private func setupBubbles() {
         //video call handler
@@ -125,9 +134,9 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
 
         title = dialog?.name
         setupBubbles()
-        // No avatars
-        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
-        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
+//        // No avatars
+//        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
+//        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
         ServicesManager.instance().chatService.addDelegate(self)
         
         //change the default settings
@@ -138,26 +147,16 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         setUserTypingAppearance()
         configCellsBesideMessageCells()
         
+        //config toolbar buttons 
+        configToolbar()
+        
         //config Videocall
         configVideoCall()
-
-////        //setup overlay, difficult, maybe just use a transparent small overlay in center and hide the collectionview first
-//        collectionView.hidden = true
-//        
-//        let overLay = UIView(frame: CGRectMake(collectionView.frame.origin.x + 10, collectionView.frame.origin.y + 20, collectionView.frame.size.width, collectionView.frame.size.height))
-//        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-//        overLay.addSubview(indicator)
-//        indicator.startAnimating()
-//        indicator.center = collectionView.center
-//        overLay.backgroundColor = UIColor.greenColor()
-//        
-//        let v = overLay
-//        collectionView.superview!.addSubview(v)
-        
         
         collectionView.backgroundColor = UIColor.blackColor()
         
     }
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -165,6 +164,8 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         loadMessages()
 
     }
+    
+    
     
     
     override func viewDidDisappear(animated: Bool) {
@@ -193,7 +194,7 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         
         if richMessage.isMediaMessage {
             let photoMediaItem = richMessage.media as! JSQPhotoMediaItem
-            photoMediaItem.appliesMediaViewMaskAsOutgoing = richMessage.senderId == self.senderId
+            photoMediaItem.appliesMediaViewMaskAsOutgoing = richMessage.senderId ==  "\(dialog?.userID)"
         }
         
         return richMessage
@@ -343,6 +344,15 @@ extension ChatVC: IncomingCallVCDelegate {
 //qmviewcontroller has more than 1 sections while jsqvc only have one, jsq use delegate methods to add timestamps
 
 extension ChatVC {
+    
+    override func senderId() -> String {
+        return "\(ServicesManager.instance().currentUser()!.ID)"
+    }
+    
+    override func senderDisplayName() -> String {
+        return "\(ServicesManager.instance().currentUser()!.ID)" 
+    }
+    
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
         
         return richMessages[indexPath.item]
@@ -357,7 +367,7 @@ extension ChatVC {
                                  messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
         
         let richMessage = richMessages[indexPath.item]
-        if richMessage.senderId == senderId {
+        if richMessage.senderId == "\(dialog?.userID)" {
             return outgoingBubble
         } else {
             return incomingBubble
@@ -366,7 +376,18 @@ extension ChatVC {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!,
                                  avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return nil
+        
+        //simple fake algo
+        if indexPath.item % 2 == 0 {
+            let avatar1Image = JSQMessagesAvatarImageFactory.avatarImageWithUserInitials("av1", backgroundColor: UIColor.whiteColor(), textColor: UIColor.blackColor(), font: UIFont.systemFontOfSize(12), diameter: 30)
+            return avatar1Image
+            
+            
+        } else {
+            let avatar2Image = JSQMessagesAvatarImageFactory.avatarImageWithUserInitials("av2", backgroundColor: UIColor.whiteColor(), textColor: UIColor.blackColor(), font: UIFont.systemFontOfSize(12), diameter: 30)
+            return avatar2Image
+        }
+        
     }
     
     private struct Commands {
@@ -377,7 +398,7 @@ extension ChatVC {
     
     override func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let richMessage = richMessages[indexPath.item]
-        let isOutgoingMessage = richMessage.senderId == senderId
+        let isOutgoingMessage = richMessage.senderId == "\(dialog?.userID)"
         
         if richMessage.text.containsString(Commands.commandTask) {
             if !isOutgoingMessage {
@@ -395,7 +416,7 @@ extension ChatVC {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let richMessage = richMessages[indexPath.item];
-        let isOutgoingMessage = richMessage.senderId == senderId
+        let isOutgoingMessage = richMessage.senderId == "\(dialog?.userID)"
         
         if richMessage.text.containsString(Commands.commandTask) {
             //special type of cell

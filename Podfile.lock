@@ -1,5 +1,5 @@
 PODS:
-  - JSQMessagesViewController (7.2.0):
+  - JSQMessagesViewController (7.3.1):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
   - Quickblox-WebRTC (2.2)
@@ -8,20 +8,30 @@ PODS:
   - UIView+Shake (1.1.5)
 
 DEPENDENCIES:
-  - JSQMessagesViewController
+  - JSQMessagesViewController (from `https://github.com/jessesquires/JSQMessagesViewController.git`, branch `develop`)
   - Quickblox-WebRTC (~> 2.2)
   - SVProgressHUD
   - TWMessageBarManager (~> 1.7.2)
   - UIView+Shake
 
+EXTERNAL SOURCES:
+  JSQMessagesViewController:
+    :branch: develop
+    :git: https://github.com/jessesquires/JSQMessagesViewController.git
+
+CHECKOUT OPTIONS:
+  JSQMessagesViewController:
+    :commit: b424d4aa93381a2efc7bb19a89985b028daee92f
+    :git: https://github.com/jessesquires/JSQMessagesViewController.git
+
 SPEC CHECKSUMS:
-  JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
+  JSQMessagesViewController: 848c2110ef978f4bf01e0329e85b1940cd719a92
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   Quickblox-WebRTC: 4575357666869f1d517eaef7da3d70da09f66686
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   TWMessageBarManager: e7adc066ee425174f5dee79473fce913b1cd1662
   UIView+Shake: 2d2185006d38ee5daed07f14c0989f703f86682f
 
-PODFILE CHECKSUM: 169887661f49b27104ff2264310f56121b01f96d
+PODFILE CHECKSUM: d31f4da734939859641abd09c34b1eeb3ae9bdab
 
 COCOAPODS: 1.0.0.rc.2

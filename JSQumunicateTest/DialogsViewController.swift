@@ -129,13 +129,16 @@ class DialogsViewController: UITableViewController, QMChatServiceDelegate, QMCha
 //                
 //                
 //            }
-            if let ChatVC = segue.destinationViewController as? ChatVC, sender = sender as? QBChatDialog {
+            if let chatvc = segue.destinationViewController as? ChatVC, sender = sender as? QBChatDialog {
                 if let currentUserLogin = ServicesManager.instance().currentUser()!.login {
                     let currentUserId = "\(ServicesManager.instance().currentUser()!.ID)"
                     print("current user login is \(currentUserLogin), id is \(currentUserId)")
-                    ChatVC.senderDisplayName = currentUserId ?? "default user id"
-                    ChatVC.senderId = currentUserId ?? "default user id"
-                    ChatVC.dialog = sender
+                    
+                    chatvc.dialog = sender
+                    
+//                    chatvc.senderDisplayName = currentUserId ?? "default user id"
+//                    chatvc.senderId = currentUserId ?? "default user id"
+//                    ChatVC.dialog = sender
                 }
                 
                 
