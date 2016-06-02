@@ -24,6 +24,8 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     var typingTimer: NSTimer?
     private var currentSession: QBRTCSession?
     
+    private var previousCvWidth: CGFloat = 0.0
+    
     lazy var toolbarAlertVC: UIAlertController = {
         let alertVC = UIAlertController(title: "Action", message: "Select One", preferredStyle: .ActionSheet)
         
@@ -135,27 +137,19 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         QMChatCache.instance()!.messagesLimitPerDialog = 100
         
         
+        
+        
         setUserTypingAppearance()
         configCellsBesideMessageCells()
         
         //config Videocall
         configVideoCall()
 
-////        //setup overlay, difficult, maybe just use a transparent small overlay in center and hide the collectionview first
-//        collectionView.hidden = true
-//        
-//        let overLay = UIView(frame: CGRectMake(collectionView.frame.origin.x + 10, collectionView.frame.origin.y + 20, collectionView.frame.size.width, collectionView.frame.size.height))
-//        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-//        overLay.addSubview(indicator)
-//        indicator.startAnimating()
-//        indicator.center = collectionView.center
-//        overLay.backgroundColor = UIColor.greenColor()
-//        
-//        let v = overLay
-//        collectionView.superview!.addSubview(v)
         
-        
+        //config vc
+        previousCvWidth = CGRectGetWidth(collectionView.frame)
         collectionView.backgroundColor = UIColor.blackColor()
+        
         
     }
     
@@ -164,6 +158,18 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatVC.sendStopTyping), name: UIApplicationWillResignActiveNotification, object: nil)
         loadMessages()
 
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if CGRectGetWidth(collectionView.frame) != previousCvWidth {
+            
+            //save frame value from next comparison
+            previousCvWidth = CGRectGetWidth(collectionView.frame)
+            let context = JSQMessagesCollectionViewFlowLayoutInvalidationContext()
+            context.invalidateFlowLayoutMessagesCache = true
+            collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
+        }
     }
     
     
@@ -379,15 +385,18 @@ extension ChatVC {
         let richMessage = richMessages[indexPath.item]
         let isOutgoingMessage = richMessage.senderId == senderId
         
-        if richMessage.text.containsString(Commands.commandTask) {
-            if !isOutgoingMessage {
-                return CGSizeMake(320, 154)
-            } else {
-                return CGSizeMake(320, 61)
+//        if richMessage.text == Commands.commandTask {
+//            if !isOutgoingMessage {
+//                return CGSizeMake(320, 154)
+//            } else {
+//                return CGSizeMake(320, 61)
+//            }
+//        } else {
+            if indexPath.row == richMessages.count - 1 {
+                print("collectionview final cell size is \(super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: indexPath)), final cell content is \(richMessage.text)")
             }
-        } else {
             return super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: indexPath)
-        }
+//        }
     }
     
     
@@ -397,24 +406,24 @@ extension ChatVC {
         let richMessage = richMessages[indexPath.item];
         let isOutgoingMessage = richMessage.senderId == senderId
         
-        if richMessage.text.containsString(Commands.commandTask) {
-            //special type of cell
-            if !isOutgoingMessage {
-                //is icoming
-                let taskIncomingcell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellIncoming.cellReuseIdentifier(), forIndexPath: indexPath) as! JSQTaskCellIncoming
-                taskIncomingcell.delegate = self
-                taskIncomingcell.taskCellDelegate = self
-                return taskIncomingcell
-            } else {
-                //ougoing task cell
-                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellOutgoing.cellReuseIdentifier(), forIndexPath: indexPath) as! JSQTaskCellOutgoing
-                return cell
-            }
-        } else {
+//        if richMessage.text == Commands.commandTask {
+//            //special type of cell
+//            if !isOutgoingMessage {
+//                //is icoming
+//                let taskIncomingcell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellIncoming.cellReuseIdentifier(), forIndexPath: indexPath) as! JSQTaskCellIncoming
+//                taskIncomingcell.delegate = self
+//                taskIncomingcell.taskCellDelegate = self
+//                return taskIncomingcell
+//            } else {
+//                //ougoing task cell
+//                let cell = collectionView.dequeueReusableCellWithReuseIdentifier(JSQTaskCellOutgoing.cellReuseIdentifier(), forIndexPath: indexPath) as! JSQTaskCellOutgoing
+//                return cell
+//            }
+//        } else {
             //normal cell
             let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
             return cell
-        }
+//        }
     }
     
 //    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
