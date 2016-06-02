@@ -131,6 +131,8 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         // Do any additional setup after loading the view, typically from a nib.
 //        senderId = "123"
 //        senderDisplayName = "fans"
+        
+        print("current user id is \(ServicesManager.instance().currentUser()!.ID)")
 
         title = dialog?.name
         setupBubbles()
@@ -194,7 +196,7 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         
         if richMessage.isMediaMessage {
             let photoMediaItem = richMessage.media as! JSQPhotoMediaItem
-            photoMediaItem.appliesMediaViewMaskAsOutgoing = richMessage.senderId ==  "\(dialog?.userID)"
+            photoMediaItem.appliesMediaViewMaskAsOutgoing = richMessage.senderId ==  "\(ServicesManager.instance().currentUser()!.ID)"
         }
         
         return richMessage
@@ -350,7 +352,7 @@ extension ChatVC {
     }
     
     override func senderDisplayName() -> String {
-        return "\(ServicesManager.instance().currentUser()!.ID)" 
+        return "\(ServicesManager.instance().currentUser()!.ID)"
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
@@ -367,7 +369,8 @@ extension ChatVC {
                                  messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
         
         let richMessage = richMessages[indexPath.item]
-        if richMessage.senderId == "\(dialog?.userID)" {
+//        print("dialog userId is \(dialog?.userID)")
+        if richMessage.senderId == "\(ServicesManager.instance().currentUser()!.ID)" {
             return outgoingBubble
         } else {
             return incomingBubble
@@ -398,7 +401,7 @@ extension ChatVC {
     
     override func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let richMessage = richMessages[indexPath.item]
-        let isOutgoingMessage = richMessage.senderId == "\(dialog?.userID)"
+        let isOutgoingMessage = richMessage.senderId == "\(ServicesManager.instance().currentUser()!.ID)"
         
         if richMessage.text.containsString(Commands.commandTask) {
             if !isOutgoingMessage {
@@ -416,7 +419,7 @@ extension ChatVC {
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let richMessage = richMessages[indexPath.item];
-        let isOutgoingMessage = richMessage.senderId == "\(dialog?.userID)"
+        let isOutgoingMessage = richMessage.senderId == "\(ServicesManager.instance().currentUser()!.ID)"
         
         if richMessage.text.containsString(Commands.commandTask) {
             //special type of cell
