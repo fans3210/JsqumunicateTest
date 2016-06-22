@@ -14,7 +14,7 @@ class JSQTaskCellOutgoing: JSQMessagesCollectionViewCellOutgoing {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor.orangeColor()
+        backgroundColor = UIColor.orange()
     }
 
 }

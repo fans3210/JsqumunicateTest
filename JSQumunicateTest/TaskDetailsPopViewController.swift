@@ -17,7 +17,7 @@ class TaskDetailsPopViewController: UIViewController {
     }
 
     @IBAction func dismiss(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

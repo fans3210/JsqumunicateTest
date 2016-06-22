@@ -24,12 +24,12 @@ class IncomingCallVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        QBRTCClient.instance().addDelegate(self)
+        QBRTCClient.instance().add(self)
         
     }
     
     func cleanUp() {
-        QBRTCClient.instance().removeDelegate(self)
+        QBRTCClient.instance().remove(self)
         QBRTCSoundRouter.instance().deinitialize()
     }
     
@@ -47,14 +47,15 @@ class IncomingCallVC: UIViewController {
     @IBAction func accept(sender: UIButton) {
 
 //        acceptCall()
-        dismissViewControllerAnimated(true, completion: nil)
-        delegate?.incomingCallVC(self, didAcceptSession: session)
+        dismiss(animated: true, completion: nil)
+//        delegate?.incomingCallVC(self, didAcceptSession: session)
+        delegate?.incomingCallVC(vc: self, didAcceptSession: session)
     }
     @IBAction func reject(sender: UIButton) {
         
         rejectCall()
-        dismissViewControllerAnimated(true, completion: nil)
-        delegate?.incomingCallVC(self, didRejectSession: session)
+        dismiss(animated: true, completion: nil)
+        delegate?.incomingCallVC(vc: self, didRejectSession: session)
     }
     
     

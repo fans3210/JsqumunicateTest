@@ -23,8 +23,8 @@ class AlertView: NSObject, UIAlertViewDelegate {
         alert.delegate = self
         
         //Add buttons from otherButtonTitle
-        for (_, title) in otherButtonTitle.enumerate() {
-            alert.addButtonWithTitle(title)
+        for (_, title) in otherButtonTitle.enumerated() {
+            alert.addButton(withTitle: title)
         }
         
         self.callBack = closure

@@ -24,7 +24,7 @@ class ServicesManager: QMServicesManager {
         UIColor(red: 0.580, green:0.012, blue:0.580, alpha:1.000),
         UIColor(red: 0.396, green:0.580, blue:0.773, alpha:1.000),
         UIColor(red: 0.765, green:0.000, blue:0.086, alpha:1.000),
-        UIColor.redColor(),
+        UIColor.red(),
         UIColor(red: 0.786, green:0.706, blue:0.000, alpha:1.000),
         UIColor(red: 0.740, green:0.624, blue:0.797, alpha:1.000)
     ]
@@ -51,14 +51,14 @@ class ServicesManager: QMServicesManager {
             return
         }
         
-        if message.senderID == self.currentUser()!.ID {
+        if message.senderID == self.currentUser()!.id {
             return
         }
         
-        let dialog = self.chatService.dialogsMemoryStorage.chatDialogWithID(dialogID)
+        let dialog = self.chatService.dialogsMemoryStorage.chatDialog(withID: dialogID)
         var dialogName = "SA_STR_NEW_MESSAGE".localized
         
-        if dialog!.type != QBChatDialogType.Private {
+        if dialog!.type != .private {
             
             if dialog!.name != nil {
                 dialogName = dialog!.name!
@@ -66,13 +66,13 @@ class ServicesManager: QMServicesManager {
     
         } else {
             
-            if let user = ServicesManager.instance().usersService.usersMemoryStorage.userWithID(UInt(dialog!.recipientID)) {
+            if let user = ServicesManager.instance().usersService.usersMemoryStorage.user(withID: UInt(dialog!.recipientID)) {
                 dialogName = user.login!
             }
         }
         
         TWMessageBarManager.sharedInstance().hideAll()
-        TWMessageBarManager.sharedInstance().showMessageWithTitle(dialogName, description: message.text, type: .Info)
+        TWMessageBarManager.sharedInstance().showMessage(withTitle: dialogName, description: message.text, type: .info)
 
     }
     
@@ -80,19 +80,19 @@ class ServicesManager: QMServicesManager {
     
     var lastActivityDate: NSDate? {
         get {
-            let defaults = NSUserDefaults.standardUserDefaults()
-            return defaults.valueForKey("SA_STR_LAST_ACTIVITY_DATE".localized) as! NSDate?
+            let defaults = UserDefaults.standard()
+            return defaults.value(forKey: "SA_STR_LAST_ACTIVITY_DATE".localized) as! NSDate?
         }
         set {
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(newValue, forKey: "SA_STR_LAST_ACTIVITY_DATE".localized)
+            let defaults = UserDefaults.standard()
+            defaults.set(newValue, forKey: "SA_STR_LAST_ACTIVITY_DATE".localized)
             defaults.synchronize()
         }
     }
 
     // MARK: QMServiceManagerProtocol
     
-    override func handleErrorResponse(response: QBResponse) {
+    override func handleErrorResponse(_ response: QBResponse) {
         super.handleErrorResponse(response)
         
         if !self.isAuthorized() {
@@ -106,41 +106,54 @@ class ServicesManager: QMServicesManager {
         } else if response.status.rawValue == 0 {
             errorMessage = "SA_STR_NETWORK_ERROR".localized
         } else {
-            errorMessage = (response.error?.error?.localizedDescription.stringByReplacingOccurrencesOfString("(", withString: "", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil).stringByReplacingOccurrencesOfString(")", withString: "", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil))!
+            
+            errorMessage = (response.error?.error?.localizedDescription.replacingOccurrences(of: "(", with: "", options: .caseInsensitiveSearch, range: nil).replacingOccurrences(of: ")", with: "", options: .caseInsensitiveSearch, range: nil))!
         }
         
         
         TWMessageBarManager.sharedInstance().hideAll()
-        TWMessageBarManager.sharedInstance().showMessageWithTitle("SA_STR_ERROR".localized, description: errorMessage, type: TWMessageBarMessageType.Error)
+        TWMessageBarManager.sharedInstance().showMessage(withTitle: "SA_STR_ERROR".localized, description: errorMessage, type: .error)
         
     }
     
-    func downloadLatestUsers(success:(([QBUUser]!) -> Void)?, error:((NSError!) -> Void)?) {
+    func downloadLatestUsers(success:(([QBUUser]?) -> Void)?, error:((NSError?) -> Void)?) {
 
 //        let enviroment = Constants.QB_USERS_ENVIROMENT
-        
-        self.usersService.searchUsersWithTags(["SvDev"]).continueWithBlock {
-            [weak self] (task : BFTask!) -> AnyObject! in
+        let searchUsertask = usersService.searchUsers(withTags: ["SvDev"])
+        //why cannot use trailing closures? WIll cause 'ambiguous use of xxx issue'
+        searchUsertask.continue({[unowned self] (task: BFTask!) -> AnyObject! in
             if (task.error != nil) {
                 error?(task.error)
                 return nil
             }
             
-            success?(self?.filteredUsersByCurrentEnvironment())
+            success?(self.filteredUsersByCurrentEnvironment())
             
             return nil
-        }
+        })
+        
+//        usersService.searchUsers(withTags: ["SvDev"]).continue {
+//            [weak self] (task : BFTask!) -> AnyObject! in
+//            if (task.error != nil) {
+//                error?(task.error)
+//                return nil
+//            }
+//            
+//            success?(self?.filteredUsersByCurrentEnvironment())
+//            
+//            return nil
+//        }
     }
     
     func color(forUser user:QBUUser) -> UIColor {
         
         let users = self.usersService.usersMemoryStorage.unsortedUsers()
-        let userIndex = (users).indexOf(self.usersService.usersMemoryStorage.userWithID(user.ID)!)
+        let userIndex = (users).index(of: self.usersService.usersMemoryStorage.user(withID: user.id)!)
         
         if userIndex < self.colors.count {
             return self.colors[userIndex!]
         } else {
-            return UIColor.blackColor()
+            return UIColor.black()
         }
     }
     
@@ -170,9 +183,10 @@ class ServicesManager: QMServicesManager {
     
     // MARK: QMChatServiceDelegate
     
-    override func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
+    
+    override func chatService(_ chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
         super.chatService(chatService, didAddMessageToMemoryStorage: message, forDialogID: dialogID)
-        self.handleNewMessage(message, dialogID: dialogID)
+        self.handleNewMessage(message: message, dialogID: dialogID)
     }
     
 }

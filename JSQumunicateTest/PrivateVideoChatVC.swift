@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class PrivateVideoChatVC: UIViewController {
     
     var session: QBRTCSession!
@@ -23,9 +24,9 @@ class PrivateVideoChatVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if session.conferenceType == .Video {
+        if session.conferenceType == .video {
             
-            cameraCapture = QBRTCCameraCapture(videoFormat: QBRTCVideoFormat.defaultFormat(), position: .Back)
+            cameraCapture = QBRTCCameraCapture(videoFormat: QBRTCVideoFormat.default(), position: .back)
             
             configLocalVideoView()
             
@@ -35,8 +36,8 @@ class PrivateVideoChatVC: UIViewController {
         }
         
         let inicatorId = session.initiatorID
-        isOffer = (ServicesManager.instance().currentUser()?.ID == inicatorId) ?? false
-        QBRTCClient.instance().addDelegate(self)
+        isOffer = (ServicesManager.instance().currentUser()?.id == inicatorId) ?? false
+        QBRTCClient.instance().add(self)
         
         QBRTCSoundRouter.instance().initialize()
         
@@ -53,17 +54,17 @@ class PrivateVideoChatVC: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         
     }
     
     private func configLocalVideoView() {
-        if session?.conferenceType == .Video {
+        if session?.conferenceType == .video {
             //config local video view
             let localVideoView = LocalVideoView(previewLayer: cameraCapture.previewLayer, frame: localVideoViewContainer.frame)
-            localVideoView.contentMode = .ScaleAspectFit
+            localVideoView.contentMode = .scaleAspectFit
             self.localVideoView = localVideoView
             localVideoViewContainer.addSubview(self.localVideoView)
         }
@@ -71,14 +72,14 @@ class PrivateVideoChatVC: UIViewController {
     }
     
     private func configRemoteVideoView(userId: NSNumber) {
-        if session?.conferenceType == .Video {
+        if session?.conferenceType == .video {
             
             let remoteVideoView = QBRTCRemoteVideoView(frame: remoteVideoViewContainer.frame)
-            remoteVideoViewContainer.backgroundColor = UIColor.blueColor()
-            remoteVideoView.backgroundColor = UIColor.orangeColor()
-            remoteVideoView.contentMode = .ScaleAspectFit
+            remoteVideoViewContainer.backgroundColor = UIColor.blue()
+            remoteVideoView.backgroundColor = UIColor.orange()
+            remoteVideoView.contentMode = .scaleAspectFit
             
-            let remoteVideoTrack = session.remoteVideoTrackWithUserID(userId)
+            let remoteVideoTrack = session.remoteVideoTrack(withUserID: userId)
             remoteVideoView.setVideoTrack(remoteVideoTrack)
             
             self.remoteVideoView = remoteVideoView
@@ -103,7 +104,7 @@ class PrivateVideoChatVC: UIViewController {
     }
 
     @IBAction func dismiss(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
@@ -165,7 +166,7 @@ extension PrivateVideoChatVC: QBRTCClientDelegate {
         if session == self.session {
             //config remoteview
 //            configRemoteVideoView(userID)
-            configRemoteVideoView(userID)
+            configRemoteVideoView(userId: userID)
 
             
         }

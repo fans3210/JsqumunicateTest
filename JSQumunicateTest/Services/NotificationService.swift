@@ -48,24 +48,25 @@ class NotificationService {
         }
         
         self.delegate = delegate;
+    
         
-        ServicesManager.instance().chatService.fetchDialogWithID(self.pushDialogID!, completion: {
+        ServicesManager.instance().chatService.fetchDialog(withID: self.pushDialogID!, completion: {
             [weak self] (chatDialog) -> Void in
             if let strongSelf = self {
                 //
                 if (chatDialog != nil) {
-                    strongSelf.pushDialogID = nil;
-                    strongSelf.delegate?.notificationServiceDidSucceedFetchingDialog(chatDialog);
+                    strongSelf.pushDialogID = nil
+                    strongSelf.delegate?.notificationServiceDidSucceedFetchingDialog(chatDialog: chatDialog)
                 }
                 else {
                     //
                     strongSelf.delegate?.notificationServiceDidStartLoadingDialogFromServer()
-                    ServicesManager.instance().chatService.loadDialogWithID(strongSelf.pushDialogID!, completion: { (loadedDialog) -> Void in
+                    ServicesManager.instance().chatService.loadDialog(withID: strongSelf.pushDialogID!, completion: { (loadedDialog) -> Void in
                         //
                         strongSelf.delegate?.notificationServiceDidFinishLoadingDialogFromServer()
                         if (loadedDialog != nil) {
                             //
-                            strongSelf.delegate?.notificationServiceDidSucceedFetchingDialog(loadedDialog)
+                            strongSelf.delegate?.notificationServiceDidSucceedFetchingDialog(chatDialog: loadedDialog)
                         }
                         else {
                             strongSelf.delegate?.notificationServiceDidFailFetchingDialog()

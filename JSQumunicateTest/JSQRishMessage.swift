@@ -16,7 +16,7 @@ class JSQRichMessage: JSQMessage {
     var qbChatMessage: QBChatMessage?
 
     init(qbChatMessage: QBChatMessage) {
-        id = qbChatMessage.ID
+        id = qbChatMessage.id
         recipentID = qbChatMessage.recipientID
         
 //        if let customParams = qbChatMessage.customParameters {
@@ -30,7 +30,7 @@ class JSQRichMessage: JSQMessage {
         dialogID = qbChatMessage.dialogID
         
         //get sender displayName
-        let currentUserId = "\(ServicesManager.instance().currentUser()!.ID)"
+        let currentUserId = "\(ServicesManager.instance().currentUser()!.id)"
 //            print("current user login is \(currentUserLogin), id is \(currentUserId)")
         let senderDisplayName = currentUserId ?? "default user id"
         

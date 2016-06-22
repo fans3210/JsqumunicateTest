@@ -21,39 +21,39 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     var richMessages = [JSQRichMessage]()
     var outgoingBubble: JSQMessagesBubbleImage!
     var incomingBubble: JSQMessagesBubbleImage!
-    var typingTimer: NSTimer?
+    var typingTimer: Timer?
     private var currentSession: QBRTCSession?
     
     private var previousCvWidth: CGFloat = 0.0
     
     lazy var toolbarAlertVC: UIAlertController = {
-        let alertVC = UIAlertController(title: "Action", message: "Select One", preferredStyle: .ActionSheet)
+        let alertVC = UIAlertController(title: "Action", message: "Select One", preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        let videoCallAction = UIAlertAction(title: "Video Call", style: .Default) {[unowned self] _ in
+        let videoCallAction = UIAlertAction(title: "Video Call", style: .default) {[unowned self] _ in
             
             guard let dialog = self.dialog else {
                 return
             }
             let oppoentIds = dialog.occupantIDs?.filter {
-                $0 != dialog.userID && $0 != ServicesManager.instance().currentUser()!.ID //temporarily solution
+                $0 != dialog.userID && $0 != ServicesManager.instance().currentUser()!.id //temporarily solution
             }
 
-            let newSession = QBRTCClient.instance().createNewSessionWithOpponents(oppoentIds, withConferenceType: .Video)
+            let newSession = QBRTCClient.instance().createNewSession(withOpponents: oppoentIds, with: .video)
             print("create session with oppoentIds \(oppoentIds)")
             
             self.currentSession = newSession
             
             //go to private videochat vc
 //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let privateVideoChatVC = self.storyboard?.instantiateViewControllerWithIdentifier("privateVideoChat") as? PrivateVideoChatVC {
+            if let privateVideoChatVC = self.storyboard?.instantiateViewController(withIdentifier: "privateVideoChat") as? PrivateVideoChatVC {
                 privateVideoChatVC.session = self.currentSession
-                self.presentViewController(privateVideoChatVC, animated: true, completion: nil)
+                self.present(privateVideoChatVC, animated: true, completion: nil)
             }
         }
         
-        let audioCallAction = UIAlertAction(title: "Audio Call", style: .Default, handler: { _ in
+        let audioCallAction = UIAlertAction(title: "Audio Call", style: .default, handler: { _ in
             
         })
         
@@ -70,30 +70,30 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         //video call handler
 
         let factory = JSQMessagesBubbleImageFactory()
-        outgoingBubble = factory.outgoingMessagesBubbleImageWithColor(
-            UIColor.purpleColor())
-        incomingBubble = factory.incomingMessagesBubbleImageWithColor(
-            UIColor.jsq_messageBubbleLightGrayColor())
+        outgoingBubble = factory?.outgoingMessagesBubbleImage(
+            with: UIColor.purple())
+        incomingBubble = factory?.incomingMessagesBubbleImage(
+            with: UIColor.jsq_messageBubbleLightGray())
     }
     
     private func setUserTypingAppearance() {
         //remove this restriction for now. just for testing a group chat with 2 people
         //because group chatting can be monitored in dashboard
         //a group chatting with 2 people, occupants number is 3 since admin is included
-        if dialog?.type == .Private  || dialog?.occupantIDs?.count == 3 {
+        if dialog?.type == .private  || dialog?.occupantIDs?.count == 3 {
         
             dialog?.onUserIsTyping = {[unowned self] userId in
-                guard ServicesManager.instance().currentUser()!.ID != userId else {
+                guard ServicesManager.instance().currentUser()!.id != userId else {
                     return
                 }
                 self.showTypingIndicator = true
-                self.scrollToBottomAnimated(true)
+                self.scrollToBottom(animated: true)
             }
 
             
             
             dialog?.onUserStoppedTyping = {[unowned self] userId in
-                guard ServicesManager.instance().currentUser()!.ID != userId else {
+                guard ServicesManager.instance().currentUser()!.id != userId else {
                     return
                 }
                 self.collectionView.performBatchUpdates({
@@ -107,15 +107,15 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     //config other cells beside message cells, like tasks etc
     private func configCellsBesideMessageCells() {
-        let jsqTaskCellIncomingNib = UINib(nibName: "JSQTaskCellIncoming", bundle: NSBundle.mainBundle())
-        collectionView.registerNib(jsqTaskCellIncomingNib, forCellWithReuseIdentifier: JSQTaskCellIncoming.cellReuseIdentifier())
+        let jsqTaskCellIncomingNib = UINib(nibName: "JSQTaskCellIncoming", bundle: Bundle.main())
+        collectionView.register(jsqTaskCellIncomingNib, forCellWithReuseIdentifier: JSQTaskCellIncoming.cellReuseIdentifier())
         
-        let jsqTaskCellOutgoingNib = UINib(nibName: "JSQTaskCellOutgoing", bundle: NSBundle.mainBundle())
-        collectionView.registerNib(jsqTaskCellOutgoingNib, forCellWithReuseIdentifier: JSQTaskCellOutgoing.cellReuseIdentifier())
+        let jsqTaskCellOutgoingNib = UINib(nibName: "JSQTaskCellOutgoing", bundle: Bundle.main())
+        collectionView.register(jsqTaskCellOutgoingNib, forCellWithReuseIdentifier: JSQTaskCellOutgoing.cellReuseIdentifier())
     }
     
     private func configVideoCall() {
-        QBRTCClient.instance().addDelegate(self)
+        QBRTCClient.instance().add(self)
     }
     
     
@@ -128,8 +128,9 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         title = dialog?.name
         setupBubbles()
         // No avatars
-        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
-        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
+        
+        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
+        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         ServicesManager.instance().chatService.addDelegate(self)
         
         //change the default settings
@@ -147,35 +148,36 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
 
         
         //config vc
-        previousCvWidth = CGRectGetWidth(collectionView.frame)
-        collectionView.backgroundColor = UIColor.blackColor()
+        
+        previousCvWidth = collectionView.frame.width
+        collectionView.backgroundColor = UIColor.black()
         
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatVC.sendStopTyping), name: UIApplicationWillResignActiveNotification, object: nil)
+        NotificationCenter.default().addObserver(self, selector: #selector(ChatVC.sendStopTyping), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
         loadMessages()
 
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if CGRectGetWidth(collectionView.frame) != previousCvWidth {
+        if collectionView.frame.width != previousCvWidth {
             
             //save frame value from next comparison
-            previousCvWidth = CGRectGetWidth(collectionView.frame)
+            previousCvWidth = collectionView.frame.width
             let context = JSQMessagesCollectionViewFlowLayoutInvalidationContext()
             context.invalidateFlowLayoutMessagesCache = true
-            collectionView.collectionViewLayout.invalidateLayoutWithContext(context)
+            collectionView.collectionViewLayout.invalidateLayout(with: context)
         }
     }
     
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default().removeObserver(self)
         
         ServicesManager.instance().currentDialogID = ""
         dialog?.clearTypingStatusBlocks()
@@ -184,8 +186,8 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     
     private func storedInMemoryMessages() -> [JSQRichMessage]? {
         
-        let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messagesWithDialogID((dialog?.ID)!)).map {[unowned self] in
-            self.mapQBChatToJSQRich($0)
+        let messages = (ServicesManager.instance().chatService.messagesMemoryStorage.messages(withDialogID: (dialog?.id)!)).map {[unowned self] in
+            self.mapQBChatToJSQRich(qbChatMessage: $0)
         }
         
         return messages
@@ -210,7 +212,7 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     private func loadMessages() {
         //load messages logic
         if let dialog = dialog {
-            ServicesManager.instance().currentDialogID = dialog.ID! //this is used in service manager's handlenewmessage funcs, it will stop the twmessagebarcontroller being displayed in this page when new message comes from the user is just the one u r talking to
+            ServicesManager.instance().currentDialogID = dialog.id! //this is used in service manager's handlenewmessage funcs, it will stop the twmessagebarcontroller being displayed in this page when new message comes from the user is just the one u r talking to
         }
         
         
@@ -234,14 +236,14 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
     private func retrieveMessagesFromCacheAndOL() {
         //this function load messages from both cache and network
         
-        ServicesManager.instance().chatService.messagesWithChatDialogID((dialog?.ID)!) {[unowned self] response, messageObjects in
+        ServicesManager.instance().chatService.messages(withChatDialogID: (dialog?.id)!) {[unowned self] response, messageObjects in
             
             print("response: \(response), messageObjects count \(messageObjects!.count)")
             
             if messageObjects!.count > 0 {
                 
                 let messages = (messageObjects!).map {[unowned self] in
-                    self.mapQBChatToJSQRich($0)
+                    self.mapQBChatToJSQRich(qbChatMessage: $0)
                 }
                 
                 for message in messages {
@@ -260,11 +262,11 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
 
     
     
-    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
+    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
         print("did press send button")
         self.sendStopTyping()
-        button.enabled = false
+        button.isEnabled = false
         
         let messageToBeSent = QBChatMessage()
         messageToBeSent.text = text
@@ -274,7 +276,7 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         messageToBeSent.readIDs = [senderId]
         messageToBeSent.dateSent = date
         
-        ServicesManager.instance().chatService.sendMessage(messageToBeSent, toDialogID: (dialog?.ID)!, saveToHistory: true, saveToStorage: true) {[unowned self] error in
+        ServicesManager.instance().chatService.send(messageToBeSent, toDialogID: (dialog?.id)!, saveToHistory: true, saveToStorage: true) {[unowned self] error in
             guard error == nil else {
                 
                 return print("sending message error: \(error)")
@@ -286,9 +288,9 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
         }
     }
     
-    override func didPressAccessoryButton(sender: UIButton!) {
+    override func didPressAccessoryButton(_ sender: UIButton!) {
         print("did press accessory button")
-        self.presentViewController(toolbarAlertVC, animated: true, completion: nil)
+        self.present(toolbarAlertVC, animated: true, completion: nil)
     }
 
 }
@@ -297,15 +299,15 @@ class ChatVC: JSQMessagesViewController, QMChatConnectionDelegate {
 //MARK: video call delegates
 extension ChatVC: QBRTCClientDelegate {
     
-    func didReceiveNewSession(session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
+    func didReceiveNewSession(_ session: QBRTCSession!, userInfo: [NSObject : AnyObject]!) {
         print("🐲🐲did receive new session")
         guard let _ = currentSession else {
             QBRTCSoundRouter.instance().initialize()
             currentSession = session
-            if let incomingCallVC = storyboard?.instantiateViewControllerWithIdentifier("IncomingCall") as? IncomingCallVC {
+            if let incomingCallVC = storyboard?.instantiateViewController(withIdentifier: "IncomingCall") as? IncomingCallVC {
                 incomingCallVC.session = currentSession
                 incomingCallVC.delegate = self
-                self.presentViewController(incomingCallVC, animated: true, completion: nil)
+                self.present(incomingCallVC, animated: true, completion: nil)
             }
             return
         }
@@ -316,7 +318,7 @@ extension ChatVC: QBRTCClientDelegate {
     }
     
     
-    func sessionDidClose(session: QBRTCSession!) {
+    func sessionDidClose(_ session: QBRTCSession!) {
         print("🌰🌰🌰session did close")
     }
     
@@ -329,10 +331,10 @@ extension ChatVC: QBRTCClientDelegate {
 //MARK: incomingCallVC delegate
 extension ChatVC: IncomingCallVCDelegate {
     func incomingCallVC(vc: IncomingCallVC, didAcceptSession session: QBRTCSession) {
-        if let privateVideoChatVC = self.storyboard?.instantiateViewControllerWithIdentifier("privateVideoChat") as? PrivateVideoChatVC {
+        if let privateVideoChatVC = self.storyboard?.instantiateViewController(withIdentifier: "privateVideoChat") as? PrivateVideoChatVC {
             currentSession = session
             privateVideoChatVC.session = self.currentSession
-            self.presentViewController(privateVideoChatVC, animated: true, completion: nil)
+            self.present(privateVideoChatVC, animated: true, completion: nil)
         }
     }
     
@@ -349,20 +351,22 @@ extension ChatVC: IncomingCallVCDelegate {
 //qmviewcontroller has more than 1 sections while jsqvc only have one, jsq use delegate methods to add timestamps
 
 extension ChatVC {
-    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+    
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         
-        return richMessages[indexPath.item]
+        return richMessages[indexPath.item!]
     }
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return messages.count
         return richMessages.count
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!,
-                                 messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!,
+                                 messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         
-        let richMessage = richMessages[indexPath.item]
+        let richMessage = richMessages[indexPath.item!]
         if richMessage.senderId == senderId {
             return outgoingBubble
         } else {
@@ -370,8 +374,8 @@ extension ChatVC {
         }
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!,
-                                 avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!,
+                                 avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
         return nil
     }
     
@@ -381,9 +385,9 @@ extension ChatVC {
     }
     
     
-    override func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let richMessage = richMessages[indexPath.item]
-        let isOutgoingMessage = richMessage.senderId == senderId
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let richMessage = richMessages[indexPath.item!]
+        _ = richMessage.senderId == senderId
         
 //        if richMessage.text == Commands.commandTask {
 //            if !isOutgoingMessage {
@@ -392,19 +396,21 @@ extension ChatVC {
 //                return CGSizeMake(320, 61)
 //            }
 //        } else {
-            if indexPath.row == richMessages.count - 1 {
-                print("collectionview final cell size is \(super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: indexPath)), final cell content is \(richMessage.text)")
-            }
-            return super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: indexPath)
+//            if indexPath.row == richMessages.count - 1 {
+//                print("collectionview final cell size is \(super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: indexPath)), final cell content is \(richMessage.text)")
+//            }
+//            return super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAtIndexPath: indexPath)
+        
+        return super.collectionView(collectionView, layout: collectionViewLayout, sizeForItemAt: indexPath)
 //        }
     }
     
     
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let richMessage = richMessages[indexPath.item];
-        let isOutgoingMessage = richMessage.senderId == senderId
+        let richMessage = richMessages[indexPath.item!]
+        _ = richMessage.senderId == senderId
         
 //        if richMessage.text == Commands.commandTask {
 //            //special type of cell
@@ -421,7 +427,7 @@ extension ChatVC {
 //            }
 //        } else {
             //normal cell
-            let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath)
+            let cell = super.collectionView(collectionView, cellForItemAt: indexPath)
             return cell
 //        }
     }
@@ -435,28 +441,45 @@ extension ChatVC {
 
 
 extension ChatVC: JSQMessagesCollectionViewCellDelegate {
-    func messagesCollectionViewCellDidTapAvatar(cell: JSQMessagesCollectionViewCell) {
+    
+    
+    
+    
+    func messagesCollectionViewCellDidTapAvatar(_ cell: JSQMessagesCollectionViewCell!) {
         
     }
     
-    func messagesCollectionViewCellDidTapMessageBubble(cell: JSQMessagesCollectionViewCell) {
+    
+    func messagesCollectionViewCellDidTapMessageBubble(_ cell: JSQMessagesCollectionViewCell!) {
         
     }
     
-    func messagesCollectionViewCellDidTapCell(cell: JSQMessagesCollectionViewCell, atPosition position: CGPoint) {
-        
+    func messagesCollectionViewCellDidTap(_ cell: JSQMessagesCollectionViewCell!, atPosition position: CGPoint) {
+
         if cell is JSQTaskCellIncoming {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let taskDetailsPopVC = storyboard?.instantiateViewControllerWithIdentifier("taskDetailsPop") {
-                taskDetailsPopVC.modalPresentationStyle = .Custom
-                	self.navigationController?.presentViewController(taskDetailsPopVC, animated: true, completion: nil)
+    //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let taskDetailsPopVC = storyboard?.instantiateViewController(withIdentifier: "taskDetailsPop") {
+                taskDetailsPopVC.modalPresentationStyle = .custom
+                    self.navigationController?.present(taskDetailsPopVC, animated: true, completion: nil)
             }
         }
     }
     
-    func messagesCollectionViewCell(cell: JSQMessagesCollectionViewCell, didPerformAction action: Selector, withSender sender: AnyObject) {
+//    func messagesCollectionViewCellDidTapCell(cell: JSQMessagesCollectionViewCell!, atPosition position: CGPoint) {
+//        
+//        if cell is JSQTaskCellIncoming {
+////            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            if let taskDetailsPopVC = storyboard?.instantiateViewController(withIdentifier: "taskDetailsPop") {
+//                taskDetailsPopVC.modalPresentationStyle = .custom
+//                	self.navigationController?.present(taskDetailsPopVC, animated: true, completion: nil)
+//            }
+//        }
+//    }
+    
+    func messagesCollectionViewCell(_ cell: JSQMessagesCollectionViewCell!, didPerformAction action: Selector!, withSender sender: AnyObject!) {
         
     }
+    
     
     
 }
@@ -467,10 +490,10 @@ extension ChatVC: JSQMessagesCollectionViewCellDelegate {
 //MARK: chat service delegate
 extension ChatVC: QMChatServiceDelegate {
     
-    func chatService(chatService: QMChatService, didLoadMessagesFromCache messages: [QBChatMessage], forDialogID dialogID: String) {
-        if self.dialog?.ID == dialogID {
+    func chatService(_ chatService: QMChatService, didLoadMessagesFromCache messages: [QBChatMessage], forDialogID dialogID: String) {
+        if self.dialog?.id == dialogID {
             let messages = messages.map {[unowned self] in
-                self.mapQBChatToJSQRich($0)
+                self.mapQBChatToJSQRich(qbChatMessage: $0)
             }
             self.richMessages += messages
             finishReceivingMessage()
@@ -483,12 +506,12 @@ extension ChatVC: QMChatServiceDelegate {
         }
     }
     
-    func chatService(chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
+    func chatService(_ chatService: QMChatService, didAddMessageToMemoryStorage message: QBChatMessage, forDialogID dialogID: String) {
         
         //TODO: this delegate even in quickblox will be called multiple times. Quickblox use a method to replace the existing message to avoid duplication. We should do similar stuff
         //NOTE2: there is no problem in one to one chatting, prob happens in group chatting, I think it's because of the recipent id. in group chatting senderid = recipent id, in group, recipent id is 0? (guess), so we will add one constraint first, make sure only display message for senderid != recipentid
         
-        if self.dialog?.ID == dialogID {
+        if self.dialog?.id == dialogID {
             // Insert message received from XMPP or self sent
             let message = JSQRichMessage(qbChatMessage: message)
             
@@ -508,7 +531,7 @@ extension ChatVC: QMChatServiceDelegate {
 //MARK: special type of cell delegates
 extension ChatVC: JSQTaskCellDelegate {
     func acceptButtonDidPressedForCell(cell: JSQTaskCellIncoming) {
-        if let indexPath = collectionView.indexPathForCell(cell) {
+        if let indexPath = collectionView.indexPath(for: cell) {
             print("accept, index is \(indexPath.item)")
 //            let message = richMessages[indexPath.row]
 //            message.qbChatMessage?.text = "sdf"
@@ -546,7 +569,7 @@ extension ChatVC {
         }
     }
     
-    override func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    override func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard QBChat.instance().isConnected() else {
             return false //prevent typing
         }
@@ -558,11 +581,11 @@ extension ChatVC {
         } else {
             sendBeginTyping()
         }
-        typingTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(ChatVC.sendStopTyping), userInfo: nil, repeats: false)
+        typingTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(ChatVC.sendStopTyping), userInfo: nil, repeats: false)
         return true
     }
     
-    override func textViewDidEndEditing(textView: UITextView) {
+    override func textViewDidEndEditing(_ textView: UITextView) {
         super.textViewDidEndEditing(textView)
 
         guard QBChat.instance().isConnected() else {

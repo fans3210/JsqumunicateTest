@@ -23,49 +23,50 @@ class LoginTableViewController: UITableViewController, NotificationServiceDelega
         super.viewDidLoad()
         
         // Fetching users from cache.
-        ServicesManager.instance().usersService.loadFromCache().continueWithBlock {[unowned self] (task : BFTask!) -> AnyObject! in
+        ServicesManager.instance().usersService.loadFromCache().continue ({[unowned self] (task : BFTask!) -> AnyObject! in
             if task.result!.count > 0 {
                 
-                self.setupUsers(ServicesManager.instance().filteredUsersByCurrentEnvironment())
+                self.setupUsers(users: ServicesManager.instance().filteredUsersByCurrentEnvironment())
                 
             } else {
                 
-                SVProgressHUD.showWithStatus("SA_STR_LOADING_USERS".localized)
+                SVProgressHUD.show(withStatus: "SA_STR_LOADING_USERS".localized)
                 
                 // Downloading users from Quickblox.
-                ServicesManager.instance().downloadLatestUsers({ (users: [QBUUser]!) -> Void in
+                
+                ServicesManager.instance().downloadLatestUsers(success: { (users: [QBUUser]?) -> Void in
                     
-                    SVProgressHUD.showSuccessWithStatus("SA_STR_COMPLETED".localized)
-                    self.setupUsers(users)
+                    SVProgressHUD.showSuccess(withStatus: "SA_STR_COMPLETED".localized)
+                    self.setupUsers(users: users!)
                     
-                    }, error: { (error: NSError!) -> Void in
+                    }, error: { (error: NSError?) -> Void in
                         
-                        SVProgressHUD.showErrorWithStatus(error.localizedDescription)
+                        SVProgressHUD.showError(withStatus: error?.localizedDescription)
                 })
             }
             
             return nil;
-        }
+        })
         
         if (ServicesManager.instance().currentUser() != nil) {
             ServicesManager.instance().currentUser()!.password = "12345678"
-            SVProgressHUD.showWithStatus("SA_STR_LOGGING_IN_AS".localized + ServicesManager.instance().currentUser()!.login!)
+            SVProgressHUD.show(withStatus: "SA_STR_LOGGING_IN_AS".localized + ServicesManager.instance().currentUser()!.login!)
             // Logging to Quickblox REST API and chat.
-            ServicesManager.instance().logInWithUser(ServicesManager.instance().currentUser()!, completion:{
+            ServicesManager.instance().logIn(with: ServicesManager.instance().currentUser()!, completion:{
                 [weak self] (success:Bool,  errorMessage: String?) -> Void in
                 if let strongSelf = self {
                     if (success) {
                         strongSelf.registerForRemoteNotification()
-                        SVProgressHUD.showSuccessWithStatus("SA_STR_LOGGED_IN".localized)
+                        SVProgressHUD.showSuccess(withStatus: "SA_STR_LOGGED_IN".localized)
                         
                         if (ServicesManager.instance().notificationService?.pushDialogID != nil) {
-                            ServicesManager.instance().notificationService?.handlePushNotificationWithDelegate(self as! NotificationServiceDelegate)
+                            ServicesManager.instance().notificationService?.handlePushNotificationWithDelegate(delegate: self as! NotificationServiceDelegate)
                         }
                         else {
-                            strongSelf.performSegueWithIdentifier("SA_STR_SEGUE_GO_TO_DIALOGS".localized, sender: nil)
+                            strongSelf.performSegue(withIdentifier: "SA_STR_SEGUE_GO_TO_DIALOGS".localized, sender: nil)
                         }
                     } else {
-                        SVProgressHUD.showErrorWithStatus(errorMessage)
+                        SVProgressHUD.showError(withStatus: errorMessage)
                     }
                 }
                 })
@@ -82,7 +83,7 @@ class LoginTableViewController: UITableViewController, NotificationServiceDelega
     // MARK: NotificationServiceDelegate protocol
     
     func notificationServiceDidStartLoadingDialogFromServer() {
-        SVProgressHUD.showWithStatus("SA_STR_LOADING_DIALOG".localized)
+        SVProgressHUD.show(withStatus: "SA_STR_LOADING_DIALOG".localized)
     }
     
     func notificationServiceDidFinishLoadingDialogFromServer() {
@@ -99,27 +100,27 @@ class LoginTableViewController: UITableViewController, NotificationServiceDelega
     }
     
     func notificationServiceDidFailFetchingDialog() {
-        self.performSegueWithIdentifier("SA_STR_SEGUE_GO_TO_DIALOGS".localized, sender: nil)
+        self.performSegue(withIdentifier: "SA_STR_SEGUE_GO_TO_DIALOGS".localized, sender: nil)
     }
     
     // MARK: Actions
     
     func logInChatWithUser(user: QBUUser) {
         
-        SVProgressHUD.showWithStatus("SA_STR_LOGGING_IN_AS".localized + user.login!)
+        SVProgressHUD.show(withStatus: "SA_STR_LOGGING_IN_AS".localized + user.login!)
 
         // Logging to Quickblox REST API and chat.
-        ServicesManager.instance().logInWithUser(user, completion:{
+        ServicesManager.instance().logIn(with: user, completion:{
             [unowned self] (success:Bool,  errorMessage: String?) -> Void in
 
             if (success) {
                 self.registerForRemoteNotification()
-                self.performSegueWithIdentifier("SA_STR_SEGUE_GO_TO_DIALOGS".localized, sender: nil)
-                SVProgressHUD.showSuccessWithStatus("SA_STR_LOGGED_IN".localized)
+                self.performSegue(withIdentifier: "SA_STR_SEGUE_GO_TO_DIALOGS".localized, sender: nil)
+                SVProgressHUD.showSuccess(withStatus: "SA_STR_LOGGED_IN".localized)
                 
             } else {
                 
-                SVProgressHUD.showErrorWithStatus(errorMessage)
+                SVProgressHUD.showError(withStatus: errorMessage)
             }
 
         })
@@ -128,9 +129,11 @@ class LoginTableViewController: UITableViewController, NotificationServiceDelega
     // MARK: Remote notifications
     
     func registerForRemoteNotification() {
-            let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil)
-            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-            UIApplication.sharedApplication().registerForRemoteNotifications()
+            let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+        
+//            let settings = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound], categories: nil)
+            UIApplication.shared().registerUserNotificationSettings(settings)
+            UIApplication.shared().registerForRemoteNotifications()
         
     }
     
@@ -143,11 +146,11 @@ class LoginTableViewController: UITableViewController, NotificationServiceDelega
 
 //tableview deleagets
 extension LoginTableViewController {
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if let _ = self.users {
             
@@ -159,12 +162,12 @@ extension LoginTableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SA_STR_CELL_USER".localized, forIndexPath: indexPath) as! UserTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SA_STR_CELL_USER".localized, for: indexPath) as! UserTableViewCell
         
         let user = self.users![indexPath.row]
         
-        cell.setColorMarkerText(String(indexPath.row + 1), color: UIColor.whiteColor())
+        cell.setColorMarkerText(text: String(indexPath.row + 1), color: UIColor.white())
         cell.userDescription = user.login
         cell.tag = indexPath.row
         
@@ -173,12 +176,12 @@ extension LoginTableViewController {
     
     // MARK: UITableViewDelegate
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated:true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated:true)
         
         let user = self.users![indexPath.row]
         user.password = "12345678"
         
-        self.logInChatWithUser(user)
+        self.logInChatWithUser(user: user)
     }
 }

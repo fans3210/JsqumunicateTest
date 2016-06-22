@@ -24,19 +24,19 @@ class JSQTaskCellIncoming: JSQMessagesCollectionViewCellIncoming {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor.blackColor()
+        backgroundColor = UIColor.black()
     }
     @IBAction func acceptPressed(sender: UIButton) {
         
         acceptButton.shake(2, withDelta: 3) {[unowned self] in
-            self.taskCellDelegate?.acceptButtonDidPressedForCell(self)
+            self.taskCellDelegate?.acceptButtonDidPressedForCell(cell: self)
         }
     }
 
     @IBAction func refusePressed(sender: UIButton) {
         
         refuseButton.shake(2, withDelta: 3) {[unowned self] in
-            self.taskCellDelegate?.refuseButtonDidPressedForCell(self)
+            self.taskCellDelegate?.refuseButtonDidPressedForCell(cell: self)
         }
     }
 }

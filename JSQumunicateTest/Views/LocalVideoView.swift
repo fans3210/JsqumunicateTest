@@ -24,9 +24,9 @@ class LocalVideoView: UIView {
         containerView = UIView(frame: frame)
         super.init(frame: frame)
         
-        containerView.backgroundColor = UIColor.clearColor()
-        containerView.layer.insertSublayer(videoLayer, atIndex: 0)
-        insertSubview(containerView, atIndex: 0)
+        containerView.backgroundColor = UIColor.clear()
+        containerView.layer.insertSublayer(videoLayer, at: 0)
+        insertSubview(containerView, at: 0)
         
         
     }
